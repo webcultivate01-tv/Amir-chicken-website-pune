@@ -20,6 +20,14 @@ import {
 import { sendResetCodeMail } from "../config/mailer.js";
 
 const MAX_ATTEMPTS = 5;
+const isValidTimezone = (tz) => {
+  try {
+    new Intl.DateTimeFormat("en", { timeZone: tz });
+    return true;
+  } catch {
+    return false;
+  }
+};
 const normalizeEmail = (email) => String(email || "").trim().toLowerCase();
 
 export const login = async (req, res) => {
@@ -52,7 +60,7 @@ export const login = async (req, res) => {
 
     return res.status(200).json({
       message: "Login successful",
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: await findUserById(user.id),
     });
   } catch (error) {
     return res.status(500).json({ message: `Login error ${error.message}` });
@@ -100,7 +108,12 @@ export const updateProfileController = async (req, res) => {
     const name = String(req.body.name ?? current.name).trim();
     const email = normalizeEmail(req.body.email ?? current.email);
     const password = req.body.password || "";
+    const timezone = String(req.body.timezone ?? current.timezone).trim();
 
+    if (!isValidTimezone(timezone)) {
+      removeFile(newPhoto);
+      return res.status(400).json({ message: "Select a valid timezone" });
+    }
     if (!name) {
       removeFile(newPhoto);
       return res.status(400).json({ message: "Name is required" });
@@ -121,7 +134,7 @@ export const updateProfileController = async (req, res) => {
       }
     }
 
-    await updateProfile(current.id, name, email, newPhoto || current.photo);
+    await updateProfile(current.id, name, email, newPhoto || current.photo, timezone);
     if (password) {
       await updatePassword(current.id, await bcrypt.hash(password, 10));
     }

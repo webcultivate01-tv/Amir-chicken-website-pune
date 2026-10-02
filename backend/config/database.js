@@ -12,6 +12,12 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
+  timezone: "Z",
+});
+
+// every timestamp is stored and read as UTC; the admin's timezone is applied in the UI
+pool.pool.on("connection", (connection) => {
+  connection.query("SET time_zone = '+00:00'");
 });
 
 export const connectDB = async () => {
@@ -46,6 +52,45 @@ export const connectDB = async () => {
     if (photoCol.length === 0) {
       await pool.query("ALTER TABLE users ADD COLUMN photo VARCHAR(255) NULL AFTER password");
     }
+
+    const [tzCol] = await pool.query("SHOW COLUMNS FROM users LIKE 'timezone'");
+    if (tzCol.length === 0) {
+      await pool.query(
+        "ALTER TABLE users ADD COLUMN timezone VARCHAR(64) NOT NULL DEFAULT 'Asia/Kolkata' AFTER photo"
+      );
+    }
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS inquiries (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(150) NOT NULL,
+        mobile VARCHAR(20) NOT NULL,
+        inquiryType ENUM('General Enquiry','Product Enquiry','Bulk / Wholesale Enquiry','Franchise Enquiry','Store Enquiry','Business Enquiry','Feedback','Other') NOT NULL DEFAULT 'General Enquiry',
+        location VARCHAR(150) NULL,
+        message TEXT NOT NULL,
+        status ENUM('New','Contacted','In Progress','Follow-up Required','Converted','Closed','Not Interested') NOT NULL DEFAULT 'New',
+        adminNote TEXT NULL,
+        followUpAt DATETIME NULL,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updatedAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_inquiries_status (status),
+        INDEX idx_inquiries_createdAt (createdAt)
+      )
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS inquiry_activities (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        inquiryId INT NOT NULL,
+        type ENUM('created','status','note','followup') NOT NULL,
+        detail TEXT NOT NULL,
+        adminName VARCHAR(100) NULL,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_activities_inquiry (inquiryId, createdAt),
+        FOREIGN KEY (inquiryId) REFERENCES inquiries(id) ON DELETE CASCADE
+      )
+    `);
 
     await pool.query(`
       CREATE TABLE IF NOT EXISTS password_resets (

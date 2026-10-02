@@ -8,12 +8,18 @@ import Dashboard from "./pages/Dashboard";
 import AdminLayout from "./components/AdminLayout";
 import PlaceholderPage from "./pages/admin/PlaceholderPage";
 import ProfilePage from "./pages/admin/ProfilePage";
+import InquiriesPage from "./pages/admin/InquiriesPage";
+import InquiryDetailPage from "./pages/admin/InquiryDetailPage";
+import SiteLayout from "./components/site/SiteLayout";
+import HomePage from "./pages/site/HomePage";
+import AboutPage from "./pages/site/AboutPage";
+import CatalogPage from "./pages/site/CatalogPage";
+import ContactPage from "./pages/site/ContactPage";
 import useGetCurrentUser from "./CustomHooks/getCurrentUser";
 
 export const serverUrl = "http://localhost:8000";
 
 const pages = [
-  { path: "inquiries", title: "Inquiry Management", subtitle: "Every inquiry that has come in through the website." },
   { path: "products", title: "Product Management", subtitle: "Add, edit and organise your products." },
 ];
 
@@ -34,6 +40,12 @@ function App() {
     <>
       <ToastContainer />
       <Routes>
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Route>
         <Route
           path="/admin"
           element={isAdmin ? <Navigate to={"/admin/dashboard"} /> : <AdminLogin />}
@@ -44,6 +56,8 @@ function App() {
         >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="inquiries" element={<InquiriesPage />} />
+          <Route path="inquiries/:id" element={<InquiryDetailPage />} />
           {pages.map((p) => (
             <Route
               key={p.path}
@@ -52,7 +66,7 @@ function App() {
             />
           ))}
         </Route>
-        <Route path="*" element={<Navigate to={"/admin"} />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );

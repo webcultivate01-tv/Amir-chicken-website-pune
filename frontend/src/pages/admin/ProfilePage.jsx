@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { serverUrl } from "../../App";
 import { setUserData } from "../../redux/userSlice";
+import { DEFAULT_TIMEZONE, getTimezones } from "../../utils/dateTime";
 
 const inputClass =
   "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition-all duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-black focus:bg-white focus:ring-4 focus:ring-black/10";
@@ -33,6 +34,7 @@ function ProfilePage() {
   const fileRef = useRef(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [profileLoading, setProfileLoading] = useState(false);
@@ -45,6 +47,7 @@ function ProfilePage() {
   useEffect(() => {
     setName(userData?.name || "");
     setEmail(userData?.email || "");
+    setTimezone(userData?.timezone || DEFAULT_TIMEZONE);
   }, [userData]);
 
   useEffect(() => {
@@ -90,6 +93,7 @@ function ProfilePage() {
     const form = new FormData();
     form.append("name", name.trim());
     form.append("email", email.trim());
+    form.append("timezone", timezone);
     if (file) form.append("photo", file);
     save(form, setProfileLoading, () => {
       setFile(null);
@@ -152,6 +156,16 @@ function ProfilePage() {
         <div className="flex flex-col gap-1.5">
           <label htmlFor="email" className={labelClass}>Email</label>
           <input id="email" type="email" className={inputClass} value={email} onChange={(e) => setEmail(e.target.value)} />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="timezone" className={labelClass}>Timezone</label>
+          <select id="timezone" className={inputClass} value={timezone} onChange={(e) => setTimezone(e.target.value)}>
+            {(getTimezones().includes(timezone) ? getTimezones() : [timezone, ...getTimezones()]).map((tz) => (
+              <option key={tz}>{tz}</option>
+            ))}
+          </select>
+          <p className="text-xs text-slate-500">All inquiry dates and times are shown in this timezone.</p>
         </div>
 
         <div className="mt-auto flex justify-end">

@@ -7,19 +7,17 @@ export const findUserByEmail = async (email) => {
 
 export const findUserById = async (id) => {
   const [rows] = await pool.query(
-    "SELECT id, name, email, role, photo, createdAt, updatedAt FROM users WHERE id = ?",
+    "SELECT id, name, email, role, photo, timezone, createdAt, updatedAt FROM users WHERE id = ?",
     [id]
   );
   return rows[0] || null;
 };
 
-export const updateProfile = async (id, name, email, photo) => {
-  await pool.query("UPDATE users SET name = ?, email = ?, photo = ? WHERE id = ?", [
-    name,
-    email,
-    photo,
-    id,
-  ]);
+export const updateProfile = async (id, name, email, photo, timezone) => {
+  await pool.query(
+    "UPDATE users SET name = ?, email = ?, photo = ?, timezone = ? WHERE id = ?",
+    [name, email, photo, timezone, id]
+  );
 };
 
 export const updatePassword = async (id, hashedPassword) => {
