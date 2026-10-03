@@ -69,7 +69,7 @@ export const connectDB = async () => {
         inquiryType ENUM('General Enquiry','Product Enquiry','Bulk / Wholesale Enquiry','Franchise Enquiry','Store Enquiry','Business Enquiry','Feedback','Other') NOT NULL DEFAULT 'General Enquiry',
         location VARCHAR(150) NULL,
         message TEXT NOT NULL,
-        status ENUM('New','Contacted','In Progress','Follow-up Required','Converted','Closed','Not Interested') NOT NULL DEFAULT 'New',
+        status ENUM('New','Contacted','In Progress','Follow-up Required','Converted','Closed','Not Interested','Spam') NOT NULL DEFAULT 'New',
         adminNote TEXT NULL,
         followUpAt DATETIME NULL,
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -91,6 +91,81 @@ export const connectDB = async () => {
         FOREIGN KEY (inquiryId) REFERENCES inquiries(id) ON DELETE CASCADE
       )
     `);
+
+    const [activityCol] = await pool.query("SHOW COLUMNS FROM inquiry_activities LIKE 'type'");
+    if (!activityCol[0].Type.includes("followup_done")) {
+      await pool.query(
+        "ALTER TABLE inquiry_activities MODIFY type ENUM('created','status','note','followup','followup_done') NOT NULL"
+      );
+    }
+
+    const [statusCol] = await pool.query("SHOW COLUMNS FROM inquiries LIKE 'status'");
+    if (!statusCol[0].Type.includes("Spam")) {
+      await pool.query(
+        "ALTER TABLE inquiries MODIFY status ENUM('New','Contacted','In Progress','Follow-up Required','Converted','Closed','Not Interested','Spam') NOT NULL DEFAULT 'New'"
+      );
+    }
+    const [activityTypeCol] = await pool.query("SHOW COLUMNS FROM inquiry_activities LIKE 'type'");
+    if (!activityTypeCol[0].Type.includes("reply")) {
+      await pool.query(
+        "ALTER TABLE inquiry_activities MODIFY type ENUM('created','status','note','followup','followup_done','reply') NOT NULL"
+      );
+    }
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS inquiry_replies (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        inquiryId INT NOT NULL,
+        subject VARCHAR(200) NOT NULL,
+        body TEXT NOT NULL,
+        adminName VARCHAR(100) NULL,
+        adminEmail VARCHAR(150) NULL,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_replies_inquiry (inquiryId, createdAt),
+        FOREIGN KEY (inquiryId) REFERENCES inquiries(id) ON DELETE CASCADE
+      )
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS inquiry_notes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        inquiryId INT NOT NULL,
+        note TEXT NOT NULL,
+        adminName VARCHAR(100) NULL,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_notes_inquiry (inquiryId, createdAt),
+        FOREIGN KEY (inquiryId) REFERENCES inquiries(id) ON DELETE CASCADE
+      )
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS inquiry_followups (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        inquiryId INT NOT NULL,
+        scheduledAt DATETIME NOT NULL,
+        type ENUM('Call','Email','Meeting') NOT NULL DEFAULT 'Call',
+        notes TEXT NULL,
+        status ENUM('Pending','Completed') NOT NULL DEFAULT 'Pending',
+        completedAt DATETIME NULL,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_followups_inquiry (inquiryId),
+        INDEX idx_followups_due (status, scheduledAt),
+        FOREIGN KEY (inquiryId) REFERENCES inquiries(id) ON DELETE CASCADE
+      )
+    `);
+
+    // one-time move of the old single adminNote / followUpAt columns into the new tables (idempotent)
+    await pool.query(
+      `INSERT INTO inquiry_notes (inquiryId, note, createdAt)
+       SELECT id, adminNote, updatedAt FROM inquiries WHERE adminNote IS NOT NULL AND adminNote <> ''`
+    );
+    await pool.query("UPDATE inquiries SET adminNote = NULL, updatedAt = updatedAt WHERE adminNote IS NOT NULL");
+    await pool.query(
+      `INSERT INTO inquiry_followups (inquiryId, scheduledAt)
+       SELECT i.id, i.followUpAt FROM inquiries i
+       WHERE i.followUpAt IS NOT NULL
+         AND NOT EXISTS (SELECT 1 FROM inquiry_followups f WHERE f.inquiryId = i.id)`
+    );
 
     await pool.query(`
       CREATE TABLE IF NOT EXISTS password_resets (

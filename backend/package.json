@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "seed:inquiries": "node config/seedInquiries.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

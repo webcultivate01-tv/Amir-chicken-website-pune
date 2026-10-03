@@ -1,4 +1,5 @@
 import validator from "validator";
+import { sendInquiryReplyMail } from "../config/mailer.js";
 import { findUserById } from "../model/userModel.js";
 import {
   INQUIRY_TYPES,
@@ -9,10 +10,24 @@ import {
   findInquiryById,
   findActivitiesByInquiryId,
   updateInquiry,
+  deleteInquiry,
+  FOLLOWUP_TYPES,
+  findNotesByInquiryId,
+  findRepliesByInquiryId,
+  addReply,
+  findNoteById,
+  addNote,
+  deleteNote,
+  findFollowupsByInquiryId,
+  findFollowupById,
+  listAllFollowups,
+  addFollowup,
+  completeFollowup,
+  deleteFollowup,
 } from "../model/inquiryModel.js";
 
 const clean = (value) => String(value ?? "").trim();
-const sameTime = (a, b) => (a ? new Date(a).getTime() : null) === (b ? new Date(b).getTime() : null);
+const adminNameOf = async (userId) => (await findUserById(userId))?.name || "Admin";
 
 // public: called by the website's contact / inquiry form
 export const submitInquiry = async (req, res) => {
@@ -86,76 +101,225 @@ export const getStats = async (req, res) => {
   }
 };
 
+// everything the detail page shows, in one response
+const detailPayload = async (id) => {
+  const [inquiry, activities, notes, followups, replies] = await Promise.all([
+    findInquiryById(id),
+    findActivitiesByInquiryId(id),
+    findNotesByInquiryId(id),
+    findFollowupsByInquiryId(id),
+    findRepliesByInquiryId(id),
+  ]);
+  return { inquiry, activities, notes, followups, replies };
+};
+
 export const getInquiry = async (req, res) => {
   try {
     const inquiry = await findInquiryById(req.params.id);
     if (!inquiry) {
       return res.status(404).json({ message: "Inquiry not found" });
     }
-    const activities = await findActivitiesByInquiryId(inquiry.id);
-    return res.status(200).json({ inquiry, activities });
+    return res.status(200).json(await detailPayload(inquiry.id));
   } catch (error) {
     return res.status(500).json({ message: `GetInquiry error ${error.message}` });
   }
 };
 
-// body: any of { status, adminNote, followUpAt (ISO string, or null to clear) }
+// body: { status }
 export const updateInquiryController = async (req, res) => {
   try {
     const current = await findInquiryById(req.params.id);
     if (!current) {
       return res.status(404).json({ message: "Inquiry not found" });
     }
-
-    const changes = {};
-    const activities = [];
-
-    if (req.body.status !== undefined && req.body.status !== current.status) {
-      if (!INQUIRY_STATUSES.includes(req.body.status)) {
-        return res.status(400).json({ message: "Invalid status" });
-      }
-      changes.status = req.body.status;
-      // "from|to" — the UI renders it as a sentence
-      activities.push({ type: "status", detail: `${current.status}|${req.body.status}` });
+    const status = req.body.status;
+    if (!INQUIRY_STATUSES.includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
     }
-
-    if (req.body.adminNote !== undefined) {
-      const adminNote = clean(req.body.adminNote);
-      if (adminNote.length > 2000) {
-        return res.status(400).json({ message: "Note must be 2000 characters or fewer" });
-      }
-      if (adminNote !== (current.adminNote || "")) {
-        changes.adminNote = adminNote || null;
-        activities.push({ type: "note", detail: adminNote });
-      }
-    }
-
-    if (req.body.followUpAt !== undefined) {
-      let followUpAt = null;
-      if (req.body.followUpAt) {
-        followUpAt = new Date(req.body.followUpAt);
-        if (Number.isNaN(followUpAt.getTime())) {
-          return res.status(400).json({ message: "Invalid follow-up date" });
-        }
-      }
-      if (!sameTime(followUpAt, current.followUpAt)) {
-        changes.followUpAt = followUpAt;
-        // ISO timestamp, or empty when cleared
-        activities.push({ type: "followup", detail: followUpAt ? followUpAt.toISOString() : "" });
-      }
-    }
-
-    if (activities.length === 0) {
+    if (status === current.status) {
       return res.status(400).json({ message: "No changes to save" });
     }
+    // status only moves forward through the list, never back
+    if (INQUIRY_STATUSES.indexOf(status) < INQUIRY_STATUSES.indexOf(current.status)) {
+      return res.status(400).json({ message: `Status cannot go back to ${status}` });
+    }
 
-    const admin = await findUserById(req.userId);
-    await updateInquiry(current.id, changes, activities, admin?.name || "Admin");
-
-    const inquiry = await findInquiryById(current.id);
-    const history = await findActivitiesByInquiryId(current.id);
-    return res.status(200).json({ message: "Inquiry updated", inquiry, activities: history });
+    // "from|to" — the UI renders it as a sentence
+    await updateInquiry(
+      current.id,
+      { status },
+      [{ type: "status", detail: `${current.status}|${status}` }],
+      await adminNameOf(req.userId)
+    );
+    return res.status(200).json({ message: "Status updated", ...(await detailPayload(current.id)) });
   } catch (error) {
     return res.status(500).json({ message: `UpdateInquiry error ${error.message}` });
+  }
+};
+
+export const deleteInquiryController = async (req, res) => {
+  try {
+    const current = await findInquiryById(req.params.id);
+    if (!current) {
+      return res.status(404).json({ message: "Inquiry not found" });
+    }
+    await deleteInquiry(current.id);
+    return res.status(200).json({ message: "Inquiry deleted" });
+  } catch (error) {
+    return res.status(500).json({ message: `DeleteInquiry error ${error.message}` });
+  }
+};
+
+// ---- replies ----
+
+// body: { subject, message } — emailed to the customer, then logged
+export const replyController = async (req, res) => {
+  try {
+    const current = await findInquiryById(req.params.id);
+    if (!current) {
+      return res.status(404).json({ message: "Inquiry not found" });
+    }
+    const subject = clean(req.body.subject);
+    const message = clean(req.body.message);
+    if (!subject || !message) {
+      return res.status(400).json({ message: "Subject and message are required" });
+    }
+    if (subject.length > 200 || message.length > 5000) {
+      return res.status(400).json({ message: "Subject or message is too long" });
+    }
+    const admin = await findUserById(req.userId);
+    const adminName = admin?.name || "Admin";
+    try {
+      await sendInquiryReplyMail({
+        to: current.email,
+        subject,
+        text: message,
+        adminName,
+        adminEmail: admin?.email,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(502).json({ message: "Could not send the email. Check the email settings." });
+    }
+    await addReply(current.id, { subject, body: message, adminEmail: admin?.email }, adminName);
+    return res.status(201).json({ message: "Reply sent", ...(await detailPayload(current.id)) });
+  } catch (error) {
+    return res.status(500).json({ message: `Reply error ${error.message}` });
+  }
+};
+
+// ---- notes ----
+
+// body: { note }
+export const addNoteController = async (req, res) => {
+  try {
+    const current = await findInquiryById(req.params.id);
+    if (!current) {
+      return res.status(404).json({ message: "Inquiry not found" });
+    }
+    const note = clean(req.body.note);
+    if (!note) {
+      return res.status(400).json({ message: "Note cannot be empty" });
+    }
+    if (note.length > 2000) {
+      return res.status(400).json({ message: "Note must be 2000 characters or fewer" });
+    }
+    await addNote(current.id, note, await adminNameOf(req.userId));
+    return res.status(201).json({ message: "Note added", ...(await detailPayload(current.id)) });
+  } catch (error) {
+    return res.status(500).json({ message: `AddNote error ${error.message}` });
+  }
+};
+
+export const deleteNoteController = async (req, res) => {
+  try {
+    const note = await findNoteById(req.params.noteId);
+    if (!note || String(note.inquiryId) !== req.params.id) {
+      return res.status(404).json({ message: "Note not found" });
+    }
+    await deleteNote(note.inquiryId, note.id);
+    return res.status(200).json({ message: "Note deleted", ...(await detailPayload(note.inquiryId)) });
+  } catch (error) {
+    return res.status(500).json({ message: `DeleteNote error ${error.message}` });
+  }
+};
+
+// ---- follow-ups ----
+
+// the Follow-ups tab: every follow-up across inquiries
+export const getFollowups = async (req, res) => {
+  try {
+    const status = clean(req.query.status);
+    const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 50);
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    if (status && !["Pending", "Completed"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+    const parseDate = (v) => {
+      const d = v ? new Date(v) : null;
+      return d && !Number.isNaN(d.getTime()) ? d : null;
+    };
+    const from = parseDate(req.query.from);
+    const to = parseDate(req.query.to);
+    const { followups, total } = await listAllFollowups({ status, page, limit, from, to });
+    return res.status(200).json({ followups, total, page, totalPages: Math.max(Math.ceil(total / limit), 1) });
+  } catch (error) {
+    return res.status(500).json({ message: `GetFollowups error ${error.message}` });
+  }
+};
+
+// body: { scheduledAt (ISO string), type, notes? }
+export const addFollowupController = async (req, res) => {
+  try {
+    const current = await findInquiryById(req.params.id);
+    if (!current) {
+      return res.status(404).json({ message: "Inquiry not found" });
+    }
+    const scheduledAt = new Date(req.body.scheduledAt);
+    if (!req.body.scheduledAt || Number.isNaN(scheduledAt.getTime())) {
+      return res.status(400).json({ message: "Enter a valid follow-up date and time" });
+    }
+    const type = clean(req.body.type) || "Call";
+    if (!FOLLOWUP_TYPES.includes(type)) {
+      return res.status(400).json({ message: "Invalid follow-up type" });
+    }
+    const notes = clean(req.body.notes) || null;
+    if (notes && notes.length > 1000) {
+      return res.status(400).json({ message: "Follow-up notes must be 1000 characters or fewer" });
+    }
+    await addFollowup(current.id, { scheduledAt, type, notes }, await adminNameOf(req.userId));
+    return res.status(201).json({ message: "Follow-up scheduled", ...(await detailPayload(current.id)) });
+  } catch (error) {
+    return res.status(500).json({ message: `AddFollowup error ${error.message}` });
+  }
+};
+
+// reachable with or without the inquiry id so the Follow-ups tab can complete one without opening the inquiry
+export const completeFollowupController = async (req, res) => {
+  try {
+    const followup = await findFollowupById(req.params.followupId);
+    if (!followup || (req.params.id && String(followup.inquiryId) !== req.params.id)) {
+      return res.status(404).json({ message: "Follow-up not found" });
+    }
+    if (followup.status === "Completed") {
+      return res.status(400).json({ message: "Follow-up is already completed" });
+    }
+    await completeFollowup(followup, await adminNameOf(req.userId));
+    return res.status(200).json({ message: "Follow-up completed", ...(await detailPayload(followup.inquiryId)) });
+  } catch (error) {
+    return res.status(500).json({ message: `CompleteFollowup error ${error.message}` });
+  }
+};
+
+export const deleteFollowupController = async (req, res) => {
+  try {
+    const followup = await findFollowupById(req.params.followupId);
+    if (!followup || String(followup.inquiryId) !== req.params.id) {
+      return res.status(404).json({ message: "Follow-up not found" });
+    }
+    await deleteFollowup(followup.inquiryId, followup.id);
+    return res.status(200).json({ message: "Follow-up deleted", ...(await detailPayload(followup.inquiryId)) });
+  } catch (error) {
+    return res.status(500).json({ message: `DeleteFollowup error ${error.message}` });
   }
 };

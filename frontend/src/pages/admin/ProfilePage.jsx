@@ -5,23 +5,30 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { serverUrl } from "../../App";
 import { setUserData } from "../../redux/userSlice";
-import { DEFAULT_TIMEZONE, getTimezones } from "../../utils/dateTime";
 
 const inputClass =
-  "w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition-all duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-black focus:bg-white focus:ring-4 focus:ring-black/10";
-const labelClass = "text-sm font-semibold text-gray-800";
+  "w-full rounded-xl border border-mist-line bg-white px-4 py-3.5 text-[15px] outline-none transition-all duration-200 placeholder:text-slate-400 hover:border-slate-300 focus:border-brand focus:ring-4 focus:ring-brand/10";
+const labelClass = "text-[15px] font-semibold text-ink";
 const cardClass =
-  "flex flex-col gap-6 rounded-2xl border border-mist-line bg-white p-6 sm:p-8";
+  "flex flex-col gap-5 rounded-3xl border border-mist-line bg-white p-6 sm:p-8";
 
 const photoUrl = (raw) =>
   raw ? (/^(https?:|data:)/.test(raw) ? raw : serverUrl + "/" + raw.replace(/^\//, "")) : null;
+
+const iconWrap = (children) => (
+  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+      {children}
+    </svg>
+  </span>
+);
 
 function SaveButton({ loading, children, className = "mt-auto py-3" }) {
   return (
     <button
       type="submit"
       disabled={loading}
-      className={`flex items-center justify-center rounded-xl bg-[#c4161c] font-semibold text-white shadow-lg shadow-[#c4161c]/30 transition hover:bg-[#a51217] disabled:opacity-70 ${className}`}
+      className={`flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 to-indigo-700 font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:from-blue-600 hover:to-indigo-800 disabled:opacity-70 ${className}`}
     >
       {loading ? <ClipLoader size={24} color="white" /> : children}
     </button>
@@ -34,7 +41,6 @@ function ProfilePage() {
   const fileRef = useRef(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [timezone, setTimezone] = useState(DEFAULT_TIMEZONE);
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [profileLoading, setProfileLoading] = useState(false);
@@ -47,7 +53,6 @@ function ProfilePage() {
   useEffect(() => {
     setName(userData?.name || "");
     setEmail(userData?.email || "");
-    setTimezone(userData?.timezone || DEFAULT_TIMEZONE);
   }, [userData]);
 
   useEffect(() => {
@@ -93,7 +98,6 @@ function ProfilePage() {
     const form = new FormData();
     form.append("name", name.trim());
     form.append("email", email.trim());
-    form.append("timezone", timezone);
     if (file) form.append("photo", file);
     save(form, setProfileLoading, () => {
       setFile(null);
@@ -116,12 +120,11 @@ function ProfilePage() {
   const shown = preview || photoUrl(userData?.photo);
 
   return (
-    <div className="grid items-stretch gap-6 lg:grid-cols-2">
-      {/* Left: profile details */}
-      <form onSubmit={handleProfileSubmit} className={cardClass}>
-        <h2 className="text-lg font-bold text-ink">Profile details</h2>
-
-        <div className="flex items-center gap-5">
+    <div className="flex flex-col gap-6">
+      {/* Profile photo */}
+      <div className={cardClass}>
+        <h2 className="text-lg font-bold text-ink">Profile Photo</h2>
+        <div className="flex flex-wrap items-center gap-5">
           {shown ? (
             <img src={shown} alt="Profile" className="h-24 w-24 rounded-full object-cover ring-2 ring-mist-line" />
           ) : (
@@ -140,81 +143,91 @@ function ProfilePage() {
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="rounded-lg border border-mist-line px-4 py-2 text-sm font-semibold text-ink hover:bg-slate-50"
+              className="w-fit rounded-xl border border-mist-line px-5 py-2.5 text-sm font-semibold text-ink hover:bg-slate-50"
             >
               {shown ? "Change photo" : "Upload photo"}
             </button>
-            <p className="text-xs text-slate-500">JPG, PNG or WEBP, up to 2MB.</p>
+            <p className="text-xs text-slate-500">
+              {file ? "Click Save changes to apply the new photo." : "JPG, PNG or WEBP (Max 2MB)"}
+            </p>
           </div>
         </div>
+      </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="name" className={labelClass}>Name</label>
-          <input id="name" className={inputClass} value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
+      <div className="grid items-stretch gap-6 lg:grid-cols-2">
+        {/* Profile details */}
+        <form onSubmit={handleProfileSubmit} className={cardClass}>
+          <div className="flex items-center gap-4">
+            {iconWrap(<><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" /></>)}
+            <div>
+              <h2 className="text-lg font-bold text-ink">Profile Details</h2>
+              <p className="text-sm text-slate-500">Update your basic information</p>
+            </div>
+          </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="email" className={labelClass}>Email</label>
-          <input id="email" type="email" className={inputClass} value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="name" className={labelClass}>Name</label>
+              <input id="name" className={inputClass} value={name} onChange={(e) => setName(e.target.value)} />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="email" className={labelClass}>Email</label>
+              <input id="email" type="email" className={inputClass} value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+          </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="timezone" className={labelClass}>Timezone</label>
-          <select id="timezone" className={inputClass} value={timezone} onChange={(e) => setTimezone(e.target.value)}>
-            {(getTimezones().includes(timezone) ? getTimezones() : [timezone, ...getTimezones()]).map((tz) => (
-              <option key={tz}>{tz}</option>
-            ))}
-          </select>
-          <p className="text-xs text-slate-500">All inquiry dates and times are shown in this timezone.</p>
-        </div>
+          <div className="mt-auto">
+            <SaveButton loading={profileLoading} className="px-6 py-3.5 text-[15px]">Save changes</SaveButton>
+          </div>
+        </form>
 
-        <div className="mt-auto flex justify-end">
-          <SaveButton loading={profileLoading} className="px-5 py-2 text-sm">Save profile</SaveButton>
-        </div>
-      </form>
+        {/* Change password */}
+        <form onSubmit={handlePasswordSubmit} className={cardClass}>
+          <div className="flex items-center gap-4">
+            {iconWrap(<><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></>)}
+            <div>
+              <h2 className="text-lg font-bold text-ink">Change Password</h2>
+              <p className="text-sm text-slate-500">Set a new password for your account</p>
+            </div>
+          </div>
 
-      {/* Right: change password */}
-      <form onSubmit={handlePasswordSubmit} className={cardClass}>
-        <div>
-          <h2 className="text-lg font-bold text-ink">Change password</h2>
-          <p className="mt-1 text-sm text-slate-500">No need to enter your old password.</p>
-        </div>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="password" className={labelClass}>New password</label>
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                placeholder="Enter new password"
+                className={inputClass}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="confirmPassword" className={labelClass}>Confirm new password</label>
+              <input
+                id="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                autoComplete="new-password"
+                placeholder="Confirm new password"
+                className={inputClass}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+          </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="password" className={labelClass}>New password</label>
-          <input
-            id="password"
-            type={showPassword ? "text" : "password"}
-            autoComplete="new-password"
-            placeholder="At least 8 characters"
-            className={inputClass}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <label htmlFor="confirmPassword" className={labelClass}>Confirm password</label>
-          <input
-            id="confirmPassword"
-            type={showPassword ? "text" : "password"}
-            autoComplete="new-password"
-            placeholder="Re-enter new password"
-            className={inputClass}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-
-        <div className="flex items-center justify-between gap-3">
           <label className="flex items-center gap-2 text-sm text-slate-600">
             <input type="checkbox" checked={showPassword} onChange={(e) => setShowPassword(e.target.checked)} />
             Show passwords
           </label>
 
-          <SaveButton loading={passwordLoading} className="px-5 py-2 text-sm">Update password</SaveButton>
-        </div>
-      </form>
+          <div className="mt-auto">
+            <SaveButton loading={passwordLoading} className="px-6 py-3.5 text-[15px]">Update password</SaveButton>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

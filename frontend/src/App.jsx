@@ -10,6 +10,7 @@ import PlaceholderPage from "./pages/admin/PlaceholderPage";
 import ProfilePage from "./pages/admin/ProfilePage";
 import InquiriesPage from "./pages/admin/InquiriesPage";
 import InquiryDetailPage from "./pages/admin/InquiryDetailPage";
+import FollowupsPage from "./pages/admin/FollowupsPage";
 import SiteLayout from "./components/site/SiteLayout";
 import HomePage from "./pages/site/HomePage";
 import AboutPage from "./pages/site/AboutPage";
@@ -38,7 +39,7 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer limit={1} position="top-center" newestOnTop hideProgressBar={false} />
       <Routes>
         <Route element={<SiteLayout />}>
           <Route path="/" element={<HomePage />} />
@@ -57,6 +58,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="inquiries" element={<InquiriesPage />} />
+          <Route path="inquiries/followups" element={<FollowupsPage />} />
           <Route path="inquiries/:id" element={<InquiryDetailPage />} />
           {pages.map((p) => (
             <Route

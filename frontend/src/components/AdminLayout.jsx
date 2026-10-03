@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { serverUrl } from "../App";
 import { setUserData } from "../redux/userSlice";
+import InquiryTabs from "./InquiryTabs";
 
 const icon = (children) => (
   <svg
@@ -84,9 +85,6 @@ const icons = {
       <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
     </>
   ),
-  bell: icon(
-    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-  ),
   logout: icon(
     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
   ),
@@ -98,6 +96,29 @@ export const navItems = [
   { label: "Inquiry Management", to: "/admin/inquiries", icon: icons.enquiries },
   { label: "Profile Management", to: "/admin/profile", icon: icons.admins },
 ];
+
+const pageMeta = [
+  { to: "/admin/dashboard", title: "Dashboard", subtitle: "" },
+  { to: "/admin/products", title: "Product Management", subtitle: "Add, edit and organise your products." },
+  { to: "/admin/inquiries", title: "Inquiry Management", subtitle: "Every inquiry that has come in through the website." },
+  { to: "/admin/profile", title: "Profile Management", subtitle: "Manage your admin account" },
+];
+
+const formatNow = (date, timeZone) => {
+  const opts = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  };
+  try {
+    return date.toLocaleString("en-US", { ...opts, timeZone });
+  } catch {
+    return date.toLocaleString("en-US", opts);
+  }
+};
 
 const initials = (name = "") => (name.trim()[0] || "A").toUpperCase();
 
@@ -128,22 +149,18 @@ function AdminLayout() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [now, setNow] = useState(new Date());
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
   const { pathname } = useLocation();
-  const currentPage = navItems.find((n) => pathname.startsWith(n.to))?.label || "Dashboard";
+  const matched = pageMeta.find((p) => pathname.startsWith(p.to)) || pageMeta[0];
+  const page =
+    matched.to === "/admin/dashboard"
+      ? { ...matched, subtitle: `Welcome back, ${userData?.name || "Admin"}` }
+      : matched;
+
+  const showInquiryTabs = pathname === "/admin/inquiries" || pathname === "/admin/inquiries/followups";
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(t);
-  }, []);
-
-  useEffect(() => {
-    const onClick = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) setMenuOpen(false);
-    };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
   const rawPhoto = userData?.photo || userData?.profileImage || userData?.avatar;
@@ -175,7 +192,7 @@ function AdminLayout() {
       : "text-slate-700 hover:bg-slate-50 hover:text-brand");
 
   return (
-    <div className="min-h-screen bg-mist-deep text-ink">
+    <div className="min-h-screen bg-[#f8f9fc] text-ink">
       {open && (
         <div
           className="fixed inset-0 z-30 bg-black/40 lg:hidden"
@@ -223,7 +240,7 @@ function AdminLayout() {
             <Avatar photo={photo} name={userData?.name} size="h-11 w-11" text="text-base" rounded="rounded-full" />
             <div className="min-w-0 flex-1 leading-tight">
               <p className="truncate text-sm font-bold text-ink">{userData?.name || "Admin"}</p>
-              <p className="text-xs font-medium text-slate-500">Administrator</p>
+              <p className="text-xs font-medium text-slate-500">Admin</p>
             </div>
           </div>
           <button
@@ -238,7 +255,7 @@ function AdminLayout() {
 
       <div className="lg:pl-[300px]">
         {/* Top navbar */}
-        <header className="sticky top-0 z-20 flex h-16 items-center justify-between gap-4 border-b border-mist-line bg-mist/80 px-4 backdrop-blur-md sm:px-8">
+        <header className="sticky top-0 z-20 flex h-[86px] items-center justify-between gap-4 border-b border-mist-line bg-white px-4 sm:px-10">
           <div className="flex min-w-0 items-center gap-3">
             <button
               onClick={() => setOpen(true)}
@@ -257,103 +274,28 @@ function AdminLayout() {
               </svg>
             </button>
 
-            {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="hidden min-w-0 items-center gap-2 text-sm sm:flex">
-              <span className="font-medium text-slate-400">Admin</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5 text-slate-300">
-                <path d="m9 6 6 6-6 6" />
-              </svg>
-              <span className="truncate font-semibold text-ink">{currentPage}</span>
-            </nav>
+            <div className="min-w-0 leading-tight">
+              <h1 className="truncate text-2xl font-bold tracking-tight text-ink">{page.title}</h1>
+              <p className="mt-1 truncate text-sm text-slate-500">{page.subtitle}</p>
+            </div>
           </div>
 
-          {/* Search */}
-          <div className="hidden max-w-md flex-1 md:block">
-            <label className="group flex h-10 items-center gap-2.5 rounded-lg border border-mist-line bg-mist-deep/70 px-3 text-slate-400 transition focus-within:border-brand/50 focus-within:bg-mist focus-within:ring-4 focus-within:ring-brand/10">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" className="h-4 w-4 shrink-0">
-                <circle cx="11" cy="11" r="7" />
-                <path d="m20 20-3.5-3.5" />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search inquiries, products…"
-                className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-slate-400"
-              />
-              <kbd className="hidden shrink-0 whitespace-nowrap font-sans text-[10px] font-semibold text-slate-400 lg:block">
-                Ctrl + K
-              </kbd>
-            </label>
-          </div>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Status + clock */}
-            <span className="hidden whitespace-nowrap text-sm font-semibold tabular-nums text-slate-600 xl:block">
-              {now.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}
+          <div className="flex shrink-0 items-center gap-4">
+            {showInquiryTabs && <InquiryTabs />}
+            <span className="hidden whitespace-nowrap text-sm font-medium tabular-nums text-slate-500 md:block">
+              {formatNow(now, userData?.timezone)}
             </span>
-
-            <button
-              aria-label="Notifications"
-              title="Notifications"
-              className="relative cursor-pointer p-2.5 text-slate-500 outline-none transition-colors duration-200 hover:text-brand focus:outline-none"
-            >
-              {icons.bell}
-              <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-[#c4161c] ring-2 ring-mist" />
-            </button>
-
-            <div className="h-6 w-px bg-mist-line" />
-
-            {/* Profile menu */}
-            <div className="relative" ref={menuRef}>
-              <button
-                onClick={() => setMenuOpen((v) => !v)}
-                aria-haspopup="menu"
-                aria-expanded={menuOpen}
-                className="group flex items-center gap-2.5 rounded-xl border border-transparent p-1 pr-2 transition-all duration-200 hover:border-mist-line hover:bg-mist hover:shadow-md hover:shadow-slate-900/5"
-              >
-                <Avatar photo={photo} name={userData?.name} />
-
-                <div className="hidden text-left leading-tight sm:block">
-                  <p className="max-w-[140px] truncate text-[13px] font-bold text-ink">{userData?.name || "Admin"}</p>
-                  <p className="text-[11px] font-medium text-slate-400">Administrator</p>
-                </div>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className={"hidden h-4 w-4 text-slate-400 transition-transform sm:block " + (menuOpen ? "rotate-180" : "")}>
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </button>
-
-              {menuOpen && (
-                <div
-                  role="menu"
-                  className="absolute right-0 mt-2 w-64 overflow-hidden rounded-xl border border-mist-line bg-mist shadow-xl shadow-slate-900/10"
-                >
-                  <div className="border-b border-mist-line px-4 py-3">
-                    <p className="truncate text-sm font-bold text-ink">{userData?.name || "Admin"}</p>
-                    <p className="truncate text-xs text-slate-500">{userData?.email}</p>
-                  </div>
-                  <NavLink
-                    to="/admin/profile"
-                    role="menuitem"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-mist-deep hover:text-ink"
-                  >
-                    {icons.admins}
-                    Profile settings
-                  </NavLink>
-                  <button
-                    role="menuitem"
-                    onClick={handleLogout}
-                    className="flex w-full items-center gap-3 border-t border-mist-line px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-[#c4161c]"
-                  >
-                    {icons.logout}
-                    Sign out
-                  </button>
-                </div>
-              )}
+            <div className="hidden h-8 w-px bg-mist-line md:block" />
+            <div className="flex items-center gap-3">
+              <p className="hidden max-w-[160px] truncate text-base font-bold text-ink sm:block">
+                {userData?.name || "Admin"}
+              </p>
+              <Avatar photo={photo} name={userData?.name} size="h-11 w-11" text="text-base" rounded="rounded-full" />
             </div>
           </div>
         </header>
 
-        <main className="px-6 py-8 sm:px-10">
+        <main className="px-4 py-8 sm:px-10">
           <Outlet />
         </main>
       </div>

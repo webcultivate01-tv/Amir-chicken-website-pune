@@ -15,6 +15,21 @@ const getTransporter = () => {
   return transporter;
 };
 
+// Replies go out through the site's SMTP account but carry the admin's name, and the
+// customer's answer lands in the admin's own inbox (Reply-To).
+export const sendInquiryReplyMail = async ({ to, subject, text, adminName, adminEmail }) => {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    throw new Error("Email service is not configured (SMTP_USER / SMTP_PASS missing)");
+  }
+  await getTransporter().sendMail({
+    from: `"${adminName.replace(/"/g, "")} - Amir Chicken" <${process.env.SMTP_USER}>`,
+    replyTo: adminEmail,
+    to,
+    subject,
+    text,
+  });
+};
+
 export const sendResetCodeMail = async (to, code) => {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
     throw new Error("Email service is not configured (SMTP_USER / SMTP_PASS missing)");

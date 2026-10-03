@@ -5,17 +5,22 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { serverUrl } from "../../App";
-import PageHeader from "../../components/PageHeader";
 import StatusBadge from "../../components/StatusBadge";
 import InquiryStatCards from "../../components/InquiryStatCards";
-import { INQUIRY_STATUSES, INQUIRY_TYPES, formatInquiryId, inputClass } from "../../utils/inquiry";
+import { INQUIRY_STATUSES, INQUIRY_TYPES, STATUS_STYLES, inputClass } from "../../utils/inquiry";
 import { DEFAULT_TIMEZONE, formatDateTime, isPast } from "../../utils/dateTime";
 
 const PAGE_SIZE = 10;
 const OPEN_STATUSES = ["New", "Contacted", "In Progress", "Follow-up Required"];
 
 const actionClass =
-  "rounded-lg border border-mist-line px-2.5 py-1 text-xs font-semibold text-slate-700 transition hover:border-brand/40 hover:bg-brand-soft hover:text-brand";
+  "rounded-lg bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:bg-slate-200 active:scale-95";
+const callClass =
+  "rounded-lg bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-100 active:scale-95";
+const emailClass =
+  "rounded-lg bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700 transition hover:bg-sky-100 active:scale-95";
+const viewClass =
+  "shrink-0 rounded-lg bg-brand px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm shadow-brand/30 transition hover:brightness-110 active:scale-95";
 
 function InquiriesPage() {
   const navigate = useNavigate();
@@ -94,18 +99,41 @@ function InquiriesPage() {
       </p>
     ) : null;
 
+  const updateStatus = async (inquiry, newStatus) => {
+    if (inquiry.status === newStatus) return;
+    try {
+      await axios.patch(`${serverUrl}/api/inquiries/${inquiry.id}`, { status: newStatus }, { withCredentials: true });
+      setData((d) => ({
+        ...d,
+        inquiries: d.inquiries.map((x) => (x.id === inquiry.id ? { ...x, status: newStatus } : x)),
+      }));
+      setLoadedCount((n) => n + 1);
+      toast.success(`Marked as ${newStatus}`, { position: "top-center", autoClose: 1500 });
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Could not update status", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+    }
+  };
+
   const contactLinks = (inquiry) => (
     <>
-      <a href={`tel:${inquiry.mobile}`} onClick={stop} className={actionClass}>Call</a>
-      <a href={`mailto:${inquiry.email}`} onClick={stop} className={actionClass}>Email</a>
+      <a href={`tel:${inquiry.mobile}`} onClick={stop} className={callClass}>Call</a>
+      <a href={`mailto:${inquiry.email}`} onClick={stop} className={emailClass}>Email</a>
     </>
   );
 
   return (
     <>
-      <PageHeader title="Inquiry Management" subtitle="Every inquiry that has come in through the website." />
-
-      <InquiryStatCards refreshKey={loadedCount} />
+      <InquiryStatCards
+        refreshKey={loadedCount}
+        activeStatus={status}
+        onSelect={(s) => {
+          setStatus(s);
+          setPage(1);
+        }}
+      />
 
       {/* Filters */}
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_200px_220px_150px]">
@@ -113,7 +141,7 @@ function InquiriesPage() {
           type="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search name, mobile, email, location or ID"
+          placeholder="Search name, mobile, email, or location"
           aria-label="Search inquiries"
           className={`${inputClass} sm:col-span-2 lg:col-span-1`}
         />
@@ -135,7 +163,7 @@ function InquiriesPage() {
         </select>
       </div>
 
-      <div className="mt-4 overflow-hidden rounded-xl border border-mist-line bg-white">
+      <div className="mt-4 overflow-hidden rounded-xl border border-mist-line bg-white shadow-sm">
         {loading && data.inquiries.length === 0 ? (
           <div className="flex justify-center py-16">
             <ClipLoader size={32} color="#4f46e5" />
@@ -155,35 +183,57 @@ function InquiriesPage() {
         ) : (
           <div className={loading ? "opacity-60 transition-opacity" : "transition-opacity"}>
             {/* Desktop table */}
-            <div className="hidden overflow-x-auto md:block">
-              <table className="w-full text-left text-sm">
-                <thead className="border-b border-mist-line bg-mist/60 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <div className="hidden md:block">
+              <table className="w-full table-fixed text-left text-sm">
+                <colgroup>
+                  <col className="w-[6%]" />
+                  <col className="w-[16%]" />
+                  <col className="w-[13%]" />
+                  <col className="w-[15%]" />
+                  <col className="w-[13%]" />
+                  <col className="w-[15%]" />
+                  <col className="w-[22%]" />
+                </colgroup>
+                <thead className="border-b border-mist-line bg-brand-soft/60 text-xs font-bold uppercase tracking-wide text-brand">
                   <tr>
-                    {["Name", "Mobile", "Inquiry Type", "Location", "Status", "Created At", "Last Updated", "Actions"].map((h) => (
-                      <th key={h} className="whitespace-nowrap px-4 py-3">{h}</th>
+                    {["No", "Name", "Number", "Inquiry Type", "Location", "Date", "Actions"].map((h) => (
+                      <th key={h} className="truncate px-3 py-3">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-mist-line">
-                  {data.inquiries.map((i) => (
+                  {data.inquiries.map((i, index) => (
                     <tr key={i.id} onClick={() => open(i.id)} className="cursor-pointer transition-colors hover:bg-mist/60">
-                      <td className="px-4 py-3">
-                        <p className="font-semibold text-ink">{i.name}</p>
-                        <p className="text-xs text-slate-400">{formatInquiryId(i.id)}</p>
+                      <td className="px-3 py-3 font-semibold text-slate-500">{(page - 1) * PAGE_SIZE + index + 1}</td>
+                      <td className="truncate px-3 py-3 text-slate-700" title={i.name}>{i.name}</td>
+                      <td className="truncate px-3 py-3 text-slate-700">{i.mobile}</td>
+                      <td className="truncate px-3 py-3 text-slate-700" title={i.inquiryType}>{i.inquiryType}</td>
+                      <td className="truncate px-3 py-3 text-slate-700" title={i.location}>{i.location || "—"}</td>
+                      <td className="truncate px-3 py-3 text-slate-600" title={formatDateTime(i.createdAt, timeZone)}>
+                        {formatDateTime(i.createdAt, timeZone)}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-slate-700">{i.mobile}</td>
-                      <td className="px-4 py-3 text-slate-700">{i.inquiryType}</td>
-                      <td className="px-4 py-3 text-slate-700">{i.location || "—"}</td>
-                      <td className="px-4 py-3">
-                        <StatusBadge status={i.status} />
-                        {followUp(i)}
-                      </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-slate-600">{formatDateTime(i.createdAt, timeZone)}</td>
-                      <td className="whitespace-nowrap px-4 py-3 text-slate-600">{formatDateTime(i.updatedAt, timeZone)}</td>
-                      <td className="px-4 py-3">
-                        <div className="flex gap-1.5">
-                          <button onClick={() => open(i.id)} className={actionClass}>View</button>
-                          {contactLinks(i)}
+                      <td className="px-3 py-3" onClick={stop}>
+                        <div className="flex items-center gap-2">
+                          <select
+                            value={i.status}
+                            onChange={(e) => updateStatus(i, e.target.value)}
+                            aria-label={`Status for ${i.name}`}
+                            className={`min-w-0 flex-1 cursor-pointer rounded-full px-2.5 py-1 text-xs font-semibold outline-none ring-1 ring-inset focus:ring-2 ${STATUS_STYLES[i.status] || STATUS_STYLES.Closed}`}
+                          >
+                            {INQUIRY_STATUSES.map((s) => (
+                              <option
+                                key={s}
+                                value={s}
+                                disabled={INQUIRY_STATUSES.indexOf(s) < INQUIRY_STATUSES.indexOf(i.status)}
+                                className="bg-white text-ink"
+                              >
+                                {s}
+                              </option>
+                            ))}
+                          </select>
+                          <button onClick={() => open(i.id)} className={viewClass}>
+                            View
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -199,7 +249,7 @@ function InquiriesPage() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="truncate font-semibold text-ink">{i.name}</p>
-                      <p className="text-xs text-slate-400">{formatInquiryId(i.id)} · {i.inquiryType}</p>
+                      <p className="text-xs text-slate-400">{i.inquiryType}</p>
                     </div>
                     <StatusBadge status={i.status} />
                   </div>
@@ -212,7 +262,7 @@ function InquiriesPage() {
                     Created {formatDateTime(i.createdAt, timeZone)} · Updated {formatDateTime(i.updatedAt, timeZone)}
                   </p>
                   <div className="mt-3 flex gap-1.5">
-                    <button onClick={() => open(i.id)} className={actionClass}>View</button>
+                    <button onClick={() => open(i.id)} className={viewClass}>View</button>
                     {contactLinks(i)}
                   </div>
                 </li>
