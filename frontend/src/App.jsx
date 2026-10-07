@@ -17,6 +17,9 @@ import AboutPage from "./pages/site/AboutPage";
 import CatalogPage from "./pages/site/CatalogPage";
 import ContactPage from "./pages/site/ContactPage";
 import useGetCurrentUser from "./CustomHooks/getCurrentUser";
+import GetQuotePage from "./pages/site/GetQuotePage";
+import PrivacyPolicyPage from "./pages/site/PrivacyPolicyPage";
+import TermsPage from "./pages/site/TermsPage";
 
 export const serverUrl = "http://localhost:8000";
 
@@ -46,6 +49,9 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/catalog" element={<CatalogPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/get-a-quote" element={<GetQuotePage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
         </Route>
         <Route
           path="/admin"
