@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { serverUrl } from "../App";
 import { setUserData } from "../redux/userSlice";
+import amirNavbarLogo from "../../images/amir-seal-of-trust.png";
 
 const inputClass =
   "border border-gray-200 bg-gray-50 rounded-xl px-4 py-3 text-sm outline-none transition-all duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:bg-white focus:border-black focus:ring-4 focus:ring-black/10 w-full";
@@ -257,9 +258,9 @@ function AdminLogin() {
       <div className="pointer-events-none absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-black/10 blur-3xl" />
       <div className="relative w-full max-w-md bg-white/90 backdrop-blur rounded-3xl shadow-2xl shadow-black/10 ring-1 ring-black/5 p-8 sm:p-10 flex flex-col gap-6">
         <img
-          src={serverUrl + "/uploads/amir-logo.png"}
-          alt="Amir Chicken"
-          className="h-20 w-auto mx-auto object-contain drop-shadow-md"
+          src={amirNavbarLogo}
+          alt="Amir 2.0"
+          className="h-20 w-auto mx-auto object-contain"
         />
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-extrabold tracking-tight text-center text-gray-900">

@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const ArrowIcon = () => (
   <svg
@@ -75,10 +77,20 @@ const FacebookIcon = () => (
   </svg>
 );
 
+const LinkedInIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="h-[18px] w-[18px]"
+  >
+    <path d="M4.98 3.5a2.5 2.5 0 1 1-.01 5 2.5 2.5 0 0 1 .01-5ZM3 9.75h4v11.5H3V9.75Zm6.5 0h3.83v1.57h.05c.53-1 1.84-2.07 3.78-2.07 4.04 0 4.79 2.66 4.79 6.11v5.89h-4v-5.22c0-1.25-.02-2.85-1.74-2.85-1.74 0-2.01 1.36-2.01 2.76v5.31h-4V9.75Z" />
+  </svg>
+);
+
 const contactInfo = [
   {
     label: "Visit us",
-    value: "K-507, Mega Center, Hadapsar, Pune, Maharashtra, India",
+    value: "K-507-510, Mega Center, Behind Noble Hospital, Magarpatta Hadapsar, Pune (Head Office)",
     icon: <LocationIcon />,
   },
   {
@@ -88,10 +100,15 @@ const contactInfo = [
   },
   {
     label: "Email us",
-    value: "amirchicken.info@gmail.com",
+    value: "info@amirchicken.in",
     icon: <MailIcon />,
   },
 ];
+
+const ctaItem = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
 export default function ContactPage() {
   return (
@@ -99,12 +116,18 @@ export default function ContactPage() {
 
       {/* ================= CONTACT SECTION ================= */}
       <section className="px-5 py-6 sm:px-8 lg:px-12 lg:py-8">
-        <div className="mx-auto max-w-[1480px] overflow-hidden rounded-[30px] bg-[#F5F5F4]">
+        <div className="mx-auto max-w-[1280px] px-2 sm:px-6 lg:px-10">
 
-          <div className="grid gap-12 px-7 py-12 sm:px-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:px-20 lg:py-20">
+          <div className="grid gap-12 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20 lg:py-12">
 
             {/* ================= LEFT CONTENT ================= */}
-            <div className="flex flex-col justify-center">
+            <motion.div
+              className="order-2 flex flex-col justify-center lg:order-1"
+              initial={{ opacity: 0, x: -80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
 
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#EC1F36]">
                 Contact AMIR
@@ -113,7 +136,7 @@ export default function ContactPage() {
               <h1 className="mt-5 max-w-lg text-5xl font-semibold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
                 Get in
                 <br />
-                touch with us
+                <span className="text-[#EC1F36]">touch with us</span>
                 <span className="text-[#EC1F36]">.</span>
               </h1>
 
@@ -131,7 +154,7 @@ export default function ContactPage() {
                     key={item.label}
                     className="flex items-start gap-4"
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#EC1F36] shadow-sm">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EC1F36]/10 text-[#EC1F36]">
                       {item.icon}
                     </div>
 
@@ -163,7 +186,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#171719] transition hover:bg-[#EC1F36] hover:text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-[#171719] transition hover:bg-[#EC1F36] hover:text-white"
                   >
                     <InstagramIcon />
                   </a>
@@ -173,20 +196,36 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#171719] transition hover:bg-[#EC1F36] hover:text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-[#171719] transition hover:bg-[#EC1F36] hover:text-white"
                   >
                     <FacebookIcon />
+                  </a>
+
+                  <a
+                    href="https://www.linkedin.com/company/amirchicken/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-[#171719] transition hover:bg-[#EC1F36] hover:text-white"
+                  >
+                    <LinkedInIcon />
                   </a>
 
                 </div>
 
               </div>
 
-            </div>
+            </motion.div>
 
 
             {/* ================= FORM ================= */}
-            <div className="rounded-[28px] bg-white p-6 shadow-[0_18px_50px_rgba(0,0,0,0.05)] sm:p-8 lg:p-10">
+            <motion.div
+              className="order-1 rounded-[32px] border border-neutral-300 bg-white p-6 shadow-[0_24px_70px_rgba(0,0,0,0.08)] sm:p-8 lg:order-2 lg:p-9"
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
 
               <div className="mb-8">
 
@@ -207,77 +246,79 @@ export default function ContactPage() {
 
               <form className="space-y-5">
 
-                {/* FIRST + LAST NAME */}
+                {/* FULL NAME + MOBILE */}
                 <div className="grid gap-5 sm:grid-cols-2">
 
                   <div>
                     <label
-                      htmlFor="firstName"
+                      htmlFor="fullName"
                       className="mb-2 block text-xs font-medium"
                     >
-                      First Name
+                      Full Name
                     </label>
 
                     <input
-                      id="firstName"
+                      id="fullName"
                       type="text"
-                      placeholder="Enter your first name"
-                      className="h-12 w-full rounded-full border border-neutral-200 px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36]"
+                      placeholder="Enter your full name"
+                      className="h-12 w-full rounded-full border border-neutral-300 bg-[#EC1F36]/[0.04] px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36] focus:bg-white"
                     />
                   </div>
 
                   <div>
                     <label
-                      htmlFor="lastName"
+                      htmlFor="phone"
                       className="mb-2 block text-xs font-medium"
                     >
-                      Last Name
+                      Mobile Number
                     </label>
 
                     <input
-                      id="lastName"
-                      type="text"
-                      placeholder="Enter your last name"
-                      className="h-12 w-full rounded-full border border-neutral-200 px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36]"
+                      id="phone"
+                      type="tel"
+                      placeholder="Enter your mobile number"
+                      className="h-12 w-full rounded-full border border-neutral-300 bg-[#EC1F36]/[0.04] px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36] focus:bg-white"
                     />
                   </div>
 
                 </div>
 
 
-                {/* EMAIL */}
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="mb-2 block text-xs font-medium"
-                  >
-                    Email
-                  </label>
+                {/* EMAIL + CITY */}
+                <div className="grid gap-5 sm:grid-cols-2">
 
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="h-12 w-full rounded-full border border-neutral-200 px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36]"
-                  />
-                </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="mb-2 block text-xs font-medium"
+                    >
+                      Email
+                    </label>
 
+                    <input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email address"
+                      className="h-12 w-full rounded-full border border-neutral-300 bg-[#EC1F36]/[0.04] px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36] focus:bg-white"
+                    />
+                  </div>
 
-                {/* PHONE */}
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="mb-2 block text-xs font-medium"
-                  >
-                    Phone Number
-                  </label>
+                  <div>
+                    <label
+                      htmlFor="city"
+                      className="mb-2 block text-xs font-medium"
+                    >
+                      City
+                    </label>
 
-                  <input
-                    id="phone"
-                    type="tel"
-                    placeholder="Enter your phone number"
-                    className="h-12 w-full rounded-full border border-neutral-200 px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36]"
-                  />
+                    <input
+                      id="city"
+                      type="text"
+                      placeholder="Enter your city"
+                      className="h-12 w-full rounded-full border border-neutral-300 bg-[#EC1F36]/[0.04] px-5 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36] focus:bg-white"
+                    />
+                  </div>
+
                 </div>
 
 
@@ -293,7 +334,7 @@ export default function ContactPage() {
                   <select
                     id="enquiry"
                     defaultValue="General Enquiry"
-                    className="h-12 w-full rounded-full border border-neutral-200 bg-white px-5 text-sm text-neutral-600 outline-none transition focus:border-[#EC1F36]"
+                    className="h-12 w-full rounded-full border border-neutral-300 bg-[#EC1F36]/[0.04] px-5 text-sm text-neutral-600 outline-none transition focus:border-[#EC1F36] focus:bg-white"
                   >
                     <option>General Enquiry</option>
                     <option>Bulk / Institutional Order</option>
@@ -315,9 +356,9 @@ export default function ContactPage() {
 
                   <textarea
                     id="message"
-                    rows="5"
+                    rows="4"
                     placeholder="Tell us a little about your requirement..."
-                    className="w-full resize-none rounded-[22px] border border-neutral-200 px-5 py-4 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36]"
+                    className="w-full resize-none rounded-[22px] border border-neutral-300 bg-[#EC1F36]/[0.04] px-5 py-4 text-sm outline-none transition placeholder:text-neutral-400 focus:border-[#EC1F36] focus:bg-white"
                   />
                 </div>
 
@@ -336,7 +377,7 @@ export default function ContactPage() {
 
               </form>
 
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -344,22 +385,52 @@ export default function ContactPage() {
 
 
       {/* ================= BOTTOM STATEMENT ================= */}
-      <section className="px-6 py-20 sm:px-8 lg:px-12 lg:py-28">
+      <section className="px-5 py-20 sm:px-8 lg:px-12 lg:py-28">
 
-        <div className="mx-auto max-w-[1480px]">
+        <motion.div
+          className="mx-auto max-w-[1280px] px-2 sm:px-6 lg:px-10"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ staggerChildren: 0.15 }}
+        >
 
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#EC1F36]">
+          <motion.p
+            variants={ctaItem}
+            className="text-xs font-semibold uppercase tracking-[0.18em] text-[#EC1F36]"
+          >
             AMIR Chicken
-          </p>
+          </motion.p>
 
-          <h2 className="mt-5 max-w-5xl text-4xl font-semibold leading-tight tracking-[-0.035em] sm:text-5xl lg:text-6xl">
+          <motion.h2 variants={ctaItem} className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
             Have something to ask?
-            <span className="text-neutral-400">
+            <span className="text-[#EC1F36]">
               {" "}We’re here to help.
             </span>
-          </h2>
+          </motion.h2>
 
-        </div>
+          <motion.div variants={ctaItem} className="mt-9 flex flex-wrap gap-3">
+
+            <Link
+              to="/get-a-quote"
+              className="group inline-flex items-center gap-3 rounded-full bg-[#171719] py-3 pl-6 pr-3 text-sm font-semibold text-white transition hover:bg-[#EC1F36]"
+            >
+              <span>Get a Quote</span>
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#171719] transition-transform duration-300 group-hover:translate-x-1">
+                <ArrowIcon />
+              </span>
+            </Link>
+
+            <Link
+              to="/catalog"
+              className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-[#171719] transition hover:border-[#171719] hover:bg-[#171719] hover:text-white"
+            >
+              Explore Catalog
+            </Link>
+
+          </motion.div>
+
+        </motion.div>
 
       </section>
 

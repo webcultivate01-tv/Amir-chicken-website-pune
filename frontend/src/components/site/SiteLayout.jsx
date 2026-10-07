@@ -254,7 +254,7 @@ const SiteLayout = () => {
             MAIN FOOTER
         =============================== */}
 
-        <div className="max-w-[1480px] mx-auto px-14 lg:px-16 py-10 lg:py-11">
+        <div className="max-w-[1480px] mx-auto px-6 sm:px-10 md:px-14 lg:px-16 py-10 lg:py-11">
 
           <div className="grid grid-cols-1 md:grid-cols-[1.9fr_0.6fr_0.6fr_1.9fr] gap-10 lg:gap-12">
 
@@ -311,7 +311,7 @@ const SiteLayout = () => {
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path d="M14 8h3V4h-3c-3.31 0-5 1.69-5 5v3H6v4h3v8h4v-8h3l1-4h-4V9c0-.67.33-1 1-1z" />
+                    <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z" />
                   </svg>
                 </a>
 
@@ -366,10 +366,38 @@ const SiteLayout = () => {
                 </a>
 
 
+                {/* LinkedIn */}
+
+                <a
+                  href="https://www.linkedin.com/company/amirchicken/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Amir Chicken LinkedIn"
+                  className="
+                    w-10 h-10
+                    rounded-full
+                    bg-[#7F1722]/35
+                    border border-[#F5EFE6]/10
+                    flex items-center justify-center
+                    text-[#F5EFE6]
+                    hover:bg-[#7F1722]
+                    transition-all duration-200
+                  "
+                >
+                  <svg
+                    className="w-[15px] h-[15px]"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M4.98 3.5a2.5 2.5 0 11-.01 5 2.5 2.5 0 01.01-5zM3 9.75h4v11.5H3V9.75zm6.5 0h3.83v1.57h.05c.53-1 1.84-2.07 3.78-2.07 4.04 0 4.79 2.66 4.79 6.11v5.89h-4v-5.22c0-1.25-.02-2.85-1.74-2.85-1.74 0-2.01 1.36-2.01 2.76v5.31h-4V9.75z" />
+                  </svg>
+                </a>
+
+
                 {/* Email */}
 
                 <a
-                  href="mailto:amirchicken.info@gmail.com"
+                  href="mailto:info@amirchicken.in"
                   aria-label="Email Amir Chicken"
                   className="
                     w-10 h-10
@@ -413,6 +441,8 @@ const SiteLayout = () => {
             {/* =========================
                 QUICK LINKS
             ========================== */}
+
+            <div className="grid grid-cols-2 gap-6 md:contents">
 
             <div>
 
@@ -519,6 +549,8 @@ const SiteLayout = () => {
 
             </div>
 
+            </div>
+
 
             {/* =========================
                 CONTACT
@@ -577,8 +609,8 @@ const SiteLayout = () => {
                     </p>
 
                     <p className="mt-0.5 text-[12px] leading-5 text-[#F5EFE6]/60">
-                      K-507, Mega Center, Hadapsar,
-                      Pune, Maharashtra, India
+                      K-507-510, Mega Center, Behind Noble Hospital,
+                      Magarpatta Hadapsar, Pune (Head Office)
                     </p>
 
                   </div>
@@ -633,7 +665,7 @@ const SiteLayout = () => {
                     </p>
 
                     <a
-                      href="tel:09527982525"
+                      href="tel:+919527982525"
                       className="
                         mt-0.5 block
                         text-[12px]
@@ -694,7 +726,7 @@ const SiteLayout = () => {
                     </p>
 
                     <a
-                      href="mailto:amirchicken.info@gmail.com"
+                      href="mailto:info@amirchicken.in"
                       className="
                         mt-0.5 block
                         text-[12px]
@@ -703,7 +735,7 @@ const SiteLayout = () => {
                         transition
                       "
                     >
-                      amirchicken.info@gmail.com
+                      info@amirchicken.in
                     </a>
 
                   </div>
@@ -781,7 +813,8 @@ const SiteLayout = () => {
             className="
               max-w-[1300px]
               mx-auto
-              px-8 lg:px-10
+              px-6 sm:px-8 lg:px-10
+              text-center md:text-left
               border-t border-[#F5EFE6]/10
               py-3.5
               flex
@@ -796,18 +829,6 @@ const SiteLayout = () => {
             {/* LEFT */}
 
             <div className="flex items-center gap-3">
-
-              <Link
-                to="/"
-                aria-label="Amir's Fresh Cut Home"
-                className="shrink-0"
-              >
-                <img
-                  src={amirFooterLogo}
-                  alt="Amir's Fresh Cut"
-                  className="h-[40px] w-auto object-contain"
-                />
-              </Link>
 
               <p className="text-[12px] text-[#F5EFE6]/60">
                 © {new Date().getFullYear()} Amir Chicken. All rights reserved.
@@ -829,15 +850,6 @@ const SiteLayout = () => {
                 text-[#F5EFE6]/60
               "
             >
-
-              <span>
-                Designed and Developed by{" "}
-                <span className="text-[#1D4ED8] font-semibold">
-                  Webcultivate
-                </span>
-              </span>
-
-              <span>|</span>
 
               <Link
                 to="/privacy-policy"
