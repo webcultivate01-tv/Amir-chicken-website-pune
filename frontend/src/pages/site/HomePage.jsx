@@ -1,5 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import HeroSection from "../../components/site/home/HeroSection";
+import BrandStatement from "../../components/site/home/BrandStatement";
+import AmirNumbers from "../../components/site/home/AmirNumbers";
+import PlateShowcase from "../../components/site/home/PlateShowcase";
 
 /* =========================================================
    ICONS
@@ -370,205 +374,13 @@ export default function HomePage() {
   return (
     <main className="bg-white text-[#171719]">
 
-      {/* =====================================================
-          HERO
-      ====================================================== */}
+      <HeroSection />
 
-      <section className="relative min-h-[calc(100vh-82px)] overflow-hidden bg-[#281719]">
+      <BrandStatement />
 
-        <img
-          src="/images/amir-protein-hero.png"
-          alt="Fresh chicken, fish, meat and eggs"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
+      <PlateShowcase />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[#281719]/95 via-[#281719]/65 to-[#281719]/10" />
-
-        <div className="absolute inset-0 bg-gradient-to-t from-[#281719]/70 via-transparent to-transparent" />
-
-
-        <div className="relative mx-auto flex min-h-[calc(100vh-82px)] max-w-[1480px] items-end px-6 pb-14 sm:px-10 lg:px-16 lg:pb-20">
-
-          <div className="max-w-3xl text-white">
-
-            <div className="mb-6 flex items-center gap-3">
-
-              <span className="h-px w-10 bg-[#FFB800]" />
-
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-[#FFB800]">
-                AMIR Chicken • Since 1991
-              </span>
-
-            </div>
-
-            <h1 className="text-6xl font-semibold leading-[0.9] tracking-[-0.055em] sm:text-7xl lg:text-[100px]">
-              Fresh protein.
-              <br />
-              Built on trust.
-            </h1>
-
-            <p className="mt-7 max-w-xl text-base leading-7 text-white/75 sm:text-lg">
-              From a single store in 1991 to a growing retail network,
-              AMIR continues to build its business around freshness,
-              consistency and customer trust.
-            </p>
-
-            <div className="mt-9 flex flex-wrap gap-3">
-
-              <Link
-                to="/catalog"
-                className="inline-flex items-center gap-3 rounded-full bg-[#EC1F36] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-white hover:text-[#EC1F36]"
-              >
-                Explore Our Range
-                <Arrow />
-              </Link>
-
-              <Link
-                to="/get-a-quote"
-                className="inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white hover:text-[#171719]"
-              >
-                Get a Quote
-                <Arrow />
-              </Link>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          BRAND STATEMENT
-      ====================================================== */}
-
-      <section className="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-
-        <div className="mx-auto grid max-w-[1480px] gap-10 lg:grid-cols-[0.55fr_1.45fr] lg:items-end">
-
-          <div>
-
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-              The AMIR Story
-            </p>
-
-            <div className="mt-5 h-px w-16 bg-[#EC1F36]" />
-
-          </div>
-
-          <h2 className="max-w-6xl text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl lg:text-7xl">
-            One store in 1991.
-            <span className="text-neutral-400">
-              {" "}A growing network built around freshness, fair trade and
-              entrepreneurship.
-            </span>
-          </h2>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          AMIR IN NUMBERS — REDESIGNED
-      ====================================================== */}
-
-      <section className="bg-[#F5F3F0] px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-
-        <div className="mx-auto max-w-[1480px]">
-
-          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
-
-            <div>
-
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-                AMIR in Numbers
-              </p>
-
-              <h2 className="mt-4 max-w-lg text-5xl font-semibold leading-[0.95] tracking-[-0.045em] sm:text-6xl">
-                A legacy you can measure.
-              </h2>
-
-            </div>
-
-            <p className="max-w-xl text-sm leading-7 text-neutral-500 lg:justify-self-end">
-              Behind every store, customer and delivery is a growing network
-              of people, infrastructure and years of experience.
-            </p>
-
-          </div>
-
-
-          {/* FEATURED NUMBERS */}
-
-          <div className="mt-14 grid gap-4 md:grid-cols-3">
-
-            {stats.slice(0, 3).map((item) => (
-              <div
-                key={item.label}
-                className="group relative overflow-hidden rounded-[28px] bg-[#281719] p-7 text-white transition duration-300 hover:-translate-y-1"
-              >
-
-                <div className="flex items-start justify-between">
-
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#EC1F36]">
-                    <Icon type={item.icon} />
-                  </div>
-
-                  <span className="text-xs font-semibold text-white/30">
-                    0{stats.indexOf(item) + 1}
-                  </span>
-
-                </div>
-
-                <p className="mt-10 text-5xl font-semibold tracking-[-0.05em]">
-                  {item.number}
-                </p>
-
-                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/55">
-                  {item.label}
-                </p>
-
-                <div className="absolute -bottom-10 -right-10 h-32 w-32 rounded-full border border-white/5" />
-
-              </div>
-            ))}
-
-          </div>
-
-
-          {/* SECONDARY NUMBERS */}
-
-          <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-[24px] bg-neutral-300 sm:grid-cols-3 lg:grid-cols-7">
-
-            {stats.slice(3).map((item) => (
-              <div
-                key={item.label}
-                className="bg-white p-5 transition hover:bg-[#281719] hover:text-white"
-              >
-
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F3F0] text-[#8F1525]">
-                  <Icon type={item.icon} />
-                </div>
-
-                <p className="mt-6 text-2xl font-semibold tracking-tight text-[#8F1525] group-hover:text-white">
-                  {item.number}
-                </p>
-
-                <p className="mt-2 text-[10px] font-semibold uppercase leading-4 tracking-[0.08em] text-neutral-500">
-                  {item.label}
-                </p>
-
-              </div>
-            ))}
-
-          </div>
-
-        </div>
-
-      </section>
+      <AmirNumbers />
 
 
       {/* =====================================================
