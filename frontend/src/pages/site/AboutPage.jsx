@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import founderPhoto from "../../../images/founder-vijay-more.png";
 import sealLogo from "../../../images/amir-seal-of-trust.png";
+import aboutHero from "../../../images/aboutHero.png";
 
 /* =========================================================
    TEMPORARY IMAGES
@@ -247,273 +248,88 @@ const AboutPage = () => {
     <main className="bg-white text-[#EC1F36] overflow-hidden">
 
       {/* =====================================================
-          01 — FOUNDER HERO
+          01 — ABOUT HERO
       ====================================================== */}
 
-      <section className="bg-white">
+      <section className="bg-white py-10 px-6 sm:px-10 lg:px-16">
 
-        <div
-          className="
-            max-w-[1680px]
-            mx-auto
-            flex
-            flex-col
-            lg:flex-row
-            min-h-[calc(100vh-78px)]
-          "
-        >
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 min-h-[80vh] items-stretch">
 
-          {/* FOUNDER IMAGE */}
+          {/* LEFT — CONTENT */}
 
-          <div
-            className="
-              relative
-              lg:w-[46%]
-              w-full
-              bg-[#EC1F36]
-              overflow-hidden
-              min-h-[560px]
-              lg:min-h-[820px]
-            "
-          >
+          <div className="lg:w-1/2 w-full flex items-center py-8">
 
-            <img
-              src={founderPhoto}
-              alt="Mr. Vijay More, Founder of Amir's Fresh Cut"
-              className="
-                absolute
-                inset-0
-                w-full
-                h-full
-                object-cover
-                object-top
-              "
-            />
-
-            <div className="absolute inset-0 bg-[#EC1F36]/10" />
-
-            <div
-              className="
-                hidden
-                lg:block
-                absolute
-                left-6
-                top-1/2
-                -translate-y-1/2
-                -rotate-90
-                origin-left
-              "
-            >
-              <p
-                className="
-                  font-poppins
-                  text-[10px]
-                  tracking-[0.28em]
-                  uppercase
-                  text-white
-                  whitespace-nowrap
-                "
-              >
-                EST. 1991 — AHMEDNAGAR — FAMILY OWNED
-              </p>
-            </div>
-
-            <div
-              className="
-                absolute
-                bottom-8
-                right-8
-                w-10
-                h-10
-                rounded-full
-                bg-white
-                flex
-                items-center
-                justify-center
-              "
-            >
-              <span
-                className="
-                  w-1.5
-                  h-1.5
-                  rounded-full
-                  bg-[#EC1F36]
-                "
-              />
-            </div>
-
-            <div
-              className="
-                absolute
-                inset-4
-                lg:inset-5
-                border
-                border-white/30
-                pointer-events-none
-              "
-            />
-
-          </div>
-
-
-          {/* FOUNDER CONTENT */}
-
-          <div
-            className="
-              lg:w-[54%]
-              w-full
-              bg-white
-              px-7
-              sm:px-10
-              lg:px-20
-              xl:px-24
-              py-16
-              lg:py-20
-              flex
-              items-center
-            "
-          >
-
-            <div className="max-w-[560px]">
+            <div>
 
               <SectionLabel>
-                The AMIR Family
+                Est. 1991 — Maharashtra
               </SectionLabel>
 
               <h1
                 className="
-                  mt-7
+                  mt-6
                   font-seasons
-                  text-[52px]
-                  sm:text-[62px]
-                  lg:text-[78px]
-                  leading-[0.9]
-                  tracking-[-0.025em]
-                  text-[#EC1F36]
+                  text-[40px]
+                  sm:text-[48px]
+                  lg:text-[56px]
+                  leading-[1.05]
+                  tracking-[-0.02em]
+                  text-[#171719]
                 "
               >
-                The Story
+                A Legacy of Trust.
                 <br />
-                <span className="italic">
-                  Behind AMIR
-                </span>
+                <span className="italic text-[#EC1F36]">A Freshness-First Future.</span>
               </h1>
 
-              <div className="mt-8 w-10 h-[3px] bg-[#EC1F36]" />
+              <div className="mt-6 w-10 h-[3px] bg-[#EC1F36]" />
 
-              <div className="mt-9 flex items-center gap-4">
+              <p className="mt-6 font-poppins text-[15px] leading-[1.75] text-[#171719]/70 max-w-[420px]">
+                From its Maharashtra roots in 1991, AMIR has grown
+                from a single outlet into a trusted fresh-protein
+                retail network — built on family values, consistent
+                quality, and a commitment to freshness.
+              </p>
 
-                <p className="font-seasons text-xl text-[#EC1F36]">
-                  Mr. Vijay More
-                </p>
-
-                <span className="w-px h-4 bg-[#EC1F36]/30" />
-
-                <p
+              <div className="mt-8">
+                <Link
+                  to="#our-story"
                   className="
-                    font-poppins
-                    text-[10px]
-                    tracking-[0.14em]
-                    uppercase
-                    text-[#EC1F36]/60
+                    inline-flex items-center gap-3
+                    bg-[#EC1F36] text-white
+                    px-8 h-13
+                    font-poppins text-[11px] tracking-[0.14em] uppercase font-semibold
+                    transition-colors duration-300 hover:bg-[#c8172d]
                   "
                 >
-                  Founder, AMIR
-                </p>
-
+                  Discover Our Story
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                    <path d="M5 12h14" />
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                </Link>
               </div>
 
-              <div className="mt-9 space-y-6">
-
-                <p
-                  className="
-                    font-poppins
-                    text-[16px]
-                    lg:text-[18px]
-                    leading-[1.75]
-                    text-[#EC1F36]/85
-                    max-w-[440px]
-                  "
-                >
-                  Born in Maharashtra's drought-affected Ahmednagar
-                  region, Mr. Vijay More understood the challenges
-                  faced by educated rural youth.
-                </p>
-
-                <div
-                  className="
-                    relative
-                    max-w-[470px]
-                    border
-                    border-[#EC1F36]/20
-                    bg-white
-                    p-7
-                    lg:p-8
-                  "
-                >
-
-                  <div
-                    className="
-                      absolute
-                      top-0
-                      left-0
-                      w-full
-                      h-[3px]
-                      bg-[#EC1F36]
-                    "
-                  />
-
-                  <p
-                    className="
-                      font-seasons
-                      text-[20px]
-                      lg:text-[22px]
-                      leading-[1.45]
-                      text-[#EC1F36]
-                    "
-                  >
-                    In 1991, he founded Amir with two ambitions:
-                    organise meat retail and create sustainable
-                    livelihoods.
-                  </p>
-
-                  <p
-                    className="
-                      mt-4
-                      font-poppins
-                      text-[9px]
-                      tracking-[0.16em]
-                      uppercase
-                      text-[#EC1F36]/60
-                    "
-                  >
-                    Founding Note — Ahmednagar
-                  </p>
-
-                </div>
-
-              </div>
-
-              <div className="mt-12 flex items-center gap-5">
-
-                <div className="h-px w-14 bg-[#EC1F36]/30" />
-
-                <p
-                  className="
-                    font-poppins
-                    text-[10px]
-                    tracking-[0.16em]
-                    uppercase
-                    text-[#EC1F36]/50
-                  "
-                >
+              <div className="mt-10 flex items-center gap-5">
+                <div className="h-px w-14 bg-[#171719]/20" />
+                <p className="font-poppins text-[10px] tracking-[0.16em] uppercase text-[#171719]/40">
                   Family-owned since 1991
                 </p>
-
               </div>
 
             </div>
 
+          </div>
+
+
+          {/* RIGHT — IMAGE */}
+
+          <div className="lg:w-1/2 w-full">
+            <img
+              src={aboutHero}
+              alt="Amir Fresh Cut — Premium Store Experience"
+              className="w-full h-full object-contain object-center"
+            />
           </div>
 
         </div>

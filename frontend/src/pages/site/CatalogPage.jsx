@@ -228,7 +228,7 @@ export default function CatalogPage() {
   to="/get-a-quote"
   className="mt-7 inline-flex w-fit items-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#EC1F36] transition hover:bg-neutral-100"
 >
-  Get a Quote →
+  Contact Now →
 </Link>
 
           </div>

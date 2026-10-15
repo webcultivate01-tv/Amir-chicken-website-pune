@@ -107,7 +107,7 @@ const SiteLayout = () => {
                   hover:shadow-md
                 "
               >
-                Get a Quote
+                Contact Now
               </Link>
 
             </div>
@@ -205,7 +205,7 @@ const SiteLayout = () => {
               ))}
 
 
-              {/* MOBILE GET A QUOTE */}
+              {/* MOBILE CONTACT NOW */}
 
               <Link
                 to="/get-a-quote"
@@ -224,7 +224,7 @@ const SiteLayout = () => {
                   transition
                 "
               >
-                Get a Quote
+                Contact Now
               </Link>
 
             </nav>

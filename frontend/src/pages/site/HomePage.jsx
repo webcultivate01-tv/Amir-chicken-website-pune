@@ -804,7 +804,7 @@ export default function HomePage() {
               to="/get-a-quote"
               className="inline-flex items-center gap-3 rounded-full bg-[#EC1F36] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#281719]"
             >
-              Get a Quote
+              Contact Now
               <Arrow />
             </Link>
 
