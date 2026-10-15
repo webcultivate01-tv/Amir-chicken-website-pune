@@ -246,6 +246,18 @@ const ImageCard = ({
 const AboutPage = () => {
   return (
     <main className="bg-white text-[#EC1F36] overflow-hidden">
+      <style>{`
+        @keyframes slideFromLeft {
+          from { opacity: 0; transform: translateX(-60px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideFromRight {
+          from { opacity: 0; transform: translateX(60px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        .slide-left  { animation: slideFromLeft  0.8s ease both; }
+        .slide-right { animation: slideFromRight 0.8s ease both; }
+      `}</style>
 
       {/* =====================================================
           01 — ABOUT HERO
@@ -253,11 +265,11 @@ const AboutPage = () => {
 
       <section className="bg-white py-10 px-6 sm:px-10 lg:px-16">
 
-        <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 min-h-[80vh] items-stretch">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 min-h-[80vh] items-stretch">
 
           {/* LEFT — CONTENT */}
 
-          <div className="lg:w-1/2 w-full flex items-center py-8">
+          <div className="slide-left lg:w-1/2 w-full flex items-center py-8 pl-6 lg:pl-12">
 
             <div>
 
@@ -284,21 +296,21 @@ const AboutPage = () => {
 
               <div className="mt-6 w-10 h-[3px] bg-[#EC1F36]" />
 
-              <p className="mt-6 font-poppins text-[15px] leading-[1.75] text-[#171719]/70 max-w-[420px]">
+              <p className="mt-6 font-poppins text-[18px] leading-[1.75] text-[#171719]/70 max-w-[420px]">
                 From its Maharashtra roots in 1991, AMIR has grown
                 from a single outlet into a trusted fresh-protein
                 retail network — built on family values, consistent
                 quality, and a commitment to freshness.
               </p>
 
-              <div className="mt-8">
+              <div className="mt-8 flex flex-wrap gap-4">
                 <Link
                   to="#our-story"
                   className="
                     inline-flex items-center gap-3
                     bg-[#EC1F36] text-white
-                    px-8 h-13
-                    font-poppins text-[11px] tracking-[0.14em] uppercase font-semibold
+                    px-8 h-14 rounded-lg
+                    font-poppins text-[13px] tracking-[0.12em] uppercase font-bold
                     transition-colors duration-300 hover:bg-[#c8172d]
                   "
                 >
@@ -308,13 +320,19 @@ const AboutPage = () => {
                     <path d="m13 6 6 6-6 6" />
                   </svg>
                 </Link>
-              </div>
 
-              <div className="mt-10 flex items-center gap-5">
-                <div className="h-px w-14 bg-[#171719]/20" />
-                <p className="font-poppins text-[10px] tracking-[0.16em] uppercase text-[#171719]/40">
-                  Family-owned since 1991
-                </p>
+                <Link
+                  to="/contact"
+                  className="
+                    inline-flex items-center gap-3
+                    border border-[#EC1F36] text-[#EC1F36]
+                    px-8 h-14 rounded-lg
+                    font-poppins text-[13px] tracking-[0.12em] uppercase font-bold
+                    transition-colors duration-300 hover:bg-[#EC1F36] hover:text-white
+                  "
+                >
+                  Contact Now
+                </Link>
               </div>
 
             </div>
@@ -324,7 +342,7 @@ const AboutPage = () => {
 
           {/* RIGHT — IMAGE */}
 
-          <div className="lg:w-1/2 w-full">
+          <div className="slide-right lg:w-1/2 w-full pr-6 lg:pr-12">
             <img
               src={aboutHero}
               alt="Amir Fresh Cut — Premium Store Experience"
@@ -348,17 +366,13 @@ const AboutPage = () => {
           border-[#EC1F36]/15
           py-24
           lg:py-32
+          px-6
+          sm:px-10
+          lg:px-16
         "
       >
 
-        <div
-          className="
-            max-w-[1680px]
-            mx-auto
-            px-7
-            lg:px-12
-          "
-        >
+        <div>
 
           <div
             className="
@@ -596,17 +610,13 @@ const AboutPage = () => {
           lg:py-32
           border-b
           border-[#EC1F36]/15
+          px-6
+          sm:px-10
+          lg:px-16
         "
       >
 
-        <div
-          className="
-            max-w-[1680px]
-            mx-auto
-            px-7
-            lg:px-12
-          "
-        >
+        <div>
 
           <div
             className="
@@ -766,17 +776,13 @@ const AboutPage = () => {
           lg:py-32
           border-b
           border-[#EC1F36]/15
+          px-6
+          sm:px-10
+          lg:px-16
         "
       >
 
-        <div
-          className="
-            max-w-[1680px]
-            mx-auto
-            px-7
-            lg:px-12
-          "
-        >
+        <div>
 
           <div
             className="
@@ -924,16 +930,9 @@ const AboutPage = () => {
           05 — FRESHNESS PROMISE
       ====================================================== */}
 
-      <section className="bg-[#EC1F36] text-white py-24 lg:py-32">
+      <section className="bg-[#EC1F36] text-white py-24 lg:py-32 px-6 sm:px-10 lg:px-16">
 
-        <div
-          className="
-            max-w-[1680px]
-            mx-auto
-            px-7
-            lg:px-12
-          "
-        >
+        <div>
 
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-0">
 
@@ -1135,17 +1134,13 @@ const AboutPage = () => {
           lg:py-32
           border-b
           border-[#EC1F36]/15
+          px-6
+          sm:px-10
+          lg:px-16
         "
       >
 
-        <div
-          className="
-            max-w-[1200px]
-            mx-auto
-            px-7
-            lg:px-12
-          "
-        >
+        <div>
 
           {/* HEADING */}
 
@@ -1442,10 +1437,13 @@ const AboutPage = () => {
           py-28
           lg:py-40
           text-center
+          px-6
+          sm:px-10
+          lg:px-16
         "
       >
 
-        <div className="max-w-[960px] mx-auto px-7">
+        <div>
 
           <div
             className="
