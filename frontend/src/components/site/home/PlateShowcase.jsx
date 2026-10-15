@@ -168,7 +168,7 @@ export default function PlateShowcase() {
           plate,
           {
             rotation: 180,
-            scale: 1.30,
+            scale: 1.25,
             duration: sequenceDuration,
             ease: "none",
           },
