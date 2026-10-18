@@ -1,19 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  LayoutGrid,
-  Drumstick,
-  Beef,
-  Fish,
-  Egg,
-} from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+
+const EASE = [0.22, 1, 0.36, 1];
 
 const categories = [
-  { name: "All Cuts", icon: LayoutGrid },
-  { name: "Chicken", icon: Drumstick },
-  { name: "Mutton", icon: Beef },
-  { name: "Fish & Seafood", icon: Fish },
-  { name: "Farm Eggs", icon: Egg },
+  { name: "All Cuts", image: "/images/amir-protein-hero.png" },
+  { name: "Chicken", image: "/images/raw-chicken-plate.png" },
+  { name: "Mutton", image: "/images/raw-mutton-plate.png" },
+  { name: "Fish & Seafood", image: "/images/fresh-fish-plate.png" },
+  { name: "Farm Eggs", image: "/images/fresh-eggs-plate.png" },
 ];
 
 const products = {
@@ -176,6 +172,14 @@ const products = {
 
 export default function CatalogPage() {
   const [active, setActive] = useState("All Cuts");
+  const reduce = useReducedMotion();
+
+  const reveal = (delay = 0, y = 32) => ({
+    initial: reduce ? false : { opacity: 0, y },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-80px" },
+    transition: { duration: 0.8, delay, ease: EASE },
+  });
 
   const visibleProducts =
     active === "All Cuts"
@@ -188,89 +192,77 @@ export default function CatalogPage() {
     <main className="min-h-screen bg-white text-[#171719]">
 
       {/* ================= HEADER ================= */}
-      <section className="px-6 pb-10 pt-20 lg:px-12">
-        <div className="mx-auto max-w-[1450px]">
+      <section className="px-6 pb-10 pt-20 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1320px]">
 
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#EC1F36]">
+          <motion.p {...reveal(0, 16)} className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#EC1F36]">
             Fresh Protein Range
-          </p>
+          </motion.p>
 
-          <h1 className="max-w-3xl text-4xl font-semibold tracking-tight lg:text-6xl">
+          <motion.h1 {...reveal(0.1)} className="max-w-3xl text-4xl font-semibold tracking-tight lg:text-6xl">
             Our Farm-Fresh Cuts
-          </h1>
+          </motion.h1>
 
-          <p className="mt-4 max-w-xl text-base leading-7 text-neutral-500">
+          <motion.p {...reveal(0.2, 20)} className="mt-4 max-w-xl text-base leading-7 text-neutral-500">
             Carefully selected cuts, prepared fresh for everyday cooking.
-          </p>
+          </motion.p>
 
         </div>
       </section>
 
 
       {/* ================= PROMO + CATEGORIES ================= */}
-      <section className="px-6 pb-16 lg:px-12">
-        <div className="mx-auto grid max-w-[1450px] gap-5 lg:grid-cols-[0.75fr_1.8fr]">
+      <section className="px-6 pb-14 sm:px-8 lg:px-10">
+        <div className="mx-auto grid max-w-[1320px] gap-5 lg:grid-cols-[0.7fr_1.8fr]">
 
           {/* PROMO */}
-          <div className="flex min-h-[210px] flex-col justify-between rounded-[28px] bg-[#EC1F36] p-8 text-white lg:p-9">
+          <motion.div {...reveal(0, 40)} className="flex min-h-[170px] flex-col justify-between rounded-[24px] bg-[#EC1F36] p-6 text-white lg:p-7">
 
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
                 Legacy of Freshness
               </p>
 
-              <h2 className="mt-4 max-w-sm text-3xl font-semibold leading-tight">
+              <h2 className="mt-3 max-w-xs text-2xl font-semibold leading-tight">
                 Fresh cuts, honest quality every day.
               </h2>
             </div>
 
             <Link
   to="/get-a-quote"
-  className="mt-7 inline-flex w-fit items-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-[#EC1F36] transition hover:bg-neutral-100"
+  className="mt-5 inline-flex w-fit items-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#EC1F36] transition hover:bg-neutral-100"
 >
   Contact Now →
 </Link>
 
-          </div>
+          </motion.div>
 
 
           {/* CATEGORIES */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
 
-            {categories.map((category) => {
-              const Icon = category.icon;
-              const selected = active === category.name;
-
+            {categories.map((category, i) => {
               return (
-                <button
+                <motion.button
                   key={category.name}
+                  {...reveal(0.1 + i * 0.08, 40)}
+                  whileTap={{ scale: 0.97 }}
                   onClick={() => setActive(category.name)}
-                  className={`group flex min-h-[210px] flex-col items-center justify-center rounded-[26px] border p-4 text-center transition-all duration-300 ${
-                    selected
-                      ? "border-[#EC1F36] bg-[#FFF4F5]"
-                      : "border-neutral-200 bg-[#FAFAFA] hover:border-[#EC1F36]/40 hover:bg-[#FFF8F8]"
-                  }`}
+                  className="group flex min-h-[210px] flex-col items-center justify-center rounded-[26px] border border-neutral-200 bg-[#FAFAFA] p-4 text-center transition-all duration-300 hover:border-[#EC1F36] hover:bg-[#FFF4F5] hover:shadow-lg hover:shadow-[#EC1F36]/10"
                 >
-
-                  {/* CATEGORY ICON */}
-                  <div
-                    className={`mb-5 flex h-20 w-20 items-center justify-center rounded-full transition-all duration-300 ${
-                      selected
-                        ? "bg-[#EC1F36] text-white shadow-md shadow-[#EC1F36]/20"
-                        : "bg-[#F3E8E9] text-[#EC1F36] group-hover:bg-[#EC1F36] group-hover:text-white"
-                    }`}
+                  <div className="mb-4 h-28 w-28 overflow-hidden rounded-full bg-white ring-2 ring-transparent ring-offset-2 transition-all duration-500 group-hover:scale-105 group-hover:ring-[#EC1F36]"
                   >
-                    <Icon
-                      strokeWidth={1.7}
-                      className="h-8 w-8"
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="h-full w-full object-cover"
                     />
                   </div>
 
-                  <span className="max-w-[120px] text-sm font-semibold leading-5">
+                  <span className="max-w-[120px] text-sm font-semibold leading-5 text-[#171719] transition-colors duration-300 group-hover:text-[#EC1F36]">
                     {category.name}
                   </span>
-
-                </button>
+                </motion.button>
               );
             })}
 
@@ -280,59 +272,64 @@ export default function CatalogPage() {
 
 
       {/* ================= PRODUCTS ================= */}
-      <section className="px-6 pb-24 lg:px-12">
-        <div className="mx-auto max-w-[1450px]">
+      <section className="px-6 pb-24 sm:px-8 lg:px-10">
+        <div className="mx-auto max-w-[1320px]">
 
           {/* SECTION TITLE */}
-          <div className="mb-8">
+          <motion.div {...reveal()} className="mx-auto mb-8 max-w-[1320px]">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#EC1F36]">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-400">
               {active}
             </p>
 
             <h2 className="mt-2 text-3xl font-semibold tracking-tight lg:text-4xl">
-              Freshly prepared
+              Freshly <span className="text-[#EC1F36]">prepared</span>
             </h2>
 
-          </div>
+          </motion.div>
 
 
           {/* PRODUCT GRID */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div key={active} className="mx-auto grid max-w-[1320px] gap-x-6 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
 
-            {visibleProducts.map((product) => (
-              <article
+            {visibleProducts.map((product, i) => (
+              <motion.article
                 key={product.name}
-                className="group overflow-hidden rounded-[28px] border border-neutral-200 bg-white transition-all duration-500 hover:-translate-y-1 hover:shadow-xl"
+                {...reveal((i % 3) * 0.1, 48)}
+                className="group"
               >
-
-                {/* IMAGE */}
-                <div className="aspect-[4/3] overflow-hidden bg-neutral-100">
-
+                <div className="relative aspect-[16/11] overflow-hidden rounded-[22px] bg-neutral-100">
                   <img
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
                     className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                   />
-
+                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-700 backdrop-blur">
+                    Fresh
+                  </span>
                 </div>
 
+                <div className="flex items-center justify-between gap-4 px-1 pt-4">
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold tracking-tight">
+                      {product.name}
+                    </h3>
+                    <p className="mt-1 text-sm leading-6 text-neutral-500">
+                      {product.text}
+                    </p>
+                  </div>
 
-                {/* CONTENT */}
-                <div className="p-6">
-
-                  <h3 className="text-xl font-semibold">
-                    {product.name}
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-6 text-neutral-500">
-                    {product.text}
-                  </p>
-
+                  <Link
+                    to="/get-a-quote"
+                    aria-label={`Order ${product.name}`}
+                    className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#EC1F36] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#c9172d]"
+                  >
+                    Order Now
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </Link>
                 </div>
-
-              </article>
+              </motion.article>
             ))}
 
           </div>

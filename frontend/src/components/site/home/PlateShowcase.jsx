@@ -101,7 +101,7 @@ export default function PlateShowcase() {
           scrollTrigger: {
             trigger: section,
             start: "top top+=74",
-            end: "+=3600",
+            end: "+=4400",
             pin: true,
             scrub: 0.7,
             anticipatePin: 1,
@@ -113,7 +113,9 @@ export default function PlateShowcase() {
         products.slice(1).forEach((product, index) => {
           const previous = index;
           const next = index + 1;
-          const at = 1.1 + index * 1.15;
+          // Every product holds for 1 unit before the next one
+          // takes over, including the first and the last.
+          const at = 1 + index * 1.5;
 
           timeline.to(
             images[previous],
@@ -160,6 +162,8 @@ export default function PlateShowcase() {
 
         // Measure the product sequence before adding the plate's
         // continuous rotation and scale animation.
+        // Pad the end so the last product holds like the others.
+        timeline.to({}, { duration: 0.01 }, 1 + (products.length - 1) * 1.5);
         const sequenceDuration = timeline.duration();
 
         // One complete clockwise rotation during the pinned scroll.

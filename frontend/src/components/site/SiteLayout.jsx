@@ -6,9 +6,10 @@ import amirFooterLogo from "../../../images/amir-wordmark-white.png";
 
 const links = [
   { to: "/", label: "Home", end: true },
-  { to: "/about", label: "About" },
-  { to: "/catalog", label: "Catalog" },
-  { to: "/contact", label: "Contact" },
+  { to: "/about", label: "About Us" },
+  { to: "/catalog", label: "Products" },
+  { to: "/news", label: "News" },
+  { to: "/contact", label: "Contact Us" },
 ];
 
 const SiteLayout = () => {
@@ -31,7 +32,7 @@ const SiteLayout = () => {
 
         <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
 
-          <div className="h-[82px] grid grid-cols-3 items-center">
+          <div className="h-[82px] grid grid-cols-3 md:grid-cols-[auto_1fr_auto] md:gap-6 items-center">
 
             {/* =========================
                 LEFT - LOGO
@@ -47,7 +48,7 @@ const SiteLayout = () => {
                 <img
                   src={amirNavbarLogo}
                   alt="Amir 2.0"
-                  className="h-[50px] sm:h-[60px] w-auto object-contain"
+                  className="h-[56px] sm:h-[68px] w-auto object-contain"
                 />
               </Link>
 
@@ -58,7 +59,7 @@ const SiteLayout = () => {
                 CENTER - NAVIGATION
             ========================== */}
 
-            <nav className="hidden md:flex items-center justify-center gap-9">
+            <nav className="hidden md:flex items-center justify-center gap-5 lg:gap-9 whitespace-nowrap">
 
               {links.map((link) => (
                 <NavLink
@@ -100,6 +101,7 @@ const SiteLayout = () => {
                   text-sm
                   font-semibold
                   tracking-wide
+                  whitespace-nowrap
                   transition-all
                   duration-200
                   hover:bg-[#271719]

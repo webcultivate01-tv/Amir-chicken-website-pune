@@ -92,14 +92,12 @@ const icons = {
 
 export const navItems = [
   { label: "Dashboard", to: "/admin/dashboard", icon: icons.dashboard },
-  { label: "Product Management", to: "/admin/products", icon: icons.projects },
   { label: "Inquiry Management", to: "/admin/inquiries", icon: icons.enquiries },
   { label: "Profile Management", to: "/admin/profile", icon: icons.admins },
 ];
 
 const pageMeta = [
   { to: "/admin/dashboard", title: "Dashboard", subtitle: "" },
-  { to: "/admin/products", title: "Product Management", subtitle: "Add, edit and organise your products." },
   { to: "/admin/inquiries", title: "Inquiry Management", subtitle: "Every inquiry that has come in through the website." },
   { to: "/admin/profile", title: "Profile Management", subtitle: "Manage your admin account" },
 ];

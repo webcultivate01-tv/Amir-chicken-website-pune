@@ -359,7 +359,7 @@ const AboutPage = () => {
           02 — OUR STORY
       ====================================================== */}
 
-      <section
+      <section id="our-story"
         className="
           bg-white
           border-y
@@ -1430,145 +1430,53 @@ const AboutPage = () => {
           07 — FINAL CTA
       ====================================================== */}
 
-      <section
-        className="
-          bg-[#EC1F36]
-          text-white
-          py-28
-          lg:py-40
-          text-center
-          px-6
-          sm:px-10
-          lg:px-16
-        "
-      >
+      <section className="relative bg-[#EC1F36] text-white text-center px-6 sm:px-10 lg:px-16 py-16 lg:py-20 overflow-hidden">
 
-        <div>
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 20%, white 0, transparent 45%), radial-gradient(circle at 80% 80%, white 0, transparent 45%)",
+          }}
+        />
 
-          <div
-            className="
-              inline-flex
-              items-center
-              gap-3
-              mb-10
-            "
-          >
+        <div className="relative max-w-[900px] mx-auto">
 
+          <div className="inline-flex items-center gap-3 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-white" />
-
-            <p
-              className="
-                font-poppins
-                text-[10px]
-                tracking-[0.2em]
-                uppercase
-                text-white/75
-              "
-            >
+            <p className="font-poppins text-[10px] tracking-[0.2em] uppercase text-white/75">
               Since 1991
             </p>
-
             <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-
           </div>
 
-
-          <h2
-            className="
-              font-seasons
-              text-[58px]
-              sm:text-[68px]
-              lg:text-[92px]
-              leading-[0.88]
-              tracking-[-0.025em]
-              text-white
-            "
-          >
-            Freshness you
-            <br />
-            <span className="italic">
-              can trust.
-            </span>
+          <h2 className="font-seasons text-[40px] sm:text-[56px] lg:text-[72px] lg:whitespace-nowrap leading-[1] tracking-[-0.025em] text-white">
+            Freshness you <span className="italic">can trust.</span>
           </h2>
 
+          <div className="mx-auto mt-6 w-10 h-[3px] bg-white/70" />
 
-          <p
-            className="
-              mt-8
-              font-poppins
-              text-[12px]
-              lg:text-[13px]
-              tracking-[0.12em]
-              uppercase
-              text-white/75
-              max-w-[430px]
-              mx-auto
-              leading-[1.7]
-            "
-          >
+          <p className="mt-6 font-poppins text-[12px] lg:text-[13px] tracking-[0.12em] uppercase text-white/75 max-w-[430px] mx-auto leading-[1.7]">
             From one store to a growing retail network.
             Same family. Same standard.
           </p>
 
-
-          <div
-            className="
-              mt-10
-              flex
-              flex-wrap
-              justify-center
-              gap-4
-            "
-          >
+          <div className="mt-8 flex flex-wrap justify-center gap-5">
 
             <Link
               to="/catalog"
-              className="
-                inline-flex
-                items-center
-                justify-center
-                bg-white
-                text-[#EC1F36]
-                px-8
-                h-14
-                font-poppins
-                text-[11px]
-                tracking-[0.14em]
-                uppercase
-                font-semibold
-                transition-all
-                duration-300
-                hover:bg-[#EC1F36]
-                hover:text-white
-                border
-                border-white
-              "
+              className="inline-flex items-center justify-center gap-3 bg-white text-[#EC1F36] px-10 h-14 rounded-lg font-poppins text-[12px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-[#171719] hover:text-white border border-white"
             >
               Explore Range
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                <path d="M5 12h14" />
+                <path d="m13 6 6 6-6 6" />
+              </svg>
             </Link>
-
 
             <Link
               to="/contact"
-              className="
-                inline-flex
-                items-center
-                justify-center
-                border
-                border-white/60
-                text-white
-                px-8
-                h-14
-                font-poppins
-                text-[11px]
-                tracking-[0.14em]
-                uppercase
-                font-semibold
-                transition-all
-                duration-300
-                hover:bg-white
-                hover:text-[#EC1F36]
-              "
+              className="inline-flex items-center justify-center border border-white/60 text-white px-10 h-14 rounded-lg font-poppins text-[12px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
             >
               Get a Quote
             </Link>

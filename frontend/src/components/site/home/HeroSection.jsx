@@ -7,7 +7,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { Link } from "react-router-dom";
-import amirHero from "../../../../images/amir-protein-hero.png";
+import amirHero from "../../../../images/Hero1 (2).png";
 
 export default function HeroSection() {
   const heroRef = useRef(null);
@@ -61,7 +61,7 @@ export default function HeroSection() {
           alt=""
           aria-hidden="true"
           fetchPriority="high"
-          className="h-full w-full object-cover object-center opacity-50"
+          className="h-full w-full object-cover object-center"
           style={{ y: imageY }}
         />
       </motion.div>

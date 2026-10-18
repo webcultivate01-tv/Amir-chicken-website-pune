@@ -6,7 +6,6 @@ import { ClipLoader } from "react-spinners";
 import AdminLogin from "./pages/AdminLogin";
 import Dashboard from "./pages/Dashboard";
 import AdminLayout from "./components/AdminLayout";
-import PlaceholderPage from "./pages/admin/PlaceholderPage";
 import ProfilePage from "./pages/admin/ProfilePage";
 import InquiriesPage from "./pages/admin/InquiriesPage";
 import InquiryDetailPage from "./pages/admin/InquiryDetailPage";
@@ -16,16 +15,13 @@ import HomePage from "./pages/site/HomePage";
 import AboutPage from "./pages/site/AboutPage";
 import CatalogPage from "./pages/site/CatalogPage";
 import ContactPage from "./pages/site/ContactPage";
+import NewsPage from "./pages/site/NewsPage";
 import useGetCurrentUser from "./CustomHooks/getCurrentUser";
 import GetQuotePage from "./pages/site/GetQuotePage";
 import PrivacyPolicyPage from "./pages/site/PrivacyPolicyPage";
 import TermsPage from "./pages/site/TermsPage";
 
 export const serverUrl = "http://localhost:8000";
-
-const pages = [
-  { path: "products", title: "Product Management", subtitle: "Add, edit and organise your products." },
-];
 
 function App() {
   useGetCurrentUser();
@@ -48,6 +44,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/news" element={<NewsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/get-a-quote" element={<GetQuotePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -66,13 +63,6 @@ function App() {
           <Route path="inquiries" element={<InquiriesPage />} />
           <Route path="inquiries/followups" element={<FollowupsPage />} />
           <Route path="inquiries/:id" element={<InquiryDetailPage />} />
-          {pages.map((p) => (
-            <Route
-              key={p.path}
-              path={p.path}
-              element={<PlaceholderPage title={p.title} subtitle={p.subtitle} />}
-            />
-          ))}
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

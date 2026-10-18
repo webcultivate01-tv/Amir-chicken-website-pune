@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import HeroSection from "../../components/site/home/HeroSection";
 import BrandStatement from "../../components/site/home/BrandStatement";
 import AmirNumbers from "../../components/site/home/AmirNumbers";
 import PlateShowcase from "../../components/site/home/PlateShowcase";
+import TransformationSection from "../../components/site/home/TransformationSection";
+import oneAmir from "../../../images/oneAmir.png";
+import techBilling from "../../../images/tech/billing.jpg";
+import techEcommerce from "../../../images/tech/ecommerce.jpg";
+import techTracking from "../../../images/tech/tracking.jpg";
+import techMonitoring from "../../../images/tech/monitoring.jpg";
+import techSupport from "../../../images/tech/support.jpg";
+import techMobile from "../../../images/tech/mobile.jpg";
+import techDelivery from "../../../images/tech/delivery.jpg";
 
 /* =========================================================
    ICONS
@@ -232,91 +241,52 @@ const stats = [
 ];
 
 
-const transformation = [
-  {
-    number: "01",
-    title: "Modern Brand Identity",
-    icon: "identity",
-    text: "A stronger and more recognizable AMIR retail identity.",
-  },
-  {
-    number: "02",
-    title: "Hygienic Store Formats",
-    icon: "hygiene",
-    text: "More consistent and customer-focused retail environments.",
-  },
-  {
-    number: "03",
-    title: "Standard Operating Practices",
-    icon: "technology",
-    text: "Structured processes designed to create consistency across the network.",
-  },
-  {
-    number: "04",
-    title: "Centralised Procurement",
-    icon: "procurement",
-    text: "A more organized approach to sourcing and supply.",
-  },
-  {
-    number: "05",
-    title: "Franchise Training",
-    icon: "training",
-    text: "Supporting partners with practical operational knowledge.",
-  },
-  {
-    number: "06",
-    title: "Marketing Support",
-    icon: "marketing",
-    text: "Helping franchise partners build visibility and customer recall.",
-  },
-  {
-    number: "07",
-    title: "Consistent Customer Experience",
-    icon: "customers",
-    text: "Bringing a familiar AMIR experience across the network.",
-  },
-];
-
-
 const growthSystem = [
   {
     number: "01",
+    image: techBilling,
     title: "Centralised Billing",
     icon: "money",
     text: "Smarter control across the retail network.",
   },
   {
     number: "02",
+    image: techEcommerce,
     title: "E-Commerce",
     icon: "ecommerce",
     text: "Digital channels that bring AMIR closer to customers.",
   },
   {
     number: "03",
+    image: techTracking,
     title: "Vehicle Tracking",
     icon: "tracking",
     text: "Better visibility across the delivery ecosystem.",
   },
   {
     number: "04",
+    image: techMonitoring,
     title: "Franchise Monitoring",
     icon: "technology",
     text: "More connected operations across locations.",
   },
   {
     number: "05",
+    image: techSupport,
     title: "Customer Support",
     icon: "support",
     text: "Systems designed around a better customer experience.",
   },
   {
     number: "06",
+    image: techMobile,
     title: "Mobile Ordering",
     icon: "mobile",
     text: "Making ordering simpler and more accessible.",
   },
   {
     number: "07",
+    image: techDelivery,
     title: "Rapid Home Delivery",
     icon: "tracking",
     text: "Connecting the retail network to modern customer expectations.",
@@ -370,6 +340,136 @@ const Arrow = () => (
    HOME PAGE
 ========================================================= */
 
+/* =========================================================
+   TECHNOLOGY-LED GROWTH (interactive)
+========================================================= */
+
+function TechnologyGrowth() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return undefined;
+    const id = setInterval(
+      () => setActive((i) => (i + 1) % growthSystem.length),
+      4000
+    );
+    return () => clearInterval(id);
+  }, [paused]);
+
+  const current = growthSystem[active];
+
+  return (
+    <section className="bg-white px-6 py-20 sm:px-12 lg:px-24 lg:py-24 xl:px-32">
+
+      <div className="mx-auto max-w-[1480px]">
+
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+
+          <div>
+
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#EC1F36]">
+              Technology-Led Growth
+            </p>
+
+            <h2 className="mt-4 whitespace-nowrap text-5xl font-semibold leading-none tracking-[-0.05em] text-[#171719] sm:text-6xl lg:text-7xl">
+              Growing smarter.
+            </h2>
+
+          </div>
+
+          <p className="max-w-xl text-lg leading-8 text-neutral-500">
+            AMIR's next phase brings technology into the everyday
+            operations of the business — from billing and ordering to
+            logistics and customer support.
+          </p>
+
+        </div>
+
+        <div
+          className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,480px)_500px] lg:justify-between lg:gap-10"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+
+          {/* capability list */}
+          <ul className="border-t border-neutral-200">
+
+            {growthSystem.map((item, index) => {
+              const isActive = index === active;
+              return (
+                <li key={item.title} className="border-b border-neutral-200">
+                  <button
+                    type="button"
+                    onMouseEnter={() => setActive(index)}
+                    onFocus={() => setActive(index)}
+                    onClick={() => setActive(index)}
+                    className="group flex w-full items-center gap-5 py-3.5 text-left"
+                  >
+                    <span className={`text-xs font-semibold tracking-[0.2em] transition ${isActive ? "text-[#EC1F36]" : "text-neutral-400"}`}>
+                      {item.number}
+                    </span>
+                    <span className={`flex-1 text-lg font-semibold tracking-tight transition-all duration-300 group-hover:text-[#EC1F36] ${isActive ? "translate-x-2 text-[#171719]" : "text-neutral-400"}`}>
+                      {item.title}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+
+          </ul>
+
+          {/* detail panel */}
+          <div className="self-start">
+
+            <div key={active} className="animate-[fadeUp_0.45s_ease-out]">
+
+              <div className="relative h-64 overflow-hidden rounded-[24px] sm:h-80 lg:h-[330px]">
+
+                <img
+                  src={current.image}
+                  alt={current.title}
+                  className="h-full w-full object-cover"
+                />
+
+                <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#EC1F36] text-white shadow-lg">
+                  <Icon type={current.icon} />
+                </div>
+
+              </div>
+
+              <h3 className="mt-5 text-2xl font-semibold tracking-tight text-[#171719]">
+                {current.title}
+              </h3>
+
+              <p className="mt-1.5 max-w-md text-base leading-7 text-neutral-500">
+                {current.text}
+              </p>
+
+            </div>
+
+            <div className="mt-4 flex gap-1.5">
+              {growthSystem.map((item, index) => (
+                <span
+                  key={item.title}
+                  className={`h-1 rounded-full transition-all duration-300 ${index === active ? "w-8 bg-[#EC1F36]" : "w-3 bg-neutral-200"}`}
+                />
+              ))}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}`}</style>
+
+    </section>
+  );
+}
+
+
 export default function HomePage() {
   return (
     <main className="bg-white text-[#171719]">
@@ -387,109 +487,22 @@ export default function HomePage() {
           2016 TRANSFORMATION — REDESIGNED
       ====================================================== */}
 
-      <section className="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-
-        <div className="mx-auto max-w-[1480px]">
-
-          <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
-
-            {/* INTRO */}
-
-            <div className="lg:sticky lg:top-28 lg:h-fit">
-
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-                A Transformation
-              </p>
-
-              <h2 className="mt-4 text-5xl font-semibold leading-[0.92] tracking-[-0.05em] sm:text-6xl">
-                A new chapter
-                <br />
-                for AMIR.
-              </h2>
-
-              <p className="mt-6 max-w-sm text-sm leading-7 text-neutral-500">
-                The 2016 transformation introduced a more structured,
-                recognizable and scalable approach to the AMIR network.
-              </p>
-
-              <div className="mt-8 flex items-center gap-3">
-
-                <span className="h-10 w-10 rounded-full bg-[#EC1F36]" />
-
-                <span className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">
-                  From identity to experience
-                </span>
-
-              </div>
-
-            </div>
-
-
-            {/* TIMELINE */}
-
-            <div className="relative">
-
-              <div className="absolute left-[27px] top-4 hidden h-[calc(100%-30px)] w-px bg-neutral-200 md:block" />
-
-              <div className="space-y-4">
-
-                {transformation.map((item) => (
-                  <div
-                    key={item.number}
-                    className="group relative grid gap-5 rounded-[24px] border border-neutral-200 bg-white p-5 transition duration-300 hover:border-[#EC1F36]/30 hover:shadow-[0_20px_60px_rgba(39,23,25,0.08)] md:grid-cols-[56px_56px_1fr] md:items-center"
-                  >
-
-                    <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-[#F5F3F0] text-[#8F1525] transition group-hover:bg-[#EC1F36] group-hover:text-white">
-                      <Icon type={item.icon} />
-                    </div>
-
-                    <span className="hidden text-xs font-semibold text-neutral-300 md:block">
-                      {item.number}
-                    </span>
-
-                    <div>
-
-                      <div className="flex flex-wrap items-center gap-3">
-
-                        <h3 className="text-lg font-semibold tracking-tight">
-                          {item.title}
-                        </h3>
-
-                        <span className="rounded-full bg-[#F5F3F0] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.1em] text-[#8F1525]">
-                          AMIR
-                        </span>
-
-                      </div>
-
-                      <p className="mt-2 max-w-xl text-sm leading-6 text-neutral-500">
-                        {item.text}
-                      </p>
-
-                    </div>
-
-                  </div>
-                ))}
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
+      <TransformationSection />
 
 
       {/* =====================================================
           FRANCHISE NETWORK
       ====================================================== */}
 
-      <section className="bg-[#EC1F36] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
+      <section className="px-4 py-4 sm:px-8 lg:px-16">
 
-        <div className="mx-auto max-w-[1480px]">
+        <div className="relative mx-auto max-w-[1480px] overflow-hidden rounded-[2rem] bg-[#EC1F36] px-6 py-16 text-white sm:px-12 lg:rounded-[2.5rem] lg:px-16 lg:py-24">
 
-          <div className="grid gap-14 lg:grid-cols-[0.7fr_1.3fr]">
+          {/* soft decorative glows */}
+          <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-40 -left-24 h-96 w-96 rounded-full bg-[#8F1525]/40 blur-3xl" />
+
+          <div className="relative grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
 
             <div>
 
@@ -530,17 +543,19 @@ export default function HomePage() {
                 "Product Diversity",
                 "Marketing Support",
                 "Established Customer Trust",
-              ].map((point, index) => (
+              ].map((point, index, list) => (
                 <div
                   key={point}
-                  className="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/5 p-5 backdrop-blur-sm"
+                  className={`group flex items-center gap-4 rounded-2xl bg-white/[0.06] px-5 py-5 ring-1 ring-inset ring-white/25 transition duration-300 hover:bg-white/[0.06] hover:ring-2 hover:ring-white ${
+                    index === list.length - 1 ? "sm:col-span-2" : ""
+                  }`}
                 >
 
-                  <span className="text-xs font-bold text-white/45">
-                    0{index + 1}
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-xs font-bold text-[#EC1F36]">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-semibold tracking-tight">
                     {point}
                   </span>
 
@@ -560,108 +575,25 @@ export default function HomePage() {
           TECHNOLOGY-LED GROWTH — REDESIGNED
       ====================================================== */}
 
-      <section className="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-
-        <div className="mx-auto max-w-[1480px]">
-
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-
-            <div>
-
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-                Technology-Led Growth
-              </p>
-
-              <h2 className="mt-4 max-w-xl text-5xl font-semibold leading-[0.92] tracking-[-0.05em] sm:text-6xl">
-                Growing
-                <br />
-                smarter.
-              </h2>
-
-              <p className="mt-6 max-w-md text-sm leading-7 text-neutral-500">
-                AMIR's next phase brings technology into the everyday
-                operations of the business — from billing and ordering to
-                logistics and customer support.
-              </p>
-
-            </div>
-
-
-            {/* SYSTEM MAP */}
-
-            <div className="relative">
-
-              <div className="grid gap-3 sm:grid-cols-2">
-
-                {growthSystem.map((item, index) => (
-                  <div
-                    key={item.title}
-                    className={`
-                      group
-                      relative
-                      overflow-hidden
-                      rounded-[22px]
-                      border
-                      border-neutral-200
-                      bg-[#F8F6F3]
-                      p-6
-                      transition
-                      duration-300
-                      hover:-translate-y-1
-                      hover:border-[#EC1F36]/30
-                      hover:bg-[#281719]
-                      hover:text-white
-                      ${
-                        index === 0
-                          ? "sm:col-span-2"
-                          : ""
-                      }
-                    `}
-                  >
-
-                    <div className="flex items-start justify-between">
-
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#8F1525] shadow-sm transition group-hover:bg-[#EC1F36] group-hover:text-white">
-                        <Icon type={item.icon} />
-                      </div>
-
-                      <span className="text-xs font-bold text-neutral-300 group-hover:text-white/30">
-                        {item.number}
-                      </span>
-
-                    </div>
-
-                    <h3 className="mt-8 text-xl font-semibold tracking-tight">
-                      {item.title}
-                    </h3>
-
-                    <p className="mt-2 max-w-sm text-sm leading-6 text-neutral-500 group-hover:text-white/60">
-                      {item.text}
-                    </p>
-
-                  </div>
-                ))}
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
+      <TechnologyGrowth />
 
 
       {/* =====================================================
           LEGACY / NEXT CHAPTER
       ====================================================== */}
 
-      <section className="overflow-hidden bg-[#281719] px-6 py-20 text-white sm:px-10 lg:px-16 lg:py-28">
+      <section className="relative overflow-hidden bg-[#281719] text-white lg:h-[80vh] lg:min-h-[560px] lg:max-h-[820px]">
 
-        <div className="mx-auto grid max-w-[1480px] items-center gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+        {/* artwork pinned right at full section height, with the same side margin as the text on the left; both dark edges fade into the theme color */}
+        <img
+          src={oneAmir}
+          alt="AMIR store and network across Maharashtra"
+          className="block w-full lg:absolute lg:inset-y-0 lg:right-[max(4rem,calc((100%-1480px)/2+4rem))] lg:h-full lg:w-auto lg:max-w-none lg:[mask-image:linear-gradient(to_right,transparent,black_30%,black_94%,transparent)]"
+        />
 
-          <div>
+        <div className="relative mx-auto flex max-w-[1480px] items-center px-6 py-14 sm:px-10 lg:h-full lg:px-16 lg:py-0">
+
+          <div className="max-w-xl">
 
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FFB800]">
               Legacy Ready for Its Next Chapter
@@ -681,22 +613,11 @@ export default function HomePage() {
 
             <Link
               to="/about"
-              className="mt-8 inline-flex items-center gap-3 text-sm font-semibold text-white hover:text-[#FFB800]"
+              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#EC1F36] px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white hover:text-[#EC1F36]"
             >
               Discover Our Story
               <Arrow />
             </Link>
-
-          </div>
-
-
-          <div className="relative">
-
-            <img
-              src="https://images.pexels.com/photos/3184436/pexels-photo-3184436.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt="AMIR business network"
-              className="w-full rounded-[28px] object-cover"
-            />
 
           </div>
 
@@ -709,63 +630,114 @@ export default function HomePage() {
           PROTEIN RANGE
       ====================================================== */}
 
-      <section className="px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+      <section className="relative overflow-hidden bg-[#F5F3F0] px-6 py-20 text-[#171719] sm:px-10 lg:px-16 lg:py-28">
 
-        <div className="mx-auto max-w-[1480px]">
+        <div className="relative mx-auto w-full max-w-[1480px]">
 
-          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
 
             <div>
 
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-                Fresh Protein Range
-              </p>
+              <div className="inline-flex items-center gap-3">
+                <span className="h-[3px] w-10 bg-[#EC1F36]" />
+                <p className="font-poppins text-[11px] font-semibold uppercase tracking-[0.22em] text-[#171719]/60">
+                  Fresh Protein Range
+                </p>
+              </div>
 
-              <h2 className="mt-3 text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
-                What's on the table?
+              <h2 className="mt-6 font-seasons text-[48px] leading-[0.95] tracking-[-0.03em] sm:text-[72px] lg:text-[104px]">
+                What's on <span className="italic text-[#EC1F36]">the table?</span>
               </h2>
 
             </div>
 
-            <Link
-              to="/catalog"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#EC1F36]"
-            >
-              View Full Range
-              <Arrow />
-            </Link>
+            <div className="max-w-[360px]">
+
+              <p className="font-poppins text-[13px] leading-[1.8] text-[#171719]/65">
+                Four categories. One standard. Sourced, handled and delivered
+                with the same care since 1991.
+              </p>
+
+              <Link
+                to="/catalog"
+                className="mt-6 inline-flex h-14 items-center gap-3 rounded-lg bg-[#EC1F36] px-8 font-poppins text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
+              >
+                View Full Range
+                <Arrow />
+              </Link>
+
+            </div>
 
           </div>
 
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
 
-            {proteinCategories.map((item) => (
+            {proteinCategories.map((item, i) => (
               <Link
                 key={item.title}
                 to="/catalog"
-                className="group overflow-hidden rounded-[24px] bg-[#F4F2EF]"
+                className="group block aspect-[4/5] [perspective:1200px] lg:aspect-auto lg:h-[420px]"
               >
 
-                <div className="aspect-[4/3] overflow-hidden">
+                <div className="relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
 
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                  />
+                  {/* FRONT */}
+                  <div className="absolute inset-0 overflow-hidden rounded-xl bg-neutral-900 [backface-visibility:hidden]">
 
-                </div>
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
 
-                <div className="p-5">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
 
-                  <h3 className="text-xl font-semibold">
-                    {item.title}
-                  </h3>
+                    <span className="absolute left-6 top-6 font-seasons text-[44px] leading-none text-white/80">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
 
-                  <p className="mt-2 text-sm leading-5 text-neutral-500">
-                    {item.text}
-                  </p>
+                    <div className="absolute inset-x-0 bottom-0 p-6 lg:p-7">
+                      <h3 className="font-seasons text-[32px] leading-[1.05] tracking-[-0.02em] text-white lg:text-[36px]">
+                        {item.title}
+                      </h3>
+                    </div>
+
+                  </div>
+
+                  {/* BACK */}
+                  <div className="absolute inset-0 overflow-hidden rounded-xl bg-neutral-900 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+
+                    <img
+                      src={item.image}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+
+                    <div className="absolute inset-0 bg-black/75" />
+
+                    <span className="absolute left-6 top-6 font-seasons text-[44px] leading-none text-white/80">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+
+                    <div className="absolute inset-x-0 bottom-0 p-6 lg:p-7">
+
+                      <h3 className="font-seasons text-[32px] leading-[1.05] tracking-[-0.02em] text-white lg:text-[36px]">
+                        {item.title}
+                      </h3>
+
+                      <p className="mt-4 font-poppins text-[12px] leading-[1.7] text-white/80">
+                        {item.text}
+                      </p>
+
+                      <span className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-[#EC1F36] px-6 font-poppins text-[11px] font-bold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-white hover:text-[#EC1F36]">
+                        Explore
+                        <Arrow />
+                      </span>
+
+                    </div>
+
+                  </div>
 
                 </div>
 
@@ -783,37 +755,51 @@ export default function HomePage() {
           FINAL CTA
       ====================================================== */}
 
-      <section className="px-6 pb-24 sm:px-10 lg:px-16">
+      <section className="relative bg-[#EC1F36] text-white text-center px-6 sm:px-10 lg:px-16 py-16 lg:py-20 overflow-hidden">
 
-        <div className="mx-auto max-w-[1480px] rounded-[30px] bg-[#F5F3F0] px-7 py-14 text-center sm:px-12 lg:py-20">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 20%, white 0, transparent 45%), radial-gradient(circle at 80% 80%, white 0, transparent 45%)",
+          }}
+        />
 
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-            Work With AMIR
-          </p>
+        <div className="relative max-w-[900px] mx-auto">
 
-          <h2 className="mx-auto mt-4 max-w-4xl text-4xl font-semibold tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-            Looking for a fresh,
-            <span className="text-neutral-400">
-              {" "}reliable protein partner?
-            </span>
+          <div className="inline-flex items-center gap-3 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-white" />
+            <p className="font-poppins text-[10px] tracking-[0.2em] uppercase text-white/75">
+              Work With AMIR
+            </p>
+            <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
+          </div>
+
+          <h2 className="font-seasons text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.05] tracking-[-0.025em] text-white">
+            Looking for a fresh,{" "}
+            <span className="italic">reliable protein partner?</span>
           </h2>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mx-auto mt-6 w-10 h-[3px] bg-white/70" />
+
+          <div className="mt-8 flex flex-wrap justify-center gap-5">
 
             <Link
               to="/get-a-quote"
-              className="inline-flex items-center gap-3 rounded-full bg-[#EC1F36] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#281719]"
+              className="inline-flex items-center justify-center gap-3 bg-white text-[#EC1F36] px-10 h-14 rounded-lg font-poppins text-[12px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-[#171719] hover:text-white border border-white"
             >
               Contact Now
-              <Arrow />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                <path d="M5 12h14" />
+                <path d="m13 6 6 6-6 6" />
+              </svg>
             </Link>
 
             <Link
               to="/contact"
-              className="inline-flex items-center gap-3 rounded-full border border-neutral-300 bg-white px-6 py-3.5 text-sm font-semibold transition hover:border-[#EC1F36] hover:text-[#EC1F36]"
+              className="inline-flex items-center justify-center border border-white/60 text-white px-10 h-14 rounded-lg font-poppins text-[12px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
             >
               Contact AMIR
-              <Arrow />
             </Link>
 
           </div>
