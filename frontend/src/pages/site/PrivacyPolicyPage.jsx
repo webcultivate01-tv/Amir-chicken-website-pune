@@ -110,96 +110,30 @@ export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-white text-[#171719]">
 
-      {/* HEADER */}
-      <section className="bg-[#281719] px-6 py-20 text-white lg:px-12 lg:py-28">
-        <div className="mx-auto max-w-[1200px]">
-
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FFB800]">
-            AMIR Chicken
-          </p>
-
-          <h1 className="mt-5 max-w-4xl text-5xl font-semibold tracking-[-0.04em] sm:text-6xl lg:text-7xl">
+      <section className="bg-[#271719] px-5 py-14 text-[#F5EFE6] sm:px-8 lg:px-12 lg:py-20">
+        <div className="mx-auto max-w-[1280px] px-2 sm:px-6 lg:px-10">
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
             Privacy Policy
-            <span className="text-[#EC1F36]">.</span>
           </h1>
-
-          <p className="mt-6 max-w-2xl text-base leading-7 text-white/65">
-            Your privacy matters to us. This page explains how information
-            provided through the AMIR Chicken website may be collected and
-            used.
+          <p className="mt-3 text-base leading-7 text-[#F5EFE6]/70">
+            Your privacy matters to us. This page explains how information provided through the AMIR Chicken website may be collected and used.
           </p>
-
         </div>
       </section>
 
-
-      {/* CONTENT */}
-      <section className="px-6 py-16 lg:px-12 lg:py-24">
-        <div className="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[240px_1fr]">
-
-          {/* SIDEBAR */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-10">
-
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-400">
-                On this page
-              </p>
-
-              <nav className="mt-5 space-y-3">
-                {sections.map((section) => (
-                  <a
-                    key={section.title}
-                    href={`#${section.title
-                      .toLowerCase()
-                      .replace(/[^a-z0-9]+/g, "-")}`}
-                    className="block text-sm text-neutral-500 transition hover:text-[#EC1F36]"
-                  >
-                    {section.title.replace(/^\d+\.\s/, "")}
-                  </a>
-                ))}
-              </nav>
-
-            </div>
-          </aside>
-
-
-          {/* ARTICLE */}
-          <article className="max-w-3xl">
-
-            <p className="mb-12 text-sm leading-7 text-neutral-500">
-              This Privacy Policy applies to information collected through the
-              AMIR Chicken website and related online enquiry experiences.
-            </p>
-
-            <div className="space-y-12">
-
-              {sections.map((section) => {
-                const id = section.title
-                  .toLowerCase()
-                  .replace(/[^a-z0-9]+/g, "-");
-
-                return (
-                  <section
-                    key={section.title}
-                    id={id}
-                    className="scroll-mt-10 border-b border-neutral-200 pb-10"
-                  >
-                    <h2 className="text-2xl font-semibold tracking-tight">
-                      {section.title}
-                    </h2>
-
-                    <div className="mt-5 space-y-4 text-[15px] leading-7 text-neutral-600">
-                      {section.content}
-                    </div>
-                  </section>
-                );
-              })}
-
-            </div>
-
-          </article>
-
-        </div>
+      <section className="px-5 py-12 sm:px-8 lg:px-12 lg:py-16">
+        <article className="mx-auto max-w-[1280px] space-y-10 px-2 sm:px-6 lg:px-10">
+          {sections.map((section) => (
+            <section key={section.title}>
+              <h2 className="text-xl font-semibold tracking-tight">
+                {section.title}
+              </h2>
+              <div className="mt-3 space-y-4 text-[15px] leading-7 text-neutral-600">
+                {section.content}
+              </div>
+            </section>
+          ))}
+        </article>
       </section>
 
     </main>

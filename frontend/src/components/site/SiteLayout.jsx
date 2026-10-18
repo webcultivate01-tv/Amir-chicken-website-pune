@@ -8,7 +8,7 @@ const links = [
   { to: "/", label: "Home", end: true },
   { to: "/about", label: "About Us" },
   { to: "/catalog", label: "Products" },
-  { to: "/news", label: "News" },
+  { to: "/news", label: "News & Media" },
   { to: "/contact", label: "Contact Us" },
 ];
 
@@ -20,6 +20,13 @@ const SiteLayout = () => {
     setOpen(false);
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#271719]">
@@ -48,7 +55,7 @@ const SiteLayout = () => {
                 <img
                   src={amirNavbarLogo}
                   alt="Amir 2.0"
-                  className="h-[56px] sm:h-[68px] w-auto object-contain"
+                  className="h-[62px] sm:h-[68px] w-auto object-contain ml-2 sm:ml-0"
                 />
               </Link>
 
@@ -119,7 +126,7 @@ const SiteLayout = () => {
                 MOBILE MENU BUTTON
             ========================== */}
 
-            <div className="md:hidden flex items-center justify-end col-span-2">
+            <div className="md:hidden flex items-center justify-end col-span-2 mr-2">
 
               <button
                 className="
@@ -184,55 +191,73 @@ const SiteLayout = () => {
             MOBILE NAVIGATION
         =============================== */}
 
-        {open && (
-          <div className="md:hidden border-t border-[#271719]/10 bg-white">
+        {/* Backdrop */}
+        <div
+          onClick={() => setOpen(false)}
+          aria-hidden="true"
+          className={`md:hidden fixed inset-0 z-40 bg-[#271719]/50 transition-opacity duration-300 ease-in-out ${
+            open ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        />
 
-            <nav className="max-w-7xl mx-auto px-5 py-5 flex flex-col gap-1">
+        {/* Sidebar */}
+        <aside
+          aria-hidden={!open}
+          className={`md:hidden fixed top-0 right-0 z-50 h-full w-[80%] max-w-[320px] bg-white shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
 
-              {links.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  end={link.end}
-                  className={({ isActive }) =>
-                    `px-4 py-3 rounded-md text-sm font-semibold transition ${
-                      isActive
-                        ? "bg-[#EC1F36]/10 text-[#EC1F36]"
-                        : "text-[#271719] hover:bg-[#EC1F36]/5 hover:text-[#EC1F36]"
-                    }`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-
-
-              {/* MOBILE CONTACT NOW */}
-
-              <Link
-                to="/get-a-quote"
-                className="
-                  mt-3
-                  w-full
-                  text-center
-                  px-5
-                  py-3
-                  rounded-md
-                  bg-[#EC1F36]
-                  text-white
-                  text-sm
-                  font-semibold
-                  hover:bg-[#271719]
-                  transition
-                "
+          <div className="h-[82px] px-5 flex items-center justify-end border-b border-[#271719]/10">
+            <button
+              className="flex items-center justify-center w-10 h-10 rounded-md border border-[#271719]/20 text-[#271719] hover:border-[#EC1F36] hover:text-[#EC1F36] transition"
+              onClick={() => setOpen(false)}
+              aria-label="Close navigation menu"
+              tabIndex={open ? 0 : -1}
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
               >
-                Contact Now
-              </Link>
-
-            </nav>
-
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
           </div>
-        )}
+
+          <nav className="px-5 py-5 flex flex-col gap-1 overflow-y-auto">
+
+            {links.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.end}
+                tabIndex={open ? 0 : -1}
+                className={({ isActive }) =>
+                  `px-4 py-3 rounded-md text-sm font-semibold transition ${
+                    isActive
+                      ? "text-[#EC1F36]"
+                      : "text-[#271719] hover:text-[#EC1F36]"
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+
+            <Link
+              to="/get-a-quote"
+              tabIndex={open ? 0 : -1}
+              className="mt-3 w-full text-center px-5 py-3 rounded-md bg-[#EC1F36] text-white text-sm font-semibold hover:bg-[#271719] transition"
+            >
+              Contact Now
+            </Link>
+
+          </nav>
+
+        </aside>
 
       </header>
 

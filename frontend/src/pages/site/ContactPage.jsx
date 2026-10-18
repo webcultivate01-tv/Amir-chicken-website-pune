@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Hen3D from "../../components/site/Hen3D";
 
 const ArrowIcon = () => (
   <svg
@@ -110,9 +111,147 @@ const ctaItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
+// Same grey -> solid word-by-word highlight as the home page BrandStatement,
+// triggered on load (the hero is already in view) instead of on scroll.
+function HighlightWords({ text, activeColor, startIndex = 0 }) {
+  const words = text.split(/\s+/);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const timers = words.map((_, i) =>
+      setTimeout(() => setActive(i + 1), 400 + (startIndex + i) * 260)
+    );
+    return () => timers.forEach(clearTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return words.map((word, i) => (
+    <span
+      key={i}
+      style={{
+        color: i < active ? activeColor : "#C7C7C7",
+        transition: "color 1.4s cubic-bezier(0.4, 0, 0.2, 1)",
+      }}
+    >
+      {word}
+      {i < words.length - 1 ? " " : ""}
+    </span>
+  ));
+}
+
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-white text-[#171719]">
+
+      {/* ================= HERO ================= */}
+      <section className="relative overflow-hidden px-5 pt-16 pb-6 sm:px-8 lg:px-12 lg:pt-24 lg:pb-8">
+        {/* Hero background: soft red swooshes + thin arc lines */}
+        <svg
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full"
+          viewBox="0 0 1813 760"
+          preserveAspectRatio="xMidYMid slice"
+          fill="none"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%)",
+          }}
+        >
+          <defs>
+            <linearGradient id="heroLeftFill" x1="0" y1="1" x2="0.7" y2="0.2">
+              <stop offset="0%" stopColor="#EC1F36" stopOpacity="0.16" />
+              <stop offset="100%" stopColor="#EC1F36" stopOpacity="0.03" />
+            </linearGradient>
+            <linearGradient id="heroRightFill" x1="0" y1="1" x2="1" y2="0.4">
+              <stop offset="0%" stopColor="#EC1F36" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="#EC1F36" stopOpacity="0.2" />
+            </linearGradient>
+            <linearGradient id="heroBand" x1="0" y1="1" x2="1" y2="0.2">
+              <stop offset="0%" stopColor="#EC1F36" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#EC1F36" stopOpacity="0.14" />
+            </linearGradient>
+          </defs>
+
+          {/* left: pink area outside a big sweeping arc */}
+          <path
+            d="M0 0 L140 0 C150 300 360 570 740 760 L0 760 Z"
+            fill="url(#heroLeftFill)"
+          />
+
+          {/* right: large soft lobe */}
+          <path
+            d="M1390 0 L1813 0 L1813 760 L1170 760 C1330 650 1690 560 1683 420 C1680 250 1550 90 1390 0 Z"
+            fill="url(#heroRightFill)"
+          />
+
+          {/* right: darker ribbon sweeping up from bottom */}
+          <path
+            d="M1170 760 C1340 600 1660 530 1813 330 L1813 480 C1700 610 1500 690 1340 760 Z"
+            fill="url(#heroBand)"
+          />
+        </svg>
+
+        <motion.div
+          className="relative mx-auto flex max-w-[1280px] flex-col items-center px-2 text-center sm:px-6 lg:px-10"
+          initial="hidden"
+          animate="show"
+          transition={{ staggerChildren: 0.15 }}
+        >
+          <motion.p
+            variants={ctaItem}
+            className="rounded-full bg-[#EC1F36]/10 px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.18em] text-[#EC1F36]"
+          >
+            Contact AMIR
+          </motion.p>
+
+          <motion.h1
+            variants={ctaItem}
+            className="mt-6 text-5xl font-semibold leading-[1] tracking-[-0.045em] sm:text-6xl lg:whitespace-nowrap lg:text-7xl xl:text-[6rem]"
+          >
+            <HighlightWords text="Get in touch" activeColor="#171719" />{" "}
+            <HighlightWords
+              text="with us."
+              activeColor="#EC1F36"
+              startIndex={3}
+            />
+          </motion.h1>
+
+          <motion.p
+            variants={ctaItem}
+            className="mt-8 max-w-2xl text-lg leading-8 text-neutral-600"
+          >
+            Product enquiry, bulk or institutional requirement, or a franchise
+            conversation — talk to the AMIR team directly and we’ll take it
+            from there.
+          </motion.p>
+
+          <motion.div variants={ctaItem} className="mt-9 flex flex-wrap justify-center gap-5 sm:gap-6">
+            <a
+              href="tel:+919527982525"
+              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-[#171719] py-3 pl-6 pr-3 text-sm font-semibold text-white"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-1/2 h-[320%] w-[230%] origin-left -translate-y-1/2 scale-x-0 rounded-full bg-[#EC1F36] transition-transform duration-700 ease-in-out group-hover:scale-x-100"
+              />
+              <span className="relative">Call +91 95279 82525</span>
+              <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#171719] transition-transform duration-300 group-hover:translate-x-1">
+                <ArrowIcon />
+              </span>
+            </a>
+
+            <a
+              href="mailto:info@amirchicken.in"
+              className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-[#171719] transition hover:border-[#171719] hover:bg-[#171719] hover:text-white"
+            >
+              Email us
+            </a>
+          </motion.div>
+        </motion.div>
+      </section>
+
 
       {/* ================= CONTACT SECTION ================= */}
       <section className="px-5 py-6 sm:px-8 lg:px-12 lg:py-8">
@@ -122,7 +261,7 @@ export default function ContactPage() {
 
             {/* ================= LEFT CONTENT ================= */}
             <motion.div
-              className="order-2 flex flex-col justify-center lg:order-1"
+              className="order-2 flex flex-col justify-start lg:order-1 lg:pt-9"
               initial={{ opacity: 0, x: -80 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
@@ -130,17 +269,14 @@ export default function ContactPage() {
             >
 
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#EC1F36]">
-                Contact AMIR
+                Contact Information
               </p>
 
-              <h1 className="mt-5 max-w-lg text-5xl font-semibold leading-[0.98] tracking-[-0.04em] sm:text-6xl lg:text-7xl">
-                Get in
-                <br />
-                <span className="text-[#EC1F36]">touch with us</span>
-                <span className="text-[#EC1F36]">.</span>
-              </h1>
+              <h2 className="mt-4 max-w-lg text-3xl font-semibold leading-tight tracking-[-0.03em] sm:text-4xl">
+                Reach us <span className="text-[#EC1F36]">directly.</span>
+              </h2>
 
-              <p className="mt-7 max-w-md text-base leading-7 text-neutral-600">
+              <p className="mt-5 max-w-md text-base leading-7 text-neutral-600">
                 Have a question, product enquiry, bulk requirement or simply
                 want to know more about AMIR? Send us a message and our team
                 will get back to you.
@@ -244,7 +380,7 @@ export default function ContactPage() {
               </div>
 
 
-              <form className="space-y-5">
+              <form id="contact-form" className="space-y-5">
 
                 {/* FULL NAME + MOBILE */}
                 <div className="grid gap-5 sm:grid-cols-2">
@@ -395,11 +531,13 @@ export default function ContactPage() {
           transition={{ staggerChildren: 0.15 }}
         >
 
+          <div className="grid items-center gap-8 lg:grid-cols-[1.4fr_0.6fr]">
+          <div>
           <motion.p
             variants={ctaItem}
             className="text-xs font-semibold uppercase tracking-[0.18em] text-[#EC1F36]"
           >
-            AMIR Chicken
+            AMIR’s Fresh Cut
           </motion.p>
 
           <motion.h2 variants={ctaItem} className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl lg:text-6xl">
@@ -409,26 +547,42 @@ export default function ContactPage() {
             </span>
           </motion.h2>
 
+          <motion.p variants={ctaItem} className="mt-6 max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg">
+            Bulk orders, custom cuts or delivery schedules, tell us what you need and our team will get back to you with the right fresh-cut solution.
+          </motion.p>
+
           <motion.div variants={ctaItem} className="mt-9 flex flex-wrap gap-3">
 
-            <Link
-              to="/get-a-quote"
+            <a
+              href="#contact-form"
+              onClick={(e) => {
+                e.preventDefault();
+                const f = document.getElementById("contact-form");
+                f?.scrollIntoView({ behavior: "smooth", block: "center" });
+                f?.querySelector("input")?.focus({ preventScroll: true });
+              }}
               className="group inline-flex items-center gap-3 rounded-full bg-[#171719] py-3 pl-6 pr-3 text-sm font-semibold text-white transition hover:bg-[#EC1F36]"
             >
-              <span>Get a Quote</span>
+              <span>Contact Now</span>
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#171719] transition-transform duration-300 group-hover:translate-x-1">
                 <ArrowIcon />
               </span>
-            </Link>
+            </a>
 
             <Link
               to="/catalog"
               className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-[#171719] transition hover:border-[#171719] hover:bg-[#171719] hover:text-white"
             >
-              Explore Catalog
+              Explore Products
             </Link>
 
           </motion.div>
+          </div>
+
+          <motion.div variants={ctaItem}>
+            <Hen3D className="mx-auto h-[300px] w-full max-w-[360px] lg:h-[380px]" />
+          </motion.div>
+          </div>
 
         </motion.div>
 
