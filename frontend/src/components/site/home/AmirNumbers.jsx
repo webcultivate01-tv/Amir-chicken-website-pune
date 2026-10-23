@@ -1,89 +1,185 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
 const stats = [
   {
-    number: "35+",
+    value: 35,
+    suffix: "+",
     label: "Years of Experience",
     description: "A legacy of commitment built since 1991.",
   },
   {
-    number: "600+",
+    value: 600,
+    suffix: "+",
     label: "Retail Stores",
     description: "An expanding network serving customers.",
   },
   {
-    number: "2,500+",
+    value: 2500,
+    suffix: "+",
     label: "People Engaged",
     description: "People connected through the AMIR journey.",
   },
 ];
 
-export default function AmirNumbers() {
-  const reduceMotion = useReducedMotion();
+/* Number that counts up in step with scroll progress */
+function ScrollNumber({ value, suffix, progress, reduceMotion }) {
+  const ref = useRef(null);
+  const format = (n) => Math.round(n).toLocaleString("en-US") + suffix;
+
+  useMotionValueEvent(progress, "change", (p) => {
+    if (!reduceMotion && ref.current) {
+      ref.current.textContent = format(p * value);
+    }
+  });
 
   return (
-    <section className="bg-[#F5F3F0] px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
-      <div className="mx-auto max-w-[1480px]">
+    <span ref={ref}>{format(reduceMotion ? value : 0)}</span>
+  );
+}
 
-        {/* Section heading */}
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-end">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-              AMIR in Numbers
-            </p>
+function StatItem({ item, index, progress, reduceMotion }) {
+  // Each stat reveals in sequence as the section scrolls into view
+  const start = 0.05 + index * 0.12;
+  const end = start + 0.35;
 
-            <h2 className="mt-4 max-w-2xl font-seasons text-4xl font-medium leading-[1.05] tracking-[-0.04em] sm:text-5xl lg:text-6xl">
-              A legacy built on{" "}
-              <span className="text-[#EC1F36]">trust.</span>
-            </h2>
-          </div>
+  const opacity = useTransform(progress, [start, end], [0, 1]);
+  const y = useTransform(progress, [start, end], [60, 0]);
+  const count = useTransform(progress, [start, end + 0.15], [0, 1]);
+  const bar = useTransform(progress, [end - 0.1, end + 0.1], [0, 1]);
 
-          <p className="max-w-md text-sm leading-7 text-neutral-500 lg:justify-self-end">
-            Decades of experience, a growing retail network and
-            thousands of people connected through the AMIR journey.
+  return (
+    <motion.div
+      style={reduceMotion ? undefined : { opacity, y }}
+      className={`flex flex-col items-center px-6 py-6 text-center lg:py-4 ${
+        index > 0
+          ? "border-t border-[#281719]/10 lg:border-l lg:border-t-0"
+          : ""
+      }`}
+    >
+      <p className="font-seasons text-6xl font-medium tracking-[-0.05em] text-[#281719] sm:text-7xl lg:text-8xl">
+        <ScrollNumber
+          value={item.value}
+          suffix={item.suffix}
+          progress={count}
+          reduceMotion={reduceMotion}
+        />
+      </p>
+
+      <motion.span
+        style={reduceMotion ? undefined : { scaleX: bar }}
+        className="mt-5 h-[3px] w-12 origin-center rounded-full bg-[#EC1F36]"
+      />
+
+      <h3 className="mt-5 text-sm font-semibold uppercase tracking-[0.2em] text-[#8F1525]">
+        {item.label}
+      </h3>
+
+      <p className="mt-3 max-w-[16rem] text-base leading-6 text-neutral-500">
+        {item.description}
+      </p>
+    </motion.div>
+  );
+}
+
+export default function AmirNumbers() {
+  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "center center"],
+  });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 24,
+    mass: 0.4,
+  });
+
+  // Whole-section parallax (continues past center while leaving)
+  const { scrollYProgress: pageProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const ringY = useTransform(pageProgress, [0, 1], [-80, 80]);
+  const ringY2 = useTransform(pageProgress, [0, 1], [100, -100]);
+  const ringRotate = useTransform(pageProgress, [0, 1], [0, 90]);
+
+  const headingOpacity = useTransform(progress, [0, 0.3], [0, 1]);
+  const headingY = useTransform(progress, [0, 0.3], [40, 0]);
+  const lineScale = useTransform(progress, [0.1, 0.5], [0, 1]);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-[100svh] items-center overflow-hidden bg-[#F5F3F0] px-6 py-16 sm:px-10 lg:px-16"
+    >
+      {/* Decorative parallax rings */}
+      {!reduceMotion && (
+        <>
+          <motion.div
+            style={{ y: ringY, rotate: ringRotate }}
+            className="pointer-events-none absolute -left-32 top-10 h-[26rem] w-[26rem] rounded-full border border-[#EC1F36]/15"
+          />
+          <motion.div
+            style={{ y: ringY2 }}
+            className="pointer-events-none absolute -right-40 bottom-0 h-[32rem] w-[32rem] rounded-full border border-[#EC1F36]/10"
+          />
+          <motion.div
+            style={{ y: ringY2 }}
+            className="pointer-events-none absolute -right-24 bottom-16 h-[22rem] w-[22rem] rounded-full border border-[#EC1F36]/10"
+          />
+        </>
+      )}
+
+      <div className="relative mx-auto w-full max-w-[1480px]">
+        {/* Heading */}
+        <motion.div
+          style={
+            reduceMotion ? undefined : { opacity: headingOpacity, y: headingY }
+          }
+          className="mx-auto max-w-3xl text-center"
+        >
+          <p className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#EC1F36]">
+            <span className="h-px w-8 bg-[#EC1F36]/50" />
+            AMIR in Numbers
+            <span className="h-px w-8 bg-[#EC1F36]/50" />
           </p>
-        </div>
 
-        {/* Three equal-sized cards */}
-        <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 className="mt-5 font-seasons text-4xl font-medium leading-[1.05] tracking-[-0.04em] text-[#281719] sm:text-5xl lg:text-6xl">
+            A legacy built on{" "}
+            <span className="italic text-[#EC1F36]">trust.</span>
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-neutral-500 sm:text-base">
+            Decades of experience, a growing retail network and thousands of
+            people connected through the AMIR journey.
+          </p>
+        </motion.div>
+
+        {/* Scroll-drawn divider */}
+        <motion.div
+          style={reduceMotion ? undefined : { scaleX: lineScale }}
+          className="mx-auto mt-10 h-px w-full max-w-5xl origin-left bg-gradient-to-r from-transparent via-[#EC1F36]/40 to-transparent lg:mt-14"
+        />
+
+        {/* Stats */}
+        <div className="mx-auto mt-8 grid max-w-6xl grid-cols-1 lg:mt-12 lg:grid-cols-3">
           {stats.map((item, index) => (
-            <motion.article
+            <StatItem
               key={item.label}
-              initial={
-                reduceMotion ? false : { opacity: 0, y: 24 }
-              }
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.6,
-                delay: reduceMotion ? 0 : index * 0.12,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              whileHover={reduceMotion ? undefined : { y: -4 }}
-              className="group relative flex min-h-[260px] flex-col overflow-hidden rounded-2xl border border-neutral-200/80 bg-white p-7 shadow-sm transition-shadow duration-300 hover:shadow-lg sm:p-8"
-            >
-              <div className="flex items-center justify-between">
-                <span className="h-1 w-10 rounded-full bg-[#EC1F36]" />
-
-                <span className="text-xs font-semibold tracking-[0.15em] text-neutral-300">
-                  0{index + 1}
-                </span>
-              </div>
-
-              <p className="mt-10 font-seasons text-5xl font-medium tracking-[-0.05em] text-[#281719] sm:text-6xl">
-                {item.number}
-              </p>
-
-              <h3 className="mt-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#8F1525]">
-                {item.label}
-              </h3>
-
-              <p className="mt-3 text-sm leading-6 text-neutral-500">
-                {item.description}
-              </p>
-
-              <div className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full border border-[#EC1F36]/10 transition-transform duration-500 group-hover:scale-125" />
-            </motion.article>
+              item={item}
+              index={index}
+              progress={progress}
+              reduceMotion={reduceMotion}
+            />
           ))}
         </div>
       </div>

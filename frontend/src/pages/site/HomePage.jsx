@@ -368,7 +368,7 @@ function TechnologyGrowth() {
 
           <div>
 
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#EC1F36]">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#EC1F36]">
               Technology-Led Growth
             </p>
 
@@ -406,7 +406,7 @@ function TechnologyGrowth() {
                     onClick={() => setActive(index)}
                     className="group flex w-full items-center gap-5 py-3.5 text-left"
                   >
-                    <span className={`text-xs font-semibold tracking-[0.2em] transition ${isActive ? "text-[#EC1F36]" : "text-neutral-400"}`}>
+                    <span className={`text-sm font-semibold tracking-[0.2em] transition ${isActive ? "text-[#EC1F36]" : "text-neutral-400"}`}>
                       {item.number}
                     </span>
                     <span className={`flex-1 text-lg font-semibold tracking-tight transition-all duration-300 group-hover:text-[#EC1F36] ${isActive ? "translate-x-2 text-[#171719]" : "text-neutral-400"}`}>
@@ -506,7 +506,7 @@ export default function HomePage() {
 
             <div>
 
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/60">
                 Franchise Network
               </p>
 
@@ -516,7 +516,7 @@ export default function HomePage() {
                 built to grow.
               </h2>
 
-              <p className="mt-6 max-w-md text-sm leading-7 text-white/70">
+              <p className="mt-6 max-w-md text-base leading-7 text-white/70">
                 AMIR enables franchise partners through brand recognition,
                 reliable procurement, tested retail formats and operational
                 support.
@@ -524,7 +524,7 @@ export default function HomePage() {
 
               <Link
                 to="/get-a-quote"
-                className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-[#EC1F36] transition hover:bg-[#281719] hover:text-white"
+                className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-base font-semibold text-[#EC1F36] transition hover:bg-[#281719] hover:text-white"
               >
                 Enquire With Us
                 <Arrow />
@@ -551,11 +551,11 @@ export default function HomePage() {
                   }`}
                 >
 
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-xs font-bold text-[#EC1F36]">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-sm font-bold text-[#EC1F36]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  <span className="text-sm font-semibold tracking-tight">
+                  <span className="text-base font-semibold tracking-tight">
                     {point}
                   </span>
 
@@ -595,7 +595,7 @@ export default function HomePage() {
 
           <div className="max-w-xl">
 
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#FFB800]">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#FFB800]">
               Legacy Ready for Its Next Chapter
             </p>
 
@@ -605,7 +605,7 @@ export default function HomePage() {
               to a growing network.
             </h2>
 
-            <p className="mt-7 max-w-md text-sm leading-7 text-white/60">
+            <p className="mt-7 max-w-md text-base leading-7 text-white/60">
               From one store in 1991 to a network supporting thousands of
               people, AMIR's journey has been built on freshness, fair trade
               and entrepreneurship.
@@ -613,7 +613,7 @@ export default function HomePage() {
 
             <Link
               to="/about"
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#EC1F36] px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white hover:text-[#EC1F36]"
+              className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#EC1F36] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white hover:text-[#EC1F36]"
             >
               Discover Our Story
               <Arrow />
@@ -640,7 +640,7 @@ export default function HomePage() {
 
               <div className="inline-flex items-center gap-3">
                 <span className="h-[3px] w-10 bg-[#EC1F36]" />
-                <p className="font-poppins text-[11px] font-semibold uppercase tracking-[0.22em] text-[#171719]/60">
+                <p className="font-poppins text-[13px] font-semibold uppercase tracking-[0.22em] text-[#171719]/60">
                   Fresh Protein Range
                 </p>
               </div>
@@ -653,14 +653,14 @@ export default function HomePage() {
 
             <div className="max-w-[360px]">
 
-              <p className="font-poppins text-[13px] leading-[1.8] text-[#171719]/65">
+              <p className="font-poppins text-[15px] leading-[1.8] text-[#171719]/65">
                 Four categories. One standard. Sourced, handled and delivered
                 with the same care since 1991.
               </p>
 
               <Link
                 to="/catalog"
-                className="mt-6 inline-flex h-14 items-center gap-3 rounded-lg bg-[#EC1F36] px-8 font-poppins text-[12px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
+                className="mt-6 inline-flex h-14 items-center gap-3 rounded-lg bg-[#EC1F36] px-8 font-poppins text-[14px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
               >
                 View Full Range
                 <Arrow />
@@ -726,11 +726,11 @@ export default function HomePage() {
                         {item.title}
                       </h3>
 
-                      <p className="mt-4 font-poppins text-[12px] leading-[1.7] text-white/80">
+                      <p className="mt-4 font-poppins text-[14px] leading-[1.7] text-white/80">
                         {item.text}
                       </p>
 
-                      <span className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-[#EC1F36] px-6 font-poppins text-[11px] font-bold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-white hover:text-[#EC1F36]">
+                      <span className="mt-5 inline-flex h-11 items-center gap-2 rounded-lg bg-[#EC1F36] px-6 font-poppins text-[13px] font-bold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-white hover:text-[#EC1F36]">
                         Explore
                         <Arrow />
                       </span>
@@ -769,7 +769,7 @@ export default function HomePage() {
 
           <div className="inline-flex items-center gap-3 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-white" />
-            <p className="font-poppins text-[10px] tracking-[0.2em] uppercase text-white/75">
+            <p className="font-poppins text-[12px] tracking-[0.2em] uppercase text-white/75">
               Work With AMIR
             </p>
             <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
@@ -786,7 +786,7 @@ export default function HomePage() {
 
             <Link
               to="/get-a-quote"
-              className="inline-flex items-center justify-center gap-3 bg-white text-[#EC1F36] px-10 h-14 rounded-lg font-poppins text-[12px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-[#171719] hover:text-white border border-white"
+              className="inline-flex items-center justify-center gap-3 bg-white text-[#EC1F36] px-10 h-14 rounded-lg font-poppins text-[14px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-[#171719] hover:text-white border border-white"
             >
               Contact Now
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
@@ -797,7 +797,7 @@ export default function HomePage() {
 
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center border border-white/60 text-white px-10 h-14 rounded-lg font-poppins text-[12px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
+              className="inline-flex items-center justify-center border border-white/60 text-white px-10 h-14 rounded-lg font-poppins text-[14px] tracking-[0.14em] uppercase font-bold transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
             >
               Contact AMIR
             </Link>

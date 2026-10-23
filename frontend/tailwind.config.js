@@ -5,8 +5,7 @@ export default {
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', "ui-sans-serif", "system-ui", "sans-serif"],
         seasons: ['"The Seasons"', '"Playfair Display"', "serif"],
-        poppins: ['"Poppins"', "ui-sans-serif", "system-ui", "sans-serif"],
-      },
+        poppins: ['"Poppins"', "ui-sans-serif", "system-ui", "sans-serif"],      },
       colors: {
         brand: { DEFAULT: "#4f46e5", soft: "#eef0ff" },
         ink: "#0f172a",

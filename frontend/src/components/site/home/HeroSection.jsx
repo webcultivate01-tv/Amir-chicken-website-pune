@@ -80,7 +80,7 @@ export default function HeroSection() {
         >
           <span className="h-px w-8 bg-[#EC1F36]" />
 
-          <p className="text-[10px] font-semibold uppercase tracking-[0.24em] sm:text-xs">
+          <p className="text-[12px] font-semibold uppercase tracking-[0.24em] sm:text-sm">
             AMIR Chicken
             <span className="mx-1 text-white/70">/</span>
             Since 1991
@@ -130,7 +130,7 @@ export default function HeroSection() {
           initial={reduceMotion ? false : entrance}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.75 }}
-          className="mx-auto mt-5 max-w-lg text-sm leading-6 text-white/95 sm:text-base sm:leading-7"
+          className="mx-auto mt-5 max-w-lg text-base leading-6 text-white/95 sm:text-base sm:leading-7"
         >
           Quality chicken, meat, fish and eggs for everyday meals
           and family favourites.
@@ -145,7 +145,7 @@ export default function HeroSection() {
         >
           <Link
             to="/catalog"
-            className="group inline-flex min-h-12 items-center gap-5 bg-[#EC1F36] px-6 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#B9101F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            className="group inline-flex min-h-12 items-center gap-5 bg-[#EC1F36] px-6 py-3 text-base font-semibold text-white transition-colors duration-300 hover:bg-[#B9101F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
             Explore our range
             <span
@@ -158,7 +158,7 @@ export default function HeroSection() {
 
           <Link
             to="/contact"
-            className="inline-flex min-h-12 items-center gap-3 border border-white/70 bg-black/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#271719] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            className="inline-flex min-h-12 items-center gap-3 border border-white/70 bg-black/10 px-6 py-3 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#271719] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
           >
             Contact us
             <span aria-hidden="true">↗</span>
@@ -170,7 +170,7 @@ export default function HeroSection() {
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.1 }}
-          className="mt-10 text-[9px] uppercase tracking-[0.25em] text-white/85 sm:mt-12"
+          className="mt-10 text-[11px] uppercase tracking-[0.25em] text-white/85 sm:mt-12"
         >
           Quality · Experience · Everyday essentials
         </motion.p>
