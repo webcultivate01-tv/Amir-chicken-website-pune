@@ -1,8 +1,20 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 
+// Optimised WebP product photos (images/products/<category>/<name>.webp), bundled by Vite
+const productImages = import.meta.glob("../../../images/products/*/*.webp", {
+  eager: true,
+  import: "default",
+});
+const mediaImage = (folder, file) =>
+  productImages[`../../../images/products/${folder}/${file}.webp`];
+const chickenImage = (file) => mediaImage("chicken", file);
+
 const EASE = [0.22, 1, 0.36, 1];
+
+// 3 columns x 2 rows on laptop screens
+const PAGE_SIZE = 6;
 
 const categories = [
   { name: "All Cuts", image: "/images/amir-protein-hero.png" },
@@ -15,40 +27,81 @@ const categories = [
 const products = {
   Chicken: [
     {
-      name: "Chicken Curry Cut",
-      text: "Fresh everyday cuts for classic Indian cooking.",
-      image:
-        "https://images.pexels.com/photos/6107734/pexels-photo-6107734.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      name: "Chicken Breast Boneless",
+      text: "Lean, tender boneless breast for grills and curries.",
+      image: chickenImage("Chicken Breast Boneless"),
     },
     {
-      name: "Chicken Breast",
-      text: "Tender and versatile boneless cuts.",
-      image:
-        "https://images.pexels.com/photos/13422437/pexels-photo-13422437.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      name: "Chicken Drumstick Skinless",
+      text: "Juicy skinless drumsticks for frying and roasting.",
+      image: chickenImage("Chicken Drumstick Skinless"),
     },
     {
-      name: "Chicken Pieces",
-      text: "Freshly prepared cuts for everyday meals.",
-      image:
-        "https://images.pexels.com/photos/6281484/pexels-photo-6281484.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      name: "Chicken Gizzard",
+      text: "Cleaned gizzards, fresh and ready to cook.",
+      image: chickenImage("Chicken Gizzard"),
     },
     {
-      name: "Fresh Chicken",
-      text: "Quality chicken prepared with care.",
-      image:
-        "https://images.pexels.com/photos/5769380/pexels-photo-5769380.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      name: "Chicken Leg Boneless",
+      text: "Boneless leg meat, soft and full of flavour.",
+      image: chickenImage("Chicken Leg Boneless"),
     },
     {
-      name: "Whole Chicken",
-      text: "Fresh whole chicken ready for your kitchen.",
-      image:
-        "https://images.pexels.com/photos/10842246/pexels-photo-10842246.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      name: "Chicken Liver & Heart",
+      text: "Fresh liver and heart, cleaned and packed.",
+      image: chickenImage("Chicken Liver & Heart"),
     },
     {
-      name: "Chicken Meat",
-      text: "Fresh cuts selected for everyday cooking.",
+      name: "Chicken Lollipop",
+      text: "Frenched wing pieces, ready to marinate and fry.",
+      image: chickenImage("Chicken Lollipop"),
+    },
+    {
+      name: "Chicken Neck With Skin",
+      text: "Fresh neck pieces with skin, great for gravies.",
+      image: chickenImage("Chicken Neck With Skin"),
+    },
+    {
+      name: "Chicken Soup Bones (Janatha Chicken)",
+      text: "Meaty bones for rich, nourishing soups.",
+      image: chickenImage("Chicken Soup Bones (Janatha Chicken)"),
+    },
+    {
+      name: "Chicken Whole Leg Skinless",
+      text: "Whole skinless leg, perfect for curries and roasts.",
+      image: chickenImage("Chicken Whole Leg Skinless"),
+    },
+    {
+      name: "Chicken Wings With Skin",
+      text: "Fresh wings with skin, trimmed and ready to cook.",
+      image: chickenImage("Chicken Wings With Skin"),
+    },
+    {
+      name: "Whole Chicken With Skin",
+      text: "Farm-fresh whole bird, dressed and cleaned.",
+      image: chickenImage("Whole Chicken With Skin"),
+    },
+    {
+      name: "Whole Chicken Without Skin",
+      text: "Skinless whole bird for lighter cooking.",
+      image: chickenImage("Whole Chicken WithOut Skin"),
+    },
+    {
+      name: "Tandoor Chicken",
+      text: "Whole chicken prepared for tandoor and grill.",
+      image: chickenImage("Tandoor Chicken"),
+    },
+    {
+      name: "Gavran/Country Chicken",
+      text: "Free-range country chicken with a rich, authentic taste.",
       image:
-        "https://images.pexels.com/photos/6107755/pexels-photo-6107755.jpeg?auto=compress&cs=tinysrgb&w=1200",
+        "https://images.pexels.com/photos/19038587/pexels-photo-19038587.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    },
+    {
+      name: "White Eggs (pc)",
+      text: "Fresh white eggs, sold per piece.",
+      image:
+        "https://images.pexels.com/photos/6700695/pexels-photo-6700695.jpeg?auto=compress&cs=tinysrgb&w=1200",
     },
   ],
 
@@ -57,37 +110,57 @@ const products = {
       name: "Mutton Curry Cut",
       text: "Fresh cuts prepared for rich Indian curries.",
       image:
+        mediaImage("mutton", "Mutton Curry Cut") ??
         "https://images.pexels.com/photos/6281509/pexels-photo-6281509.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    },
+    {
+      name: "Mutton Boneless",
+      text: "Tender boneless mutton for kebabs and fry.",
+      image:
+        mediaImage("mutton", "Mutton Boneless") ??
+        "https://images.pexels.com/photos/4411696/pexels-photo-4411696.jpeg?auto=compress&cs=tinysrgb&w=1200",
     },
     {
       name: "Mutton Chops",
       text: "Tender chops with rich natural flavour.",
       image:
-        "https://images.pexels.com/photos/4411696/pexels-photo-4411696.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    },
-    {
-      name: "Fresh Lamb Cut",
-      text: "Fresh meat prepared for everyday meals.",
-      image:
+        mediaImage("mutton", "Mutton Chops") ??
         "https://images.pexels.com/photos/31732110/pexels-photo-31732110.jpeg?auto=compress&cs=tinysrgb&w=1200",
     },
     {
-      name: "Premium Mutton",
-      text: "Carefully selected cuts for your kitchen.",
+      name: "Mutton Shoulder",
+      text: "Flavourful shoulder cut, ideal for slow cooking.",
       image:
+        mediaImage("mutton", "Mutton Shoulder") ??
         "https://images.pexels.com/photos/31732115/pexels-photo-31732115.jpeg?auto=compress&cs=tinysrgb&w=1200",
     },
     {
-      name: "Mutton Cuts",
-      text: "Fresh cuts with naturally rich flavour.",
+      name: "Mutton Leg",
+      text: "Lean leg cut for roasts and biryani.",
       image:
+        mediaImage("mutton", "Mutton Leg") ??
         "https://images.pexels.com/photos/36691281/pexels-photo-36691281.jpeg?auto=compress&cs=tinysrgb&w=1200",
     },
     {
-      name: "Fresh Meat",
-      text: "Quality cuts prepared with care.",
+      name: "Mutton Paya",
+      text: "Cleaned trotters for traditional, rich paya soup.",
       image:
+        mediaImage("mutton", "Mutton Paya") ??
         "https://images.pexels.com/photos/36691295/pexels-photo-36691295.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    },
+    {
+      name: "Mutton Brain",
+      text: "Fresh, cleaned brain for classic fry dishes.",
+      image:
+        mediaImage("mutton", "Mutton Brain") ??
+        "https://images.pexels.com/photos/6281509/pexels-photo-6281509.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    },
+    {
+      name: "Mutton Liver",
+      text: "Fresh liver, cleaned and ready to cook.",
+      image:
+        mediaImage("mutton", "Mutton Liver") ??
+        "https://images.pexels.com/photos/4411696/pexels-photo-4411696.jpeg?auto=compress&cs=tinysrgb&w=1200",
     },
   ],
 
@@ -172,6 +245,8 @@ const products = {
 
 export default function CatalogPage() {
   const [active, setActive] = useState("All Cuts");
+  const [page, setPage] = useState(1);
+  const productsRef = useRef(null);
   const reduce = useReducedMotion();
 
   const reveal = (delay = 0, y = 32) => ({
@@ -183,10 +258,19 @@ export default function CatalogPage() {
 
   const visibleProducts =
     active === "All Cuts"
-      ? Object.values(products)
-          .flat()
-          .slice(0, 6)
+      ? Object.values(products).flat()
       : products[active];
+
+  const totalPages = Math.ceil(visibleProducts.length / PAGE_SIZE);
+  const pagedProducts = visibleProducts.slice(
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE
+  );
+
+  const goToPage = (p) => {
+    setPage(p);
+    productsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <main className="min-h-screen bg-white text-[#171719]">
@@ -247,7 +331,10 @@ export default function CatalogPage() {
                   key={category.name}
                   {...reveal(0.1 + i * 0.08, 40)}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => setActive(category.name)}
+                  onClick={() => {
+                    setActive(category.name);
+                    setPage(1);
+                  }}
                   className="group flex min-h-[210px] flex-col items-center justify-center rounded-[26px] border border-neutral-200 bg-[#FAFAFA] p-4 text-center transition-all duration-300 hover:border-[#EC1F36] hover:bg-[#FFF4F5] hover:shadow-lg hover:shadow-[#EC1F36]/10"
                 >
                   <div className="mb-4 h-28 w-28 overflow-hidden rounded-full bg-white ring-2 ring-transparent ring-offset-2 transition-all duration-500 group-hover:scale-105 group-hover:ring-[#EC1F36]"
@@ -272,7 +359,7 @@ export default function CatalogPage() {
 
 
       {/* ================= PRODUCTS ================= */}
-      <section className="px-6 pb-24 sm:px-8 lg:px-10">
+      <section ref={productsRef} className="scroll-mt-24 px-6 pb-24 sm:px-8 lg:px-10">
         <div className="mx-auto max-w-[1320px]">
 
           {/* SECTION TITLE */}
@@ -292,7 +379,7 @@ export default function CatalogPage() {
           {/* PRODUCT GRID */}
           <div key={active} className="mx-auto grid max-w-[1320px] gap-x-6 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
 
-            {visibleProducts.map((product, i) => (
+            {pagedProducts.map((product, i) => (
               <motion.article
                 key={product.name}
                 {...reveal((i % 3) * 0.1, 48)}
@@ -333,6 +420,47 @@ export default function CatalogPage() {
             ))}
 
           </div>
+
+          {/* PAGINATION */}
+          {totalPages > 1 && (
+            <nav aria-label="Pagination" className="mt-12 flex justify-center space-x-4">
+              <button
+                type="button"
+                aria-label="Previous page"
+                disabled={page === 1}
+                onClick={() => goToPage(page - 1)}
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#EC1F36] rotate-180 border-neutral-300 text-neutral-600 hover:border-[#EC1F36] hover:text-[#EC1F36] disabled:cursor-default disabled:bg-neutral-100 disabled:text-neutral-400 disabled:hover:border-neutral-300 disabled:hover:text-neutral-400"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="size-3 overflow-visible" fill="currentColor" viewBox="0 0 451.846 451.847" aria-hidden="true"><path d="M345.441 248.292 151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373" /></svg>
+              </button>
+
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  aria-current={n === page ? "page" : undefined}
+                  onClick={() => goToPage(n)}
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#EC1F36] ${
+                    n === page
+                      ? "border-[#EC1F36] bg-[#EC1F36] text-white"
+                      : "border-neutral-300 text-[#171719] hover:border-[#EC1F36] hover:bg-[#FFF4F5] hover:text-[#EC1F36]"
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                aria-label="Next page"
+                disabled={page === totalPages}
+                onClick={() => goToPage(page + 1)}
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#EC1F36] border-neutral-300 text-neutral-600 hover:border-[#EC1F36] hover:text-[#EC1F36] disabled:cursor-default disabled:bg-neutral-100 disabled:text-neutral-400 disabled:hover:border-neutral-300 disabled:hover:text-neutral-400"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="size-3 overflow-visible" fill="currentColor" viewBox="0 0 451.846 451.847" aria-hidden="true"><path d="M345.441 248.292 151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373" /></svg>
+              </button>
+            </nav>
+          )}
 
         </div>
       </section>
