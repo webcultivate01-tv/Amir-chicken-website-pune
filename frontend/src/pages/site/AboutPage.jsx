@@ -819,10 +819,10 @@ const FinalCta = () => (
         </Link>
 
         <Link
-          to="/contact"
+          to="/catalog"
           className="inline-flex items-center justify-center border border-white/60 text-white px-3 min-[400px]:px-5 sm:px-10 h-12 sm:h-14 rounded-lg font-poppins text-[10px] min-[400px]:text-[11px] sm:text-[14px] tracking-[0.06em] sm:tracking-[0.14em] uppercase font-bold whitespace-nowrap transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
         >
-          Contact AMIR
+          Explore Products
         </Link>
       </div>
     </div>

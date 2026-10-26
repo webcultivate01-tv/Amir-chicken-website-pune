@@ -312,10 +312,10 @@ const NewsPage = () => {
             </Link>
 
             <Link
-              to="/contact"
+              to="/catalog"
               className="inline-flex h-14 items-center justify-center rounded-lg border border-white/60 px-10 font-poppins text-[14px] font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:bg-white hover:text-[#EC1F36]"
             >
-              Contact AMIR
+              Explore Products
             </Link>
           </div>
         </div>
