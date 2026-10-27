@@ -10,6 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const products = [
   {
     name: "Fresh Chicken",
+    category: "chicken",
     caption: "FRESHNESS, EVERY DAY",
     description:
       "Fresh chicken, carefully handled with quality and hygiene in mind.",
@@ -17,6 +18,7 @@ const products = [
   },
   {
     name: "Tender Mutton",
+    category: "mutton",
     caption: "QUALITY YOU CAN TRUST",
     description:
       "Quality mutton selected with care for freshness and consistency.",
@@ -24,6 +26,7 @@ const products = [
   },
   {
     name: "Fresh Fish",
+    category: "fish",
     caption: "FRESH FROM THE WATER",
     description:
       "Fresh fish and seafood, handled with care from selection to your table.",
@@ -31,6 +34,7 @@ const products = [
   },
   {
     name: "Farm Fresh Eggs",
+    category: "eggs",
     caption: "A DAILY ESSENTIAL",
     description:
       "Fresh eggs for everyday meals and family favourites.",
@@ -335,7 +339,7 @@ export default function PlateShowcase() {
                 <p>{product.description}</p>
 
                 <Link
-                  to="/catalog"
+                  to={`/catalog?category=${product.category}`}
                   className="plate-showcase__link"
                 >
                   Explore products{" "}
@@ -372,7 +376,7 @@ export default function PlateShowcase() {
               <p>{product.description}</p>
 
               <Link
-                to="/catalog"
+                to={`/catalog?category=${product.category}`}
                 className="plate-showcase__link"
               >
                 Explore products ↗

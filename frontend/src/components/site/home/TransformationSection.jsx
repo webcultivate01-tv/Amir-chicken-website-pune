@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 const chapters = [
   {
     title: "Modern Brand Identity",
-    text: "A stronger and more recognizable AMIR retail identity.",
+    text: "A stronger and more recognisable Amir retail identity.",
   },
   {
     title: "Hygienic Store Formats",
@@ -15,7 +15,7 @@ const chapters = [
   },
   {
     title: "Centralised Procurement",
-    text: "A more organized approach to sourcing and supply.",
+    text: "A more organised approach to sourcing and supply.",
   },
   {
     title: "Franchise Training",
@@ -27,7 +27,7 @@ const chapters = [
   },
   {
     title: "Consistent Customer Experience",
-    text: "Bringing a familiar AMIR experience across the network.",
+    text: "Bringing a familiar Amir experience across the network.",
   },
 ];
 
@@ -113,7 +113,7 @@ export default function TransformationSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white px-6 py-16 sm:px-10 lg:flex lg:min-h-[100svh] lg:items-center lg:px-16 lg:py-12">
+    <section ref={sectionRef} className="border-t border-[#EC1F36]/15 bg-white px-6 py-16 sm:px-10 lg:flex lg:min-h-[100svh] lg:items-center lg:px-16 lg:py-12">
       <style>{`
         .amir-chapters-window { scrollbar-width: none; -ms-overflow-style: none; }
         .amir-chapters-window::-webkit-scrollbar { display: none; }
@@ -126,19 +126,19 @@ export default function TransformationSection() {
             <div className="flex items-center gap-3">
               <span className="h-[2px] w-10 bg-[#EC1F36]" />
               <p className="font-poppins text-[15px] font-semibold uppercase tracking-[0.22em] text-[#171719]/60">
-                A Transformation · 2016
+                Franchising &amp; Rebranding · 2016
               </p>
             </div>
 
             <h2 className="mt-7 font-seasons text-[48px] leading-[1] tracking-[-0.03em] text-[#171719] sm:text-[64px] lg:text-[80px]">
               A new chapter
               <br />
-              for <span className="italic text-[#EC1F36]">AMIR.</span>
+              for <span className="italic text-[#EC1F36]">Amir.</span>
             </h2>
 
             <p className="mt-7 max-w-md font-poppins text-[17px] leading-[1.9] text-[#171719]/60">
               The 2016 transformation introduced a more structured,
-              recognizable and scalable approach to the AMIR network.
+              recognisable and scalable approach to the Amir network.
             </p>
 
             <div className="mt-10 flex items-center gap-4">

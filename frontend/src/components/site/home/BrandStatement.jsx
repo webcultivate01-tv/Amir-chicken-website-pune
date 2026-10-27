@@ -46,7 +46,7 @@ export default function BrandStatement() {
       <div className="mx-auto grid max-w-[1480px] gap-10 lg:grid-cols-[0.55fr_1.45fr] lg:items-end">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-            The AMIR Story
+            The Amir Story
           </p>
           <div className="mt-5 h-px w-16 bg-[#EC1F36]" />
         </div>

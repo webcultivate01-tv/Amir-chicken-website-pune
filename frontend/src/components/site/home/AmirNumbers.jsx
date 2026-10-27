@@ -16,7 +16,7 @@ const stats = [
     description: "A legacy of commitment built since 1991.",
   },
   {
-    value: 600,
+    value: 580,
     suffix: "+",
     label: "Retail Stores",
     description: "An expanding network serving customers.",
@@ -24,8 +24,8 @@ const stats = [
   {
     value: 2500,
     suffix: "+",
-    label: "People Engaged",
-    description: "People connected through the AMIR journey.",
+    label: "Livelihoods Supported",
+    description: "Families and teams supported across the Amir network.",
   },
 ];
 
@@ -64,7 +64,7 @@ function StatItem({ item, index, progress, reduceMotion }) {
           : ""
       }`}
     >
-      <p className="font-seasons text-6xl font-medium tracking-[-0.05em] text-[#281719] sm:text-7xl lg:text-8xl">
+      <p className="font-seasons text-5xl font-medium tracking-[-0.05em] text-[#281719] sm:text-6xl lg:text-7xl">
         <ScrollNumber
           value={item.value}
           suffix={item.suffix}
@@ -119,7 +119,7 @@ export default function AmirNumbers() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex min-h-[100svh] items-center overflow-hidden bg-[#F5F3F0] px-6 py-16 sm:px-10 lg:px-16"
+      className="relative flex items-center overflow-hidden bg-[#F5F3F0] px-6 py-14 sm:px-10 lg:px-16 lg:py-16"
     >
       {/* Decorative parallax rings */}
       {!reduceMotion && (
@@ -149,7 +149,7 @@ export default function AmirNumbers() {
         >
           <p className="inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.25em] text-[#EC1F36]">
             <span className="h-px w-8 bg-[#EC1F36]/50" />
-            AMIR in Numbers
+            Amir in Numbers
             <span className="h-px w-8 bg-[#EC1F36]/50" />
           </p>
 
@@ -159,19 +159,18 @@ export default function AmirNumbers() {
           </h2>
 
           <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-neutral-500 sm:text-base">
-            Decades of experience, a growing retail network and thousands of
-            people connected through the AMIR journey.
+            A growing retail network and thousands of livelihoods, built over 35 years.
           </p>
         </motion.div>
 
         {/* Scroll-drawn divider */}
         <motion.div
           style={reduceMotion ? undefined : { scaleX: lineScale }}
-          className="mx-auto mt-10 h-px w-full max-w-5xl origin-left bg-gradient-to-r from-transparent via-[#EC1F36]/40 to-transparent lg:mt-14"
+          className="mx-auto mt-8 h-px w-full max-w-5xl origin-left bg-gradient-to-r from-transparent via-[#EC1F36]/40 to-transparent lg:mt-8"
         />
 
         {/* Stats */}
-        <div className="mx-auto mt-8 grid max-w-6xl grid-cols-1 lg:mt-12 lg:grid-cols-3">
+        <div className="mx-auto mt-4 grid max-w-6xl grid-cols-1 lg:mt-6 lg:grid-cols-3">
           {stats.map((item, index) => (
             <StatItem
               key={item.label}

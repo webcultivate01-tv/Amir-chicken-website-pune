@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import storyPhoto from "../../../images/aboutShop.png";
 import founderPhoto from "../../../images/vijayMore.png";
+import TransformationSection from "../../components/site/home/TransformationSection";
 
 /* =========================================================
    SECTION LABEL
@@ -804,6 +805,11 @@ const FinalCta = () => (
         <span className="italic">reliable protein partner?</span>
       </h2>
 
+      <p className="mx-auto mt-5 max-w-xl font-poppins text-[15px] leading-7 text-white/80">
+        Fresh cuts, accurate weight and fair pricing, backed by 35+ years
+        of trust and a network of 580+ stores across Maharashtra.
+      </p>
+
       <div className="mx-auto mt-6 w-10 h-[3px] bg-white/70" />
 
       <div className="mt-8 flex flex-row justify-center gap-2 sm:gap-5">
@@ -1066,6 +1072,7 @@ const AboutPage = () => {
       <StorySection />
       <FounderSection />
       <JourneySection />
+      <TransformationSection />
       <TrustSection />
       <FinalCta />
 

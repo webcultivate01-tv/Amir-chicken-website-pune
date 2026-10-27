@@ -44,7 +44,7 @@ export default function HeroSection() {
     <section
       ref={heroRef}
       aria-labelledby="amir-hero-title"
-      className="relative isolate flex min-h-[620px] h-[calc(100svh-82px)] max-h-[900px] items-center justify-center overflow-hidden bg-[#271719] text-white"
+      className="relative isolate flex h-[80svh] max-h-[900px] sm:min-h-[620px] sm:h-[calc(100svh-82px)] items-center justify-center overflow-hidden bg-[#271719] text-white"
     >
       {/* Full-screen food photograph */}
       <motion.div
@@ -70,13 +70,13 @@ export default function HeroSection() {
       <div className="absolute inset-0 -z-10 bg-black/20" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/35 via-black/10 to-black/55" />
 
-      <div className="mx-auto w-full max-w-[1440px] px-5 py-20 text-center sm:px-10 lg:px-16">
+      <div className="mx-auto w-full max-w-[1440px] px-5 pb-8 pt-4 text-center sm:py-20 sm:px-10 lg:px-16">
         {/* Brand eyebrow */}
         <motion.div
           initial={reduceMotion ? false : entrance}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="mb-7 flex items-center justify-center gap-3"
+          className="mb-5 flex items-center sm:mb-7 justify-center gap-3"
         >
           <span className="h-px w-8 bg-[#EC1F36]" />
 
@@ -103,7 +103,7 @@ export default function HeroSection() {
               },
             },
           }}
-          className="mx-auto max-w-5xl font-seasons text-4xl font-medium leading-[1.08] tracking-tight sm:text-6xl md:text-7xl lg:text-[88px]"
+          className="mx-auto max-w-5xl font-seasons text-4xl font-medium leading-[1.08] tracking-tight max-sm:text-[2.5rem] sm:text-6xl md:text-7xl lg:text-[88px]"
         >
           <span className="block overflow-hidden pb-2">
             <motion.span
@@ -142,7 +142,7 @@ export default function HeroSection() {
           initial={reduceMotion ? false : entrance}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.9 }}
-          className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          className="mt-6 flex flex-wrap sm:mt-8 items-center justify-center gap-3"
         >
           <Link
             to="/catalog"
@@ -171,7 +171,7 @@ export default function HeroSection() {
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.1 }}
-          className="mt-10 text-xs font-medium uppercase tracking-[0.2em] text-white sm:mt-12"
+          className="mt-6 text-xs font-medium uppercase tracking-[0.2em] text-white sm:mt-12"
         >
           Freshness · Fairness · Trust
           <span className="mx-2 text-[#FFB800]">|</span>

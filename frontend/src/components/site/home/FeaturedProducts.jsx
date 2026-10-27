@@ -53,12 +53,12 @@ function ProductCard({ product, index, reduce }) {
     >
       <Link
         to="/contact"
-        className="flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-neutral-200/80 bg-white transition-all duration-500 hover:-translate-y-2 hover:border-[#EC1F36]/30 hover:shadow-[0_28px_60px_-24px_rgba(236,31,54,0.35)]"
+        className="flex h-full flex-col overflow-hidden rounded-2xl border sm:rounded-[1.75rem] border border-neutral-200/80 bg-white transition-all duration-500 hover:-translate-y-2 hover:border-[#EC1F36]/30 hover:shadow-[0_28px_60px_-24px_rgba(236,31,54,0.35)]"
       >
         <div
           className={`relative aspect-[4/3.4] overflow-hidden bg-gradient-to-br ${product.tint}`}
         >
-          <span className="absolute left-4 top-4 z-10 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#EC1F36] backdrop-blur">
+          <span className="absolute left-2 top-2 z-10 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-semibold sm:left-4 sm:top-4 sm:px-3 sm:py-1 sm:text-[11px] uppercase tracking-[0.14em] text-[#EC1F36] backdrop-blur">
             {product.category}
           </span>
 
@@ -72,16 +72,16 @@ function ProductCard({ product, index, reduce }) {
           />
         </div>
 
-        <div className="flex flex-1 flex-col p-6">
-          <h3 className="text-xl font-semibold tracking-tight text-[#171719]">
+        <div className="flex flex-1 flex-col p-3 sm:p-6">
+          <h3 className="text-sm font-semibold leading-snug tracking-tight text-[#171719] sm:text-xl">
             {product.name}
           </h3>
 
-          <p className="mt-2 flex-1 text-[15px] leading-6 text-neutral-500">
+          <p className="mt-1 hidden flex-1 text-[15px] leading-6 text-neutral-500 sm:mt-2 sm:block">
             {product.text}
           </p>
 
-          <span className="mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-[#EC1F36] px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-300 group-hover:bg-[#171719]">
+          <span className="mt-3 inline-flex w-fit items-center gap-1.5 rounded-full bg-[#EC1F36] px-3.5 py-2 text-xs font-semibold sm:mt-6 sm:gap-2 sm:px-5 sm:py-2.5 sm:text-sm text-white transition-colors duration-300 group-hover:bg-[#171719]">
             Order now
             <span
               aria-hidden="true"
@@ -119,7 +119,7 @@ export default function FeaturedProducts() {
               Featured Products
             </p>
 
-            <h2 className="mt-4 text-5xl font-semibold leading-[0.95] tracking-[-0.05em] text-[#171719] sm:text-6xl">
+            <h2 className="mt-3 text-[2.15rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#171719] sm:mt-4 sm:text-6xl sm:leading-[0.95] sm:tracking-[-0.05em]">
               Customer favourites,
               <br />
               <span className="text-[#EC1F36]">picked fresh.</span>
@@ -133,21 +133,21 @@ export default function FeaturedProducts() {
             transition={{ duration: 0.8, delay: 0.15, ease: EASE }}
             className="max-w-md"
           >
-            <p className="text-base leading-7 text-neutral-500">
+            <p className="text-[15px] leading-6 text-neutral-600 sm:text-base sm:leading-7 sm:text-neutral-500">
               The cuts our customers reach for most, handled with care and
               delivered fresh from our stores.
             </p>
 
             <Link
               to="/catalog"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#171719] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#EC1F36]"
+              className="mt-5 hidden items-center gap-2 rounded-full bg-[#171719] px-6 sm:inline-flex py-3 text-sm font-semibold text-white transition-colors hover:bg-[#EC1F36]"
             >
               Shop all products <span aria-hidden="true">↗</span>
             </Link>
           </motion.div>
         </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-14 sm:gap-6 lg:grid-cols-4">
           {featured.map((product, index) => (
             <ProductCard
               key={product.name}
@@ -156,6 +156,15 @@ export default function FeaturedProducts() {
               reduce={reduce}
             />
           ))}
+        </div>
+
+        <div className="mt-8 flex justify-center sm:hidden">
+          <Link
+            to="/catalog"
+            className="inline-flex items-center gap-2 rounded-full bg-[#171719] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#EC1F36]"
+          >
+            See more products <span aria-hidden="true">↗</span>
+          </Link>
         </div>
       </div>
     </section>

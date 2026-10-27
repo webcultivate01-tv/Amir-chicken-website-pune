@@ -1,5 +1,5 @@
 import aboutHero from "../../../../images/aboutHero.png";
-import oneAmir from "../../../../images/oneAmir.png";
+import oneAmir from "../../../../images/oneAmir (2).png";
 import newsHero from "../../../../images/newsHero1.png";
 import oneToAmir from "../../../../images/oneToAmir.png";
 import newsHero2 from "../../../../images/newsHero2.png";

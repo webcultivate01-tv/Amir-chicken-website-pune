@@ -50,7 +50,7 @@
 
 .plate-showcase__plate {
   position: relative;
-  width: min(100%, 78svh, 750px);
+  width: min(100%, 70svh, 680px);
   aspect-ratio: 1;
   margin: auto;
   transform-origin: center center;
@@ -175,7 +175,7 @@
   }
 
   .plate-showcase__plate {
-    width: min(100%, 72svh, 640px);
+    width: min(100%, 65svh, 580px);
   }
 
   .plate-showcase__product h3 {

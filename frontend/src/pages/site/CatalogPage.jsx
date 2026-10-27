@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 
 // Optimised WebP product photos (images/products/<category>/<name>.webp), bundled by Vite
@@ -243,11 +243,36 @@ const products = {
   ],
 };
 
+// URL slug -> category name, used by links like /catalog?category=mutton
+const categorySlugs = {
+  chicken: "Chicken",
+  mutton: "Mutton",
+  fish: "Fish & Seafood",
+  eggs: "Farm Eggs",
+};
+
 export default function CatalogPage() {
-  const [active, setActive] = useState("All Cuts");
+  const [searchParams] = useSearchParams();
+  const categoryParam = categorySlugs[searchParams.get("category")];
+  const [active, setActive] = useState(categoryParam ?? "All Cuts");
   const [page, setPage] = useState(1);
   const productsRef = useRef(null);
   const reduce = useReducedMotion();
+
+  // Arriving from a "Explore products" link: show that category and jump
+  // straight to the product cards instead of the page header.
+  useEffect(() => {
+    if (!categoryParam) return;
+    setActive(categoryParam);
+    setPage(1);
+    const timer = setTimeout(() => {
+      productsRef.current?.scrollIntoView({
+        behavior: reduce ? "auto" : "smooth",
+        block: "start",
+      });
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [categoryParam, reduce]);
 
   const reveal = (delay = 0, y = 32) => ({
     initial: reduce ? false : { opacity: 0, y },
