@@ -24,7 +24,7 @@ const Chevron =({ d }) => (
 );
 
 const arrowBtn =
-  "absolute top-1/2 z-20 hidden h-14 w-14 -translate-y-1/2 items-center justify-center transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#EC1F36] sm:flex";
+  "absolute top-1/2 z-20 hidden h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full backdrop-blur-sm transition-all duration-300 hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#EC1F36] sm:flex";
 
 export default function NewsHero() {
   const [index, setIndex] = useState(0);
@@ -53,7 +53,7 @@ export default function NewsHero() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return undefined;
     }
-    const timer = setTimeout(next, 2000);
+    const timer = setTimeout(next, 6000);
     return () => clearTimeout(timer);
   }, [index, paused, next]);
 
@@ -234,12 +234,12 @@ export default function NewsHero() {
               className="flex h-6 w-6 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <span
-                className={`block h-2 w-2 rounded-full transition-all duration-300 ${
+                className={`block h-2 rounded-full transition-all duration-500 ${
                   active
-                    ? `scale-110 ${onLight ? "bg-[#EC1F36]" : "bg-white"}`
+                    ? `w-7 ${onLight ? "bg-[#EC1F36]" : "bg-white"}`
                     : onLight
-                    ? "bg-[#EC1F36]/30 hover:bg-[#EC1F36]/60"
-                    : "bg-white/40 hover:bg-white/70"
+                    ? "w-2 bg-[#EC1F36]/30 hover:bg-[#EC1F36]/60"
+                    : "w-2 bg-white/40 hover:bg-white/70"
                 }`}
               />
             </button>

@@ -65,14 +65,14 @@ export default function StoryModal({ story, onClose }) {
         aria-modal="true"
         aria-labelledby={titleId}
         onKeyDown={onKeyDown}
-        className="news-modal-in relative max-h-[92vh] w-full max-w-[940px] overflow-y-auto bg-white text-[#EC1F36] shadow-2xl"
+        className="news-modal-in relative max-h-[92vh] w-full max-w-[980px] overflow-y-auto rounded-[24px] bg-white text-[#EC1F36] shadow-[0_40px_100px_-30px_rgba(0,0,0,0.6)]"
       >
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
           aria-label="Close story"
-          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#EC1F36]/30 bg-white text-[#EC1F36] transition-colors hover:bg-[#EC1F36] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#EC1F36]"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#EC1F36]/30 bg-white text-[#EC1F36] transition-all duration-300 shadow-md hover:rotate-90 hover:bg-[#EC1F36] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#EC1F36]"
         >
           <svg
             viewBox="0 0 24 24"
