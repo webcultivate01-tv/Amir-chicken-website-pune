@@ -3,6 +3,7 @@ import { NavLink, Link, Outlet, useLocation } from "react-router-dom";
 
 import amirNavbarLogo from "../../../images/amir-seal-of-trust.png";
 import amirFooterLogo from "../../../images/amir-wordmark-white.png";
+import iraLogo from "../../../images/ira-logo.png";
 
 const links = [
   { to: "/", label: "Home", end: true },
@@ -305,9 +306,8 @@ const SiteLayout = () => {
               </Link>
 
               <p className="mt-3 max-w-[350px] text-[13px] leading-5.5 text-[#F5EFE6]/65">
-                AMIR Chicken | Fresh Protein Market.
-                India's Trusted Chicken Retailer since 1991.
-                600+ outlets serving Chicken, Eggs, Mutton and Fish.
+                Amir | Fresh Protein Market.
+                Trusted fresh-protein retailer since 1991, with 580+ stores serving Chicken, Eggs, Mutton, Fish, Seafood and Frozen Foods.
               </p>
 
 
@@ -321,7 +321,7 @@ const SiteLayout = () => {
                   href="https://www.facebook.com/amirchicken.in/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Amir Chicken Facebook"
+                  aria-label="Amir's Fresh Cut Facebook"
                   className="
                     w-10 h-10
                     rounded-full
@@ -349,7 +349,7 @@ const SiteLayout = () => {
                   href="https://www.instagram.com/amirchicken.in/?hl=en"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Amir Chicken Instagram"
+                  aria-label="Amir's Fresh Cut Instagram"
                   className="
                     w-10 h-10
                     rounded-full
@@ -399,7 +399,7 @@ const SiteLayout = () => {
                   href="https://www.linkedin.com/company/amirchicken/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Amir Chicken LinkedIn"
+                  aria-label="Amir's Fresh Cut LinkedIn"
                   className="
                     w-10 h-10
                     rounded-full
@@ -425,7 +425,7 @@ const SiteLayout = () => {
 
                 <a
                   href="mailto:info@amirchicken.in"
-                  aria-label="Email Amir Chicken"
+                  aria-label="Email Amir's Fresh Cut"
                   className="
                     w-10 h-10
                     rounded-full
@@ -459,6 +459,25 @@ const SiteLayout = () => {
                     />
                   </svg>
                 </a>
+
+              </div>
+
+
+              {/* IRA MEMBERSHIP */}
+
+              <div className="mt-5">
+
+                <p className="text-[11px] uppercase tracking-wider text-[#F5EFE6]/50 mb-2">
+                  Proud member of
+                </p>
+
+                <div className="inline-block rounded-md bg-white px-3 py-1.5">
+                  <img
+                    src={iraLogo}
+                    alt="Indian Retail Alliance"
+                    className="h-[34px] w-auto object-contain"
+                  />
+                </div>
 
               </div>
 
@@ -569,6 +588,30 @@ const SiteLayout = () => {
                       &gt;
                     </span>
                     Fish
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/catalog"
+                    className="flex items-center gap-2 text-[13px] text-[#F5EFE6]/65 hover:text-[#F5EFE6] transition-colors duration-200"
+                  >
+                    <span className="text-[#F5EFE6]/40">
+                      &gt;
+                    </span>
+                    Seafood
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/catalog"
+                    className="flex items-center gap-2 text-[13px] text-[#F5EFE6]/65 hover:text-[#F5EFE6] transition-colors duration-200"
+                  >
+                    <span className="text-[#F5EFE6]/40">
+                      &gt;
+                    </span>
+                    Frozen Foods
                   </Link>
                 </li>
 
@@ -858,7 +901,7 @@ const SiteLayout = () => {
             <div className="flex items-center gap-3">
 
               <p className="text-[12px] text-[#F5EFE6]/60">
-                © {new Date().getFullYear()} Amir Chicken. All rights reserved.
+                © {new Date().getFullYear()} Aamir Farms and Foods Limited. All rights reserved.
               </p>
 
             </div>

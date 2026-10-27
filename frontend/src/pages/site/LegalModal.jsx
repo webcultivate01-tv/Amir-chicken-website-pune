@@ -30,7 +30,7 @@ export default function LegalModal({
           </button>
 
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#FFB800]">
-            AMIR Chicken
+            Amir's Fresh Cut
           </p>
 
           <h2 className="mt-3 pr-10 text-3xl font-semibold tracking-tight">
@@ -48,7 +48,7 @@ export default function LegalModal({
 
               <p>
                 We respect your privacy and take reasonable steps to protect
-                information shared with us through the AMIR Chicken website.
+                information shared with us through the Amir's Fresh Cut website.
               </p>
 
               <div>
@@ -80,14 +80,22 @@ export default function LegalModal({
                 </h3>
 
                 <p className="mt-2">
-                  For privacy-related questions, contact{" "}
+                  For privacy-related questions, contact Aamir Farms and Foods Limited at{" "}
                   <a
-                    href="mailto:amirchicken.info@gmail.com"
+                    href="mailto:info@amirchicken.in"
                     className="text-[#EC1F36] hover:underline"
                   >
-                    amirchicken.info@gmail.com
+                    info@amirchicken.in
+                  </a>{" "}
+                  or call{" "}
+                  <a
+                    href="tel:+919527982525"
+                    className="text-[#EC1F36] hover:underline"
+                  >
+                    +91 95279 82525
                   </a>
-                  .
+                  . Head Office: K-507-510, Mega Center, Behind Noble
+                  Hospital, Magarpatta Hadapsar, Pune.
                 </p>
               </div>
 
@@ -96,7 +104,7 @@ export default function LegalModal({
             <div className="space-y-6 text-sm leading-7 text-neutral-600">
 
               <p>
-                By using the AMIR Chicken website, you agree to use the website
+                By using the Amir's Fresh Cut website, you agree to use the website
                 responsibly and in accordance with these Terms & Conditions.
               </p>
 
@@ -132,6 +140,31 @@ export default function LegalModal({
                   Website content, branding, logos, images, and other materials
                   may not be reproduced or commercially used without
                   authorization.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-[#171719]">
+                  Contact
+                </h3>
+
+                <p className="mt-2">
+                  Aamir Farms and Foods Limited —{" "}
+                  <a
+                    href="mailto:info@amirchicken.in"
+                    className="text-[#EC1F36] hover:underline"
+                  >
+                    info@amirchicken.in
+                  </a>
+                  ,{" "}
+                  <a
+                    href="tel:+919527982525"
+                    className="text-[#EC1F36] hover:underline"
+                  >
+                    +91 95279 82525
+                  </a>
+                  . Head Office: K-507-510, Mega Center, Behind Noble
+                  Hospital, Magarpatta Hadapsar, Pune.
                 </p>
               </div>
 

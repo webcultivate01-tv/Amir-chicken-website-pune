@@ -4,11 +4,19 @@ const sections = [
   {
     title: "1. Acceptance of These Terms",
     content: (
-      <p>
-        By accessing or using the AMIR Chicken website, you agree to use the
-        website in accordance with these Terms and Conditions. If you do not
-        agree with these terms, please discontinue use of the website.
-      </p>
+      <>
+        <p>
+          By accessing or using the Amir's Fresh Cut website, you agree to use the
+          website in accordance with these Terms and Conditions. If you do not
+          agree with these terms, please discontinue use of the website.
+        </p>
+
+        <p>
+          This website is operated by Aamir Farms and Foods Limited, a
+          Maharashtra-based fresh-protein retail company established in 1991
+          by Mr. Vijay More.
+        </p>
+      </>
     ),
   },
   {
@@ -37,7 +45,7 @@ const sections = [
     content: (
       <p>
         Any order, supply arrangement, quotation, or commercial engagement may
-        be subject to separate terms agreed between AMIR Chicken and the
+        be subject to separate terms agreed between Amir's Fresh Cut and the
         customer.
       </p>
     ),
@@ -58,7 +66,7 @@ const sections = [
       <p>
         Unless otherwise stated, the content, branding, graphics, text,
         imagery, logos, and other materials appearing on this website belong
-        to AMIR Chicken or are used with appropriate permission. They may not
+        to Amir's Fresh Cut or are used with appropriate permission. They may not
         be reproduced or commercially used without authorization.
       </p>
     ),
@@ -68,7 +76,7 @@ const sections = [
     content: (
       <p>
         The website may contain links to third-party websites or services.
-        AMIR Chicken is not responsible for the content, availability, or
+        Amir's Fresh Cut is not responsible for the content, availability, or
         practices of external websites.
       </p>
     ),
@@ -77,7 +85,7 @@ const sections = [
     title: "8. Limitation of Liability",
     content: (
       <p>
-        To the extent permitted by applicable law, AMIR Chicken shall not be
+        To the extent permitted by applicable law, Amir's Fresh Cut shall not be
         responsible for losses arising from interruptions, technical issues,
         inaccuracies, or reliance on information available through the
         website.
@@ -97,17 +105,38 @@ const sections = [
   {
     title: "10. Contact",
     content: (
-      <p>
-        For questions regarding these Terms and Conditions, please contact AMIR
-        Chicken at{" "}
-        <a
-          href="mailto:amirchicken.info@gmail.com"
-          className="font-medium text-[#EC1F36] hover:underline"
-        >
-          amirchicken.info@gmail.com
-        </a>
-        .
-      </p>
+      <>
+        <p>
+          For questions regarding these Terms and Conditions, please contact
+          Aamir Farms and Foods Limited using the details below.
+        </p>
+
+        <ul className="space-y-2">
+          <li>
+            <span className="font-semibold text-[#171719]">Head Office: </span>
+            K-507-510, Mega Center, Behind Noble Hospital, Magarpatta
+            Hadapsar, Pune
+          </li>
+          <li>
+            <span className="font-semibold text-[#171719]">Phone: </span>
+            <a
+              href="tel:+919527982525"
+              className="font-medium text-[#EC1F36] hover:underline"
+            >
+              +91 95279 82525
+            </a>
+          </li>
+          <li>
+            <span className="font-semibold text-[#171719]">Email: </span>
+            <a
+              href="mailto:info@amirchicken.in"
+              className="font-medium text-[#EC1F36] hover:underline"
+            >
+              info@amirchicken.in
+            </a>
+          </li>
+        </ul>
+      </>
     ),
   },
 ];
@@ -122,7 +151,7 @@ export default function TermsPage() {
             Terms &amp; Conditions
           </h1>
           <p className="mt-3 text-base leading-7 text-[#F5EFE6]/70">
-            Please read these terms carefully before using the AMIR Chicken website.
+            Please read these terms carefully before using the Amir's Fresh Cut website.
           </p>
         </div>
       </section>

@@ -225,41 +225,33 @@
     padding-block: 24px;
   }
 
-  .plate-showcase__layout {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .plate-showcase__visual {
-    height: auto;
-  }
-
-  .plate-showcase__plate {
-    width: min(90vw, 420px);
-  }
-
-  .plate-showcase__details,
+  /* The pinned desktop plate is replaced by the stacked list below. */
+  .plate-showcase__layout,
   .plate-showcase__footer {
     display: none;
   }
 
   .plate-showcase__mobile-list {
     display: grid;
-    gap: 36px;
-    margin-top: 30px;
+    gap: 48px;
   }
 
   .plate-showcase__mobile-list article {
-    text-align: left;
+    text-align: center;
+  }
+
+  .plate-showcase__mobile-list p {
+    margin-inline: auto;
   }
 
   .plate-showcase__mobile-list img {
     display: block;
-    width: min(100%, 380px);
+    width: min(88%, 360px);
     aspect-ratio: 1;
     margin: 0 auto 18px;
     object-fit: contain;
+    will-change: transform;
+    filter: drop-shadow(0 14px 18px rgba(39, 23, 25, 0.1));
   }
 
   .plate-showcase__mobile-list h3 {

@@ -383,7 +383,7 @@ export default function GetQuotePage() {
           </h2>
 
           <a
-            href="mailto:amirchicken.info@gmail.com"
+            href="mailto:info@amirchicken.in"
             className="mt-7 inline-flex items-center gap-3 rounded-full bg-[#171719] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[#EC1F36]"
           >
             Email AMIR

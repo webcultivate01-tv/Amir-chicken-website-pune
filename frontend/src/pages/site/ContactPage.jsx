@@ -548,7 +548,7 @@ export default function ContactPage() {
           </motion.h2>
 
           <motion.p variants={ctaItem} className="mt-6 max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg">
-            Bulk orders, custom cuts or delivery schedules, tell us what you need and our team will get back to you with the right fresh-cut solution.
+            Bulk orders, custom cuts or institutional supply, tell us what you need and our team will get back to you with the right fresh-cut solution.
           </motion.p>
 
           <motion.div variants={ctaItem} className="mt-9 flex flex-wrap gap-3">
@@ -563,7 +563,7 @@ export default function ContactPage() {
               }}
               className="group inline-flex items-center gap-3 rounded-full bg-[#171719] py-3 pl-6 pr-3 text-sm font-semibold text-white transition hover:bg-[#EC1F36]"
             >
-              <span>Contact Now</span>
+              <span>Become a Franchise Partner</span>
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#171719] transition-transform duration-300 group-hover:translate-x-1">
                 <ArrowIcon />
               </span>

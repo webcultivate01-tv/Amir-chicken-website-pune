@@ -94,6 +94,28 @@ export default function PlateShowcase() {
       const mm = gsap.matchMedia();
 
       mm.add("(min-width: 761px)", () => {
+        // One-time entrance: the plate glides in from the left and the
+        // text from the right the first time the section scrolls into view.
+        // These wrappers are separate from the scrubbed plate rotation.
+        const visual = section.querySelector(".plate-showcase__visual");
+        const details = section.querySelector(".plate-showcase__details");
+
+        gsap.set(visual, { xPercent: -40, autoAlpha: 0 });
+        gsap.set(details, { xPercent: 40, autoAlpha: 0 });
+
+        const entrance = gsap.timeline({
+          defaults: { duration: 1.3, ease: "power3.out" },
+          scrollTrigger: {
+            trigger: section,
+            start: "top 75%",
+            once: true,
+          },
+        });
+
+        entrance
+          .to(visual, { xPercent: 0, autoAlpha: 1 }, 0)
+          .to(details, { xPercent: 0, autoAlpha: 1 }, 0.15);
+
         const timeline = gsap.timeline({
           defaults: {
             ease: "power2.inOut",
@@ -192,15 +214,69 @@ export default function PlateShowcase() {
           );
         }
 
-        return () => timeline.kill();
+        return () => {
+          entrance.kill();
+          timeline.kill();
+        };
       });
 
-      // On mobile, show all products in a normal scrolling layout.
+      // On mobile, products stack in a normal scrolling layout. Each card
+      // fades up once, and its plate rotates and scales with scroll.
       mm.add("(max-width: 760px)", () => {
-        gsap.set(plate, { clearProps: "transform" });
-        gsap.set(images, { autoAlpha: 1 });
-        gsap.set(texts, { clearProps: "all" });
-        gsap.set(progressRef.current, { scaleX: 1 });
+        const cards = gsap.utils.toArray(
+          section.querySelectorAll(".plate-showcase__mobile-list article")
+        );
+
+        cards.forEach((card) => {
+          const img = card.querySelector("img");
+          const items = card.querySelectorAll(
+            ".plate-showcase__caption, h3, p, .plate-showcase__link"
+          );
+
+          gsap.fromTo(
+            img,
+            { autoAlpha: 0, scale: 0.85 },
+            {
+              autoAlpha: 1,
+              scale: 1,
+              duration: 0.9,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                once: true,
+              },
+            }
+          );
+
+          gsap.from(items, {
+            autoAlpha: 0,
+            y: 24,
+            duration: 0.7,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 70%",
+              once: true,
+            },
+          });
+
+          gsap.fromTo(
+            img,
+            { rotation: -40 },
+            {
+              rotation: 40,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.6,
+              },
+            }
+          );
+        });
       });
 
       return () => mm.revert();

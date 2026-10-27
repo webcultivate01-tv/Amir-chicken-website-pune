@@ -81,9 +81,9 @@ export default function HeroSection() {
           <span className="h-px w-8 bg-[#EC1F36]" />
 
           <p className="text-[12px] font-semibold uppercase tracking-[0.24em] sm:text-sm">
-            AMIR Chicken
-            <span className="mx-1 text-white/70">/</span>
-            Since 1991
+            Amir's Fresh Cut
+            {/* <span className="mx-1 text-white/70">/</span>
+            Since 1991 */}
           </p>
 
           <span className="h-px w-8 bg-[#EC1F36]" />
@@ -132,8 +132,9 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.75 }}
           className="mx-auto mt-5 max-w-lg text-base leading-6 text-white/95 sm:text-base sm:leading-7"
         >
-          Quality chicken, meat, fish and eggs for everyday meals
-          and family favourites.
+          Chicken, eggs, mutton, fish, seafood and frozen foods — fresh cuts,
+          100% Halal practices, accurate weight and fair pricing, all under
+          one trusted brand.
         </motion.p>
 
         {/* Calls to action */}
@@ -170,9 +171,13 @@ export default function HeroSection() {
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.1 }}
-          className="mt-10 text-[11px] uppercase tracking-[0.25em] text-white/85 sm:mt-12"
+          className="mt-10 text-xs font-medium uppercase tracking-[0.2em] text-white sm:mt-12"
         >
-          Quality · Experience · Everyday essentials
+          Freshness · Fairness · Trust
+          <span className="mx-2 text-[#FFB800]">|</span>
+          580+ Stores
+          <span className="mx-2 text-[#FFB800]">|</span>
+          ISO &amp; Halal Registered
         </motion.p>
       </div>
     </section>

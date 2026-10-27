@@ -4,6 +4,7 @@ import HeroSection from "../../components/site/home/HeroSection";
 import BrandStatement from "../../components/site/home/BrandStatement";
 import AmirNumbers from "../../components/site/home/AmirNumbers";
 import PlateShowcase from "../../components/site/home/PlateShowcase";
+import FeaturedProducts from "../../components/site/home/FeaturedProducts";
 import TransformationSection from "../../components/site/home/TransformationSection";
 import oneAmir from "../../../images/oneAmir.png";
 import techBilling from "../../../images/tech/billing.jpg";
@@ -479,6 +480,8 @@ export default function HomePage() {
       <BrandStatement />
 
       <PlateShowcase />
+
+      <FeaturedProducts />
 
       <AmirNumbers />
 

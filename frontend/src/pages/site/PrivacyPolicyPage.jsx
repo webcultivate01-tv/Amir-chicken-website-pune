@@ -6,7 +6,14 @@ const sections = [
     content: (
       <>
         <p>
-          When you interact with the AMIR Chicken website, we may receive
+          Amir's Fresh Cut is operated by Aamir Farms and Foods Limited, a
+          Maharashtra-based fresh-protein retail company established in 1991 by
+          Mr. Vijay More, with retail stores across Pune, Nashik and
+          Ahilyanagar.
+        </p>
+
+        <p>
+          When you interact with the Amir's Fresh Cut website, we may receive
           information that you voluntarily provide to us, such as your name,
           phone number, email address, and details submitted through enquiry or
           quote forms.
@@ -40,7 +47,7 @@ const sections = [
     title: "3. Sharing of Information",
     content: (
       <p>
-        AMIR Chicken does not use your submitted information for purposes
+        Amir's Fresh Cut does not use your submitted information for purposes
         unrelated to your interaction with us. Information may be shared with
         service providers or other parties where reasonably necessary to
         operate the website, respond to enquiries, or provide requested
@@ -72,8 +79,7 @@ const sections = [
     title: "6. Your Choices",
     content: (
       <p>
-        If you have questions about information you have submitted to AMIR
-        Chicken, or would like to request clarification regarding its use,
+        If you have questions about information you have submitted to Amir's Fresh Cut, or would like to request clarification regarding its use,
         please contact us using the details provided below.
       </p>
     ),
@@ -91,17 +97,38 @@ const sections = [
   {
     title: "8. Contact Us",
     content: (
-      <p>
-        If you have questions about this Privacy Policy, you can contact AMIR
-        Chicken at{" "}
-        <a
-          href="mailto:amirchicken.info@gmail.com"
-          className="font-medium text-[#EC1F36] hover:underline"
-        >
-          amirchicken.info@gmail.com
-        </a>
-        .
-      </p>
+      <>
+        <p>
+          If you have questions about this Privacy Policy, you can contact
+          Aamir Farms and Foods Limited using the details below.
+        </p>
+
+        <ul className="space-y-2">
+          <li>
+            <span className="font-semibold text-[#171719]">Head Office: </span>
+            K-507-510, Mega Center, Behind Noble Hospital, Magarpatta
+            Hadapsar, Pune
+          </li>
+          <li>
+            <span className="font-semibold text-[#171719]">Phone: </span>
+            <a
+              href="tel:+919527982525"
+              className="font-medium text-[#EC1F36] hover:underline"
+            >
+              +91 95279 82525
+            </a>
+          </li>
+          <li>
+            <span className="font-semibold text-[#171719]">Email: </span>
+            <a
+              href="mailto:info@amirchicken.in"
+              className="font-medium text-[#EC1F36] hover:underline"
+            >
+              info@amirchicken.in
+            </a>
+          </li>
+        </ul>
+      </>
     ),
   },
 ];
@@ -116,7 +143,7 @@ export default function PrivacyPolicyPage() {
             Privacy Policy
           </h1>
           <p className="mt-3 text-base leading-7 text-[#F5EFE6]/70">
-            Your privacy matters to us. This page explains how information provided through the AMIR Chicken website may be collected and used.
+            Your privacy matters to us. This page explains how information provided through the Amir's Fresh Cut website may be collected and used.
           </p>
         </div>
       </section>
