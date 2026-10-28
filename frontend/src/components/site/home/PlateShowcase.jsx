@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { EggIcon } from "./EggIcon";
 import "./PlateShowcase.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -48,6 +49,7 @@ export default function PlateShowcase() {
   const imageRefs = useRef([]);
   const textRefs = useRef([]);
   const progressRef = useRef(null);
+  const eggOverlayRef = useRef(null);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -61,7 +63,8 @@ export default function PlateShowcase() {
 
       if (
         images.some((image) => !image) ||
-        texts.some((text) => !text)
+        texts.some((text) => !text) ||
+        !eggOverlayRef.current
       ) {
         return;
       }
@@ -75,6 +78,8 @@ export default function PlateShowcase() {
 
       gsap.set(texts, { autoAlpha: 0, y: 14 });
       gsap.set(texts[0], { autoAlpha: 1, y: 0 });
+
+      gsap.set(eggOverlayRef.current, { autoAlpha: 0 });
 
       gsap.set(plate, {
         scale: 1.1,
@@ -97,7 +102,7 @@ export default function PlateShowcase() {
 
       const mm = gsap.matchMedia();
 
-      mm.add("(min-width: 761px)", () => {
+      mm.add("(min-width: 1024px)", () => {
         // One-time entrance: the plate glides in from the left and the
         // text from the right the first time the section scrolls into view.
         // These wrappers are separate from the scrubbed plate rotation.
@@ -125,6 +130,7 @@ export default function PlateShowcase() {
             ease: "power2.inOut",
           },
           scrollTrigger: {
+            id: "plate-showcase-scroll",
             trigger: section,
             start: "top top+=74",
             end: "+=4400",
@@ -184,6 +190,20 @@ export default function PlateShowcase() {
             },
             at + 0.15
           );
+
+          // The eggs plate is last in the sequence — reveal the egg
+          // overlay alongside it so it is on screen for the hand-off
+          // to the flying-egg animation once this section unpins.
+          if (next === products.length - 1) {
+            timeline.to(
+              eggOverlayRef.current,
+              {
+                autoAlpha: 1,
+                duration: 0.4,
+              },
+              at + 0.15
+            );
+          }
         });
 
         // Measure the product sequence before adding the plate's
@@ -226,7 +246,7 @@ export default function PlateShowcase() {
 
       // On mobile, products stack in a normal scrolling layout. Each card
       // fades up once, and its plate rotates and scales with scroll.
-      mm.add("(max-width: 760px)", () => {
+      mm.add("(max-width: 1023px)", () => {
         const cards = gsap.utils.toArray(
           section.querySelectorAll(".plate-showcase__mobile-list article")
         );
@@ -314,6 +334,15 @@ export default function PlateShowcase() {
                   loading={index === 0 ? "eager" : "lazy"}
                 />
               ))}
+
+              <div
+                id="egg-flight-source"
+                ref={eggOverlayRef}
+                className="plate-showcase__egg-overlay"
+                aria-hidden="true"
+              >
+                <EggIcon className="plate-showcase__egg-overlay-icon" />
+              </div>
             </div>
           </div>
 

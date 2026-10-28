@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, useReducedMotion } from "framer-motion";
 import HeroSection from "../../components/site/home/HeroSection";
 import BrandStatement from "../../components/site/home/BrandStatement";
 import FranchiseNetwork from "../../components/site/home/FranchiseNetwork";
 import AmirNumbers from "../../components/site/home/AmirNumbers";
 import PlateShowcase from "../../components/site/home/PlateShowcase";
 import FeaturedProducts from "../../components/site/home/FeaturedProducts";
+import EggFlight from "../../components/site/home/EggFlight";
+import CreatorVideoCarousel from "../../components/site/home/CreatorVideoCarousel";
 import oneAmir from "../../../images/oneAmir (2).png";
 import techBilling from "../../../images/tech/billing.jpg";
 import techEcommerce from "../../../images/tech/ecommerce.jpg";
@@ -241,6 +244,8 @@ const growthSystem = [
 ];
 
 
+const EASE = [0.22, 1, 0.36, 1];
+
 const Arrow = () => (
   <svg
     viewBox="0 0 24 24"
@@ -390,6 +395,8 @@ function TechnologyGrowth() {
 
 
 export default function HomePage() {
+  const reduce = useReducedMotion();
+
   return (
     <main className="bg-white text-[#171719]">
 
@@ -400,6 +407,8 @@ export default function HomePage() {
       <PlateShowcase />
 
       <FeaturedProducts />
+
+      <EggFlight />
 
       <AmirNumbers />
 
@@ -422,13 +431,13 @@ export default function HomePage() {
           LEGACY / NEXT CHAPTER
       ====================================================== */}
 
-      <section className="relative overflow-hidden bg-[#281719] text-white lg:h-[80vh] lg:min-h-[560px] lg:max-h-[820px]">
+      <section className="relative flex flex-col-reverse overflow-hidden bg-[#281719] text-white lg:block lg:h-[80vh] lg:min-h-[560px] lg:max-h-[820px]">
 
         {/* artwork pinned right at full section height, with the same side margin as the text on the left; both dark edges fade into the theme color */}
         <img
           src={oneAmir}
           alt="Amir store and network across Maharashtra"
-          className="block w-full [mask-image:linear-gradient(to_bottom,black_80%,transparent)] lg:absolute lg:inset-y-0 lg:right-[max(4rem,calc((100%-1480px)/2+4rem))] lg:h-full lg:w-auto lg:max-w-none lg:[mask-image:linear-gradient(to_right,transparent,black_30%,black_94%,transparent)]"
+          className="block w-11/12 mx-auto [mask-image:linear-gradient(to_top,black_85%,transparent)] lg:absolute lg:top-1/2 lg:mx-0 lg:w-auto lg:-translate-y-1/2 lg:right-[max(4rem,calc((100%-1480px)/2+4rem))] lg:h-[90%] lg:max-w-none lg:[mask-image:linear-gradient(to_right,transparent,black_30%,black_94%,transparent)]"
         />
 
         <div className="relative mx-auto flex max-w-[1480px] items-center px-6 py-14 sm:px-10 lg:h-full lg:px-16 lg:py-0">
@@ -467,6 +476,13 @@ export default function HomePage() {
 
 
       {/* =====================================================
+          CREATOR VIDEO CAROUSEL
+      ====================================================== */}
+
+      <CreatorVideoCarousel />
+
+
+      {/* =====================================================
           FINAL CTA
       ====================================================== */}
 
@@ -482,27 +498,57 @@ export default function HomePage() {
 
         <div className="relative max-w-[900px] mx-auto">
 
-          <div className="inline-flex items-center gap-3 mb-6">
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="inline-flex items-center gap-3 mb-6"
+          >
             <span className="w-1.5 h-1.5 rounded-full bg-white" />
             <p className="font-poppins text-[12px] tracking-[0.2em] uppercase text-white/75">
               Work With Amir
             </p>
             <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-          </div>
+          </motion.div>
 
-          <h2 className="font-seasons text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.05] tracking-[-0.025em] text-white">
+          <motion.h2
+            initial={reduce ? false : { opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
+            className="font-seasons text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.05] tracking-[-0.025em] text-white"
+          >
             Looking for a fresh,{" "}
             <span className="italic">reliable protein partner?</span>
-          </h2>
+          </motion.h2>
 
-          <p className="mx-auto mt-5 max-w-xl font-poppins text-[15px] leading-7 text-white/80">
+          <motion.p
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.75, delay: 0.2, ease: EASE }}
+            className="mx-auto mt-5 max-w-xl font-poppins text-[15px] leading-7 text-white/80"
+          >
             Fresh cuts, accurate weight and fair pricing, backed by 35+ years
             of trust and a network of 580+ stores across Maharashtra.
-          </p>
+          </motion.p>
 
-          <div className="mx-auto mt-6 w-10 h-[3px] bg-white/70" />
+          <motion.div
+            initial={reduce ? false : { opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.3, ease: EASE }}
+            className="mx-auto mt-6 w-10 h-[3px] bg-white/70 origin-center"
+          />
 
-          <div className="mt-8 flex flex-row justify-center gap-2 sm:gap-5">
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.75, delay: 0.38, ease: EASE }}
+            className="mt-8 flex flex-row justify-center gap-2 sm:gap-5"
+          >
 
             <Link
               to="/get-a-quote"
@@ -522,7 +568,7 @@ export default function HomePage() {
               Explore Products
             </Link>
 
-          </div>
+          </motion.div>
 
         </div>
 

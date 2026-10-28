@@ -1,212 +1,339 @@
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "./FranchiseNetwork.css";
 
-const EASE = [0.22, 1, 0.36, 1];
+gsap.registerPlugin(ScrollTrigger);
 
-const svg = {
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.5,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-  className: "h-6 w-6",
-};
-
-const points = [
+const pillars = [
   {
-    title: "Brand Recognition",
+    number: "01",
+    kicker: "Brand Recognition",
+    name: "Brand",
     text: "A name families have trusted since 1991.",
-    icon: (
-      <svg {...svg}>
-        <circle cx="12" cy="9" r="5" />
-        <path d="m9 13.5-1.5 7L12 18l4.5 2.5-1.5-7" />
-      </svg>
-    ),
+    tilt: -5,
+    offset: -18,
+    image:"/images/franchiseNetwork/brand-recognition.png",
+    alt: "Modern retail store interior with branded display lighting",
   },
   {
-    title: "Reliable Procurement",
+    number: "02",
+    kicker: "Reliable Procurement",
+    name: "Supply",
     text: "Consistent supply through centralised sourcing.",
-    icon: (
-      <svg {...svg}>
-        <path d="M3 7h11v9H3z" />
-        <path d="M14 10h4l3 3v3h-7" />
-        <circle cx="7" cy="18" r="1.8" />
-        <circle cx="17.5" cy="18" r="1.8" />
-      </svg>
-    ),
+    tilt: 4,
+    offset: 22,
+    image:"images/franchiseNetwork/reliable-procurement.png",
+    alt: "Freight truck on the road carrying fresh stock",
   },
   {
-    title: "Tested Retail Formats",
+    number: "03",
+    kicker: "Tested Retail Formats",
+    name: "Retail",
     text: "Hygienic store designs proven across the network.",
-    icon: (
-      <svg {...svg}>
-        <path d="M4 10h16v10H4z" />
-        <path d="m3 10 2-6h14l2 6" />
-        <path d="M10 20v-5h4v5" />
-      </svg>
-    ),
+    tilt: -3,
+    offset: -10,
+    image:
+      "images/franchiseNetwork/tested-retail-formats.png",
+    alt: "Hygienic retail store with organised display shelves",
   },
   {
-    title: "Operational Guidance",
+    number: "04",
+    kicker: "Operational Guidance",
+    name: "Training",
     text: "Standard practices and hands-on franchise training.",
-    icon: (
-      <svg {...svg}>
-        <path d="M9 4h6l1 2h3v14H5V6h3z" />
-        <path d="m9 13 2 2 4-4" />
-      </svg>
-    ),
+    tilt: 6,
+    offset: 14,
+    image:
+      "images/franchiseNetwork/operational-guidance.png",
+    alt: "Franchise team in a hands-on operational training session",
   },
   {
-    title: "Product Diversity",
+    number: "05",
+    kicker: "Product Diversity",
+    name: "Variety",
     text: "Chicken, eggs, mutton, fish, seafood and frozen foods.",
-    icon: (
-      <svg {...svg}>
-        <path d="M12 3 3 8l9 5 9-5z" />
-        <path d="m3 13 9 5 9-5" />
-      </svg>
-    ),
+    tilt: -6,
+    offset: -24,
+    image: "/images/franchiseNetwork/variety.png",
+    alt: "Chicken, mutton, fish and eggs laid out together",
   },
   {
-    title: "Marketing Support",
+    number: "06",
+    kicker: "Marketing Support",
+    name: "Marketing",
     text: "Visibility and recall built with every partner.",
-    icon: (
-      <svg {...svg}>
-        <path d="M4 10v4" />
-        <path d="m7 9 11-5v16L7 15z" />
-        <path d="m8 15 1.5 5h3L11 15" />
-      </svg>
-    ),
+    tilt: 3,
+    offset: 18,
+    image:
+      "/images/franchiseNetwork/marketing.png",
+    alt: "Brand billboard built for visibility and recall",
+  },
+  {
+    number: "07",
+    kicker: "Established Customer Trust",
+    name: "Trust",
+    text: "10 Lakh+ loyal customers who already know the Amir name.",
+    tilt: -4,
+    offset: -8,
+    image:
+      "/images/franchiseNetwork/customerTrust.png",
+    alt: "Two partners shaking hands over a trusted deal",
   },
 ];
 
-const Arrow = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    className="h-4 w-4"
-  >
-    <path d="M5 12h14" />
-    <path d="m13 6 6 6-6 6" />
-  </svg>
-);
-
 export default function FranchiseNetwork() {
-  const reduce = useReducedMotion();
+  const sectionRef = useRef(null);
+  const viewportRef = useRef(null);
+  const trackRef = useRef(null);
+  const bgWordRef = useRef(null);
+  const ctaRef = useRef(null);
+  const cursorRef = useRef(null);
+  const [flippedCard, setFlippedCard] = useState(null);
 
-  const reveal = (delay = 0) => ({
-    initial: reduce ? false : { opacity: 0, y: 32 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-80px" },
-    transition: { duration: 0.8, delay, ease: EASE },
-  });
+  const handleCardTap = (number) => {
+    if (!window.matchMedia("(hover: none), (pointer: coarse)").matches) {
+      return;
+    }
+    setFlippedCard((current) => (current === number ? null : number));
+  };
+
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+
+    if (!section || !viewport || !track) return undefined;
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+          fullMotion: "(prefers-reduced-motion: no-preference)",
+          isMobile: "(max-width: 767px)",
+        },
+        (context) => {
+          const { reduceMotion, isMobile } = context.conditions;
+          if (reduceMotion) return undefined;
+
+          const getDistance = () =>
+            Math.max(0, track.scrollWidth - viewport.clientWidth);
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: isMobile ? "center center" : "top top",
+              end: () => "+=" + getDistance(),
+              pin: true,
+              scrub: 1,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          tl.to(
+            track,
+            { x: () => -getDistance(), ease: "none", duration: 10 },
+            0
+          );
+
+          if (bgWordRef.current) {
+            tl.to(
+              bgWordRef.current,
+              {
+                x: () => -getDistance() * 0.3,
+                ease: "none",
+                duration: 10,
+              },
+              0
+            );
+          }
+
+          if (ctaRef.current) {
+            tl.fromTo(
+              ctaRef.current,
+              { scale: 0.82, autoAlpha: 0.65 },
+              {
+                scale: 1,
+                autoAlpha: 1,
+                ease: "power2.out",
+                duration: 2,
+              },
+              8
+            );
+          }
+
+          return () => {
+            tl.scrollTrigger?.kill();
+            tl.kill();
+          };
+        }
+      );
+
+      return () => mm.revert();
+    }, section);
+
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+
+    const resizeObserver = new ResizeObserver(refresh);
+    resizeObserver.observe(track);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener("load", refresh);
+      resizeObserver.disconnect();
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const viewport = viewportRef.current;
+    const cursor = cursorRef.current;
+
+    if (!viewport || !cursor) return undefined;
+    if (window.matchMedia("(hover: none), (pointer: coarse)").matches) {
+      return undefined;
+    }
+
+    const moveX = gsap.quickTo(cursor, "x", { duration: 0.3, ease: "power3" });
+    const moveY = gsap.quickTo(cursor, "y", { duration: 0.3, ease: "power3" });
+
+    const handleMove = (event) => {
+      moveX(event.clientX);
+      moveY(event.clientY);
+    };
+
+    const showCursor = () => cursor.classList.add("is-visible");
+    const hideCursor = () => cursor.classList.remove("is-visible");
+
+    viewport.addEventListener("pointermove", handleMove);
+
+    const cards = viewport.querySelectorAll(".franchise-card");
+    cards.forEach((card) => {
+      card.addEventListener("pointerenter", showCursor);
+      card.addEventListener("pointerleave", hideCursor);
+    });
+
+    return () => {
+      viewport.removeEventListener("pointermove", handleMove);
+      cards.forEach((card) => {
+        card.removeEventListener("pointerenter", showCursor);
+        card.removeEventListener("pointerleave", hideCursor);
+      });
+    };
+  }, []);
 
   return (
     <section
-      aria-label="Franchise network"
-      className="relative overflow-hidden border-t border-[#EC1F36]/15 bg-[#FBF8F7] px-6 py-12 sm:px-10 lg:px-16 lg:py-14"
+      ref={sectionRef}
+      id="franchise-network"
+      aria-labelledby="franchise-heading"
+      className="franchise-scroll"
     >
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[28rem] w-[28rem] rounded-full bg-[#EC1F36]/[0.05] blur-3xl" />
+      <div className="franchise-scroll__inner">
+        <div
+          ref={bgWordRef}
+          aria-hidden="true"
+          className="franchise-scroll__bgword"
+        >
+          AMIR&rsquo;S FRESH CUT
+        </div>
 
-      <div className="relative mx-auto grid max-w-[1480px] gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-center lg:gap-10">
-        {/* LEFT — story + quote */}
-        <div className="">
-          <motion.div {...reveal(0)}>
-            <div className="inline-flex items-center gap-3">
-              <span className="h-px w-8 bg-[#EC1F36]" />
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#EC1F36]">
-                Franchise Network
-              </p>
-            </div>
+        <header className="franchise-scroll__header">
+          <p className="franchise-scroll__eyebrow">
+            AMIR&rsquo;S FRANCHISE NETWORK
+          </p>
+          <h2 id="franchise-heading" className="franchise-scroll__heading">
+            BUILT TO GROW.
+          </h2>
+        </header>
 
-            <h2 className="mt-4 font-seasons text-5xl leading-[1.02] tracking-[-0.03em] text-[#171719] sm:text-6xl lg:text-[64px]">
-              A system
-              <br />
-              <span className="italic text-[#EC1F36]">built to grow.</span>
-            </h2>
+        <div ref={viewportRef} className="franchise-scroll__viewport">
+          <div ref={trackRef} className="franchise-scroll__track">
+            {pillars.map((pillar) => (
+              <article
+                key={pillar.number}
+                className={
+                  "franchise-card" +
+                  (flippedCard === pillar.number ? " is-flipped" : "")
+                }
+                style={{ "--tilt": `${pillar.tilt}deg`, "--offset": `${pillar.offset}px` }}
+                tabIndex={0}
+                onClick={() => handleCardTap(pillar.number)}
+              >
+                <div className="franchise-card__inner">
+                  <div className="franchise-card__face franchise-card__face--front">
+                    <div className="franchise-card__frame">
+                      <img
+                        src={pillar.image}
+                        alt={pillar.alt}
+                        loading="lazy"
+                        className="franchise-card__image"
+                      />
+                      <div className="franchise-card__gradient" aria-hidden="true" />
+                    </div>
 
-            <p className="mt-4 max-w-md text-base leading-7 text-neutral-500">
-              Amir enables franchise partners through brand recognition,
-              reliable procurement, tested retail formats and operational
-              support.
-            </p>
+                    <span className="franchise-card__badge" aria-hidden="true">
+                      {pillar.number}
+                    </span>
+
+                    <div className="franchise-card__copy">
+                      <span className="franchise-card__kicker">
+                        {pillar.kicker}
+                      </span>
+                      <h3 className="franchise-card__name">{pillar.name}</h3>
+                    </div>
+                  </div>
+
+                  <div className="franchise-card__face franchise-card__face--back">
+                    <img
+                      src={pillar.image}
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      className="franchise-card__back-image"
+                    />
+                    <div className="franchise-card__back-overlay" aria-hidden="true" />
+
+                    <div className="franchise-card__back-content">
+                      <span className="franchise-card__back-number" aria-hidden="true">
+                        {pillar.number}
+                      </span>
+                      <h3 className="franchise-card__back-title">
+                        {pillar.kicker}
+                      </h3>
+                      <p className="franchise-card__back-text">{pillar.text}</p>
+                      <Link
+                        to="/contact"
+                        className="franchise-card__back-btn"
+                        onClick={(event) => event.stopPropagation()}
+                      >
+                        Contact Us
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
 
             <Link
-              to="/get-a-quote"
-              className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#171719] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[#EC1F36]"
+              ref={ctaRef}
+              to="/contact"
+              className="franchise-scroll__cta"
             >
-              Become a Franchise Partner
-              <Arrow />
+              Become A Partner
+              <span className="franchise-scroll__cta-arrow" aria-hidden="true">
+                &rarr;
+              </span>
             </Link>
-          </motion.div>
-
-          <motion.figure
-            {...reveal(0.15)}
-            className="mt-8 max-w-md border-l-2 border-[#EC1F36] pl-6"
-          >
-            <blockquote className="font-seasons text-[19px] italic leading-[1.4] text-[#171719]">
-              “Amir helped us enter an organised business with a trusted name
-              and dependable support.”
-            </blockquote>
-            <figcaption className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#171719]/55">
-              Sandeep Devkar · 30 Outlets, Nashik City
-            </figcaption>
-          </motion.figure>
-        </div>
-
-        {/* RIGHT — pillars */}
-        <div>
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {points.map((point, index) => (
-              <motion.article
-                key={point.title}
-                {...reveal(0.08 * index)}
-                className="group relative overflow-hidden rounded-2xl border border-[#171719]/10 bg-white p-5 transition-all duration-500 hover:-translate-y-1.5 hover:border-[#EC1F36]/30 hover:shadow-[0_24px_50px_-28px_rgba(236,31,54,0.4)] "
-              >
-                <span className="absolute right-4 top-4 font-seasons text-lg italic text-[#171719]/20 transition-colors duration-500 group-hover:text-[#EC1F36]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#EC1F36]/[0.08] text-[#EC1F36] transition-colors duration-500 group-hover:bg-[#EC1F36] group-hover:text-white">
-                  {point.icon}
-                </span>
-
-                <h3 className="mt-4 font-seasons text-[21px] leading-[1.1] tracking-[-0.01em] text-[#171719]">
-                  {point.title}
-                </h3>
-
-                <p className="mt-1.5 text-[14px] leading-5 text-neutral-500">
-                  {point.text}
-                </p>
-              </motion.article>
-            ))}
           </div>
-
-          {/* 7th pillar — full-width banner */}
-          <motion.div
-            {...reveal(0.5)}
-            className="mt-3 flex items-center gap-4 rounded-2xl bg-[#281719] px-5 py-4 text-white"
-          >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-[#FFB800]">
-              <svg {...svg}>
-                <path d="M7 12 3 8l4-1 4 2 4-2 4 1-4 4" />
-                <path d="m7 12 5 6 5-6" />
-              </svg>
-            </span>
-
-            <div>
-              <h3 className="font-seasons text-[21px] leading-[1.1]">
-                Established Customer Trust
-              </h3>
-              <p className="mt-0.5 text-[14px] leading-5 text-white/60">
-                10 Lakh+ loyal customers who already know the Amir name.
-              </p>
-            </div>
-          </motion.div>
         </div>
       </div>
+
+      <div ref={cursorRef} className="franchise-scroll__cursor" aria-hidden="true" />
     </section>
   );
 }

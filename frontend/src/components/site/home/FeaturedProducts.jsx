@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import { EggCartonIcon } from "./EggIcon";
 
 // Bundled WebP product photos (images/products/<category>/<name>.webp)
 const productImages = import.meta.glob("../../../../images/products/*/*.webp", {
@@ -34,15 +35,15 @@ const featured = [
     tint: "from-[#FDEFEF] to-[#F6D3D6]",
   },
   {
-    name: "Whole Chicken Without Skin",
-    category: "Chicken",
-    text: "Fresh, skinless and ready for any family recipe.",
-    image: photo("chicken", "Whole Chicken WithOut Skin"),
-    tint: "from-[#F4F4F5] to-[#E7E7EA]",
+    name: "Farm Fresh Eggs",
+    category: "Eggs",
+    text: "Farm-fresh eggs, carefully packed for everyday cooking and baking.",
+    image: photo("eggs", "Egg Tray"),
+    tint: "from-[#FFF8E8] to-[#F3DFAF]",
   },
 ];
 
-function ProductCard({ product, index, reduce }) {
+function ProductCard({ product, index, reduce, isEggTarget }) {
   return (
     <motion.article
       initial={reduce ? false : { opacity: 0, y: 48 }}
@@ -56,6 +57,7 @@ function ProductCard({ product, index, reduce }) {
         className="flex h-full flex-col overflow-hidden rounded-2xl border sm:rounded-[1.75rem] border border-neutral-200/80 bg-white transition-all duration-500 hover:-translate-y-2 hover:border-[#EC1F36]/30 hover:shadow-[0_28px_60px_-24px_rgba(236,31,54,0.35)]"
       >
         <div
+          id={isEggTarget ? "egg-flight-target" : undefined}
           className={`relative aspect-[4/3.4] overflow-hidden bg-gradient-to-br ${product.tint}`}
         >
           <span className="absolute left-2 top-2 z-10 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-semibold sm:left-4 sm:top-4 sm:px-3 sm:py-1 sm:text-[11px] uppercase tracking-[0.14em] text-[#EC1F36] backdrop-blur">
@@ -64,12 +66,16 @@ function ProductCard({ product, index, reduce }) {
 
           <div className="absolute -bottom-10 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-white/60 blur-2xl" />
 
-          <img
-            src={product.image}
-            alt={product.name}
-            loading="lazy"
-            className="relative h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-rotate-1"
-          />
+          {product.art ? (
+            <product.art className="relative h-full w-full object-contain p-6 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-rotate-1" />
+          ) : (
+            <img
+              src={product.image}
+              alt={product.name}
+              loading="lazy"
+              className="relative h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-rotate-1"
+            />
+          )}
         </div>
 
         <div className="flex flex-1 flex-col p-3 sm:p-6">
@@ -101,6 +107,7 @@ export default function FeaturedProducts() {
 
   return (
     <section
+      id="featured-products-section"
       aria-label="Featured products"
       className="relative overflow-hidden bg-[#FBF8F7] px-4 py-20 sm:px-8 lg:px-16 lg:py-28"
     >
@@ -154,6 +161,7 @@ export default function FeaturedProducts() {
               product={product}
               index={index}
               reduce={reduce}
+              isEggTarget={index === featured.length - 1}
             />
           ))}
         </div>
