@@ -325,7 +325,7 @@ const NewsPage = () => {
           <div className="mt-8 flex flex-wrap justify-center gap-5">
             <motion.div variants={ctaItem({ opacity: 0, y: 20 }, 0.6)}>
             <Link
-              to="/get-a-quote"
+              to="/contact"
               className="inline-flex h-14 items-center justify-center gap-3 rounded-lg border border-white bg-white px-10 font-poppins text-[14px] font-bold uppercase tracking-[0.14em] text-[#EC1F36] transition-all duration-300 hover:bg-[#171719] hover:text-white"
             >
               Contact Now

@@ -120,6 +120,20 @@ const useInView = (threshold = 0.15) => {
 };
 
 
+/* Horizontal scroll reveal: "left" content glides in from the left edge,
+   "right" content from the right. Shorter travel on small screens. */
+const slideIn = (shown, side, delay = 0) => ({
+  className: `will-change-[transform,opacity] transition-[opacity,transform] duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:!transition-none motion-reduce:!opacity-100 motion-reduce:!translate-x-0 ${
+    shown
+      ? "opacity-100 translate-x-0"
+      : side === "left"
+      ? "opacity-0 -translate-x-12 sm:-translate-x-20 lg:-translate-x-32"
+      : "opacity-0 translate-x-12 sm:translate-x-20 lg:translate-x-32"
+  }`,
+  style: { transitionDelay: `${delay}s` },
+});
+
+
 /* =========================================================
    THE AMIR PROMISE
 ========================================================= */
@@ -326,12 +340,8 @@ const STORY_PHOTO = storyPhoto;
 
 const StorySection = () => {
   const [ref, shown] = useInView(0.15);
-  const reveal = (delay) => ({
-    className: `transition-all duration-700 ease-out ${
-      shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-    }`,
-    style: { transitionDelay: `${delay}s` },
-  });
+  const fromLeft = slideIn(shown, "left");
+  const fromRight = slideIn(shown, "right", 0.1);
 
   return (
     <section
@@ -340,8 +350,8 @@ const StorySection = () => {
     >
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-10 items-center">
         {/* TEXT — left */}
-        <div>
-          <div {...reveal(0)}>
+        <div {...fromLeft}>
+          <div>
             <SectionLabel>Our Story · Since 1991</SectionLabel>
 
             <h2 className="mt-4 font-seasons text-[32px] sm:text-[44px] lg:text-[52px] leading-[1.02] tracking-[-0.02em] text-[#171719]">
@@ -350,7 +360,7 @@ const StorySection = () => {
             </h2>
           </div>
 
-          <div {...reveal(0.12)}>
+          <div>
             <p className="mt-6 font-poppins text-[15px] sm:text-[16px] leading-[1.75] text-[#171719]/75">
               In 1991, Amir began as a single chicken and eggs store in Gadital,
               Hadapsar. The idea was simple: meat retail could be fresh, fair
@@ -373,7 +383,7 @@ const StorySection = () => {
         </div>
 
         {/* PHOTO — right */}
-        <figure {...reveal(0.15)}>
+        <figure {...fromRight}>
           <img
             src={STORY_PHOTO}
             alt="An early Amir store counter"
@@ -393,12 +403,8 @@ const StorySection = () => {
 
 const FounderSection = () => {
   const [ref, shown] = useInView(0.15);
-  const reveal = (delay) => ({
-    className: `transition-all duration-700 ease-out ${
-      shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-    }`,
-    style: { transitionDelay: `${delay}s` },
-  });
+  const fromLeft = slideIn(shown, "left");
+  const fromRight = slideIn(shown, "right", 0.1);
 
   return (
     <section
@@ -408,8 +414,8 @@ const FounderSection = () => {
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24 xl:gap-32 items-center">
         {/* PHOTO — left, in a circle on the brand red */}
         <figure
-          className={`flex flex-col items-center ${reveal(0.15).className}`}
-          style={reveal(0.15).style}
+          className={`flex flex-col items-center ${fromLeft.className}`}
+          style={fromLeft.style}
         >
           <div className="w-full max-w-[380px] sm:max-w-[420px] aspect-square rounded-full bg-[#EC1F36] overflow-hidden pt-[4%]">
             <img
@@ -426,8 +432,8 @@ const FounderSection = () => {
         </figure>
 
         {/* TEXT — right */}
-        <div>
-          <div {...reveal(0)}>
+        <div {...fromRight}>
+          <div>
             <SectionLabel>The Vision Behind Amir</SectionLabel>
 
             <h2 className="mt-4 font-seasons text-[32px] sm:text-[44px] lg:text-[52px] leading-[1.02] tracking-[-0.02em] text-[#171719]">
@@ -440,7 +446,7 @@ const FounderSection = () => {
             </p>
           </div>
 
-          <div {...reveal(0.12)}>
+          <div>
             <p className="mt-6 font-poppins text-[15px] sm:text-[16px] leading-[1.75] text-[#171719]/75">
               Born in Maharashtra’s drought-affected Ahmednagar region, Mr.
               Vijay More saw first-hand the challenges faced by educated rural
@@ -814,7 +820,7 @@ const FinalCta = () => (
 
       <div className="mt-8 flex flex-row justify-center gap-2 sm:gap-5">
         <Link
-          to="/get-a-quote"
+          to="/contact"
           className="inline-flex items-center justify-center gap-1.5 sm:gap-3 bg-white text-[#EC1F36] px-3 min-[400px]:px-5 sm:px-10 h-12 sm:h-14 rounded-lg font-poppins text-[10px] min-[400px]:text-[11px] sm:text-[14px] tracking-[0.06em] sm:tracking-[0.14em] uppercase font-bold whitespace-nowrap transition-all duration-300 hover:bg-[#171719] hover:text-white border border-white"
         >
           Contact Now

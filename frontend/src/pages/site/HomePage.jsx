@@ -551,7 +551,7 @@ export default function HomePage() {
           >
 
             <Link
-              to="/get-a-quote"
+              to="/contact"
               className="inline-flex items-center justify-center gap-1.5 sm:gap-3 bg-white text-[#EC1F36] px-3 min-[400px]:px-5 sm:px-10 h-12 sm:h-14 rounded-lg font-poppins text-[10px] min-[400px]:text-[11px] sm:text-[14px] tracking-[0.06em] sm:tracking-[0.14em] uppercase font-bold whitespace-nowrap transition-all duration-300 hover:bg-[#171719] hover:text-white border border-white"
             >
               Contact Now

@@ -338,7 +338,7 @@ export default function CatalogPage() {
             </div>
 
             <Link
-  to="/get-a-quote"
+  to="/contact"
   className="mt-5 inline-flex w-fit items-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#EC1F36] transition hover:bg-neutral-100"
 >
   Contact Now →
@@ -433,7 +433,7 @@ export default function CatalogPage() {
                   </div>
 
                   <Link
-                    to="/get-a-quote"
+                    to="/contact"
                     aria-label={`Order ${product.name}`}
                     className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#EC1F36] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#c9172d]"
                   >

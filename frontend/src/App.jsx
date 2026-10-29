@@ -17,7 +17,6 @@ import CatalogPage from "./pages/site/CatalogPage";
 import ContactPage from "./pages/site/ContactPage";
 import NewsPage from "./pages/site/NewsPage";
 import useGetCurrentUser from "./CustomHooks/getCurrentUser";
-import GetQuotePage from "./pages/site/GetQuotePage";
 import PrivacyPolicyPage from "./pages/site/PrivacyPolicyPage";
 import TermsPage from "./pages/site/TermsPage";
 
@@ -46,7 +45,6 @@ function App() {
           <Route path="/catalog" element={<CatalogPage />} />
           <Route path="/news" element={<NewsPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/get-a-quote" element={<GetQuotePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsPage />} />
         </Route>
