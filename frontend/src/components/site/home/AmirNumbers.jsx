@@ -119,7 +119,7 @@ export default function AmirNumbers() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex items-center overflow-hidden bg-[#F5F3F0] px-6 py-14 sm:px-10 lg:px-16 lg:py-16"
+      className="relative flex items-center overflow-hidden bg-[#F5F3F0] px-6 pb-14 pt-8 sm:px-10 sm:py-14 lg:px-16 lg:py-16"
     >
       {/* Decorative parallax rings */}
       {!reduceMotion && (
