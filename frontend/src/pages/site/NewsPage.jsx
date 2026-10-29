@@ -1,25 +1,21 @@
 import React from "react";
 
-import Hero from "../../components/site/news/magazine/Hero";
-import QuickFive from "../../components/site/news/magazine/QuickFive";
-import Foodverse from "../../components/site/news/magazine/Foodverse";
-import CulinaryVoice from "../../components/site/news/magazine/CulinaryVoice";
-import Poll from "../../components/site/news/magazine/Poll";
-import Features from "../../components/site/news/magazine/Features";
-import NewsTrends from "../../components/site/news/magazine/NewsTrends";
-import Newsletter from "../../components/site/news/magazine/Newsletter";
+import NewsHeroSection from "../../components/site/news/NewsHeroSection";
+import FeaturedStory from "../../components/site/news/FeaturedStory";
+import LatestStories from "../../components/site/news/LatestStories";
+import StoriesByCategory from "../../components/site/news/StoriesByCategory";
+import Newsletter from "../../components/site/news/Newsletter";
+import FinalCta from "../../components/site/common/FinalCta";
 
 const NewsPage = () => (
-  <div className="bg-mag-offwhite text-mag-ink">
-    <Hero />
-    <QuickFive />
-    <Foodverse />
-    <CulinaryVoice />
-    <Poll />
-    <Features />
-    <NewsTrends />
+  <main className="bg-white text-[#171719]">
+    <NewsHeroSection />
+    <FeaturedStory />
+    <LatestStories />
+    <StoriesByCategory />
     <Newsletter />
-  </div>
+    <FinalCta />
+  </main>
 );
 
 export default NewsPage;

@@ -96,7 +96,7 @@ const SiteLayout = () => {
             <div className="hidden md:flex items-center justify-end">
 
               <Link
-                to="/get-a-quote"
+                to="/contact"
                 className="
                   inline-flex
                   items-center
@@ -249,7 +249,7 @@ const SiteLayout = () => {
             ))}
 
             <Link
-              to="/get-a-quote"
+              to="/contact"
               tabIndex={open ? 0 : -1}
               className="mt-3 w-full text-center px-5 py-3 rounded-md bg-[#EC1F36] text-white text-sm font-semibold hover:bg-[#271719] transition"
             >
