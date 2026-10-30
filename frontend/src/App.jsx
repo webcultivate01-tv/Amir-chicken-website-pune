@@ -16,6 +16,7 @@ import AboutPage from "./pages/site/AboutPage";
 import CatalogPage from "./pages/site/CatalogPage";
 import ContactPage from "./pages/site/ContactPage";
 import NewsPage from "./pages/site/NewsPage";
+import StoryDetailPage from "./pages/site/StoryDetailPage";
 import useGetCurrentUser from "./CustomHooks/getCurrentUser";
 import PrivacyPolicyPage from "./pages/site/PrivacyPolicyPage";
 import TermsPage from "./pages/site/TermsPage";
@@ -44,6 +45,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/catalog" element={<CatalogPage />} />
           <Route path="/news" element={<NewsPage />} />
+          <Route path="/news/:id" element={<StoryDetailPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsPage />} />

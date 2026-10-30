@@ -6,6 +6,7 @@ import cors from "cors";
 import path from "path";
 import authRouter from "./routes/authRoute.js";
 import inquiryRouter from "./routes/inquiryRoute.js";
+import newsletterRouter from "./routes/newsletterRoute.js";
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors({ origin: /^http:\/\/localhost:\d+$/, credentials: true }));
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api/auth", authRouter);
 app.use("/api/inquiries", inquiryRouter);
+app.use("/api/newsletter", newsletterRouter);
 
 app.get("/", (req, res) => res.send("Hello From Tejas Mehar"));
 

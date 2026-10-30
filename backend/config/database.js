@@ -168,6 +168,14 @@ export const connectDB = async () => {
     );
 
     await pool.query(`
+      CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(150) NOT NULL UNIQUE,
+        createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS password_resets (
         email VARCHAR(150) NOT NULL PRIMARY KEY,
         codeHash VARCHAR(255) NOT NULL,
