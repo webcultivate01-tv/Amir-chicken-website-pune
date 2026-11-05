@@ -25,4 +25,3 @@ export const EggIcon = forwardRef(function EggIcon(
   );
 });
 
-export const EggCartonIcon = EggIcon;

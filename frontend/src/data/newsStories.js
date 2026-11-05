@@ -21,13 +21,13 @@ export const newsStories = [
     category: "Company News",
     date: "14 September 2026",
     readingTime: "4 Minutes read",
-    title: "From One Counter in Hadapsar to 580+ Stores",
+    title: "From One Counter in Hadapsar to 650+ Stores",
     description:
       "What began as a single shop at Gadital, Hadapsar in 1991 has grown into one of Maharashtra's largest fresh-protein retail networks.",
     summary:
       "What began as a single shop at Gadital, Hadapsar in 1991 has grown into one of Maharashtra's largest fresh-protein retail networks.",
     content: [
-      "In 1991, Amir opened its first store in Gadital, Hadapsar — a single counter selling fresh chicken and eggs to the local neighbourhood. Three decades on, that same commitment to freshness has carried the brand to more than 580 stores across Pune, Nashik and Ahilyanagar.",
+      "In 1991, Amir opened its first store in Gadital, Hadapsar — a single counter selling fresh chicken and eggs to the local neighbourhood. Three decades on, that same commitment to freshness has carried the brand to more than 650 stores across Pune, Nashik and Ahilyanagar.",
       "The network opened to franchise partners in 2016, allowing Amir to grow while keeping the same daily sourcing, handling and quality checks at every counter — whether it's the original Hadapsar store or the newest franchise outlet.",
       "Today, the Amir network supports over 2,500 livelihoods, from farm partners and store staff to delivery teams, all working toward the same goal: fresh cuts, accurate weight and fair pricing, every single day.",
     ],
@@ -65,7 +65,7 @@ export const newsStories = [
     content: [
       "Mr. Vijay More grew up in Maharashtra's drought-affected Ahmednagar region, where he saw first-hand the challenges faced by educated rural youth struggling to find steady work.",
       "In 1991, he founded Amir with two clear ambitions: to bring genuinely fresh chicken and eggs to local customers, and to create reliable livelihoods for the people who would come to work alongside him.",
-      "More than three decades later, those same two ambitions still guide Amir — now a network of 580+ stores and 2,500+ livelihoods across Maharashtra, built one counter at a time.",
+      "More than three decades later, those same two ambitions still guide Amir — now a network of 650+ stores and 2,500+ livelihoods across Maharashtra, built one counter at a time.",
     ],
   },
   {

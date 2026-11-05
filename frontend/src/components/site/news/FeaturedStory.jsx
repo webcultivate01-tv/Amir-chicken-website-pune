@@ -35,7 +35,7 @@ export default function FeaturedStory() {
           </h2>
 
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">
-            Since 1991, Amir has grown from a single store into 580+ stores
+            Since 1991, Amir has grown from a single store into 650+ stores
             across Maharashtra, offering fresh, hygienic and 100% Halal protein.
           </p>
 

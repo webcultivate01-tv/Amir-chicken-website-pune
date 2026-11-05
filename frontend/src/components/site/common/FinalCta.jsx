@@ -50,7 +50,7 @@ export default function FinalCta() {
           className="mx-auto mt-5 max-w-xl font-poppins text-[15px] leading-7 text-white/80"
         >
           Fresh cuts, accurate weight and fair pricing, backed by 35+ years
-          of trust and a network of 580+ stores across Maharashtra.
+          of trust and a network of 650+ stores across Maharashtra.
         </motion.p>
 
         <motion.div

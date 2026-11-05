@@ -206,7 +206,7 @@ const StoryDetailPage = () => {
                 About Amir
               </p>
               <p className="mt-3 text-[15px] leading-7 text-neutral-600">
-                Fresh chicken, mutton, fish and eggs since 1991 — now across 580+ stores in Maharashtra.
+                Fresh chicken, mutton, fish and eggs since 1991 — now across 650+ stores in Maharashtra.
               </p>
               <Link
                 to="/contact"

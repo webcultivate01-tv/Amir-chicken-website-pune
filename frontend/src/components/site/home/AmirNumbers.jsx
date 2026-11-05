@@ -16,7 +16,7 @@ const stats = [
     description: "A legacy of commitment built since 1991.",
   },
   {
-    value: 580,
+    value: 650,
     suffix: "+",
     label: "Retail Stores",
     description: "An expanding network serving customers.",

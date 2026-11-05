@@ -370,14 +370,14 @@ const StorySection = () => {
 
             <p className="mt-4 font-poppins text-[15px] sm:text-[16px] leading-[1.75] text-[#171719]/75">
               That one counter became a private limited company in 2005 and
-              opened to franchise partners in 2016. Today, 580+ Amir stores
+              opened to franchise partners in 2016. Today, 650+ Amir stores
               across Pune, Nashik and Ahilyanagar support over 2,500
               livelihoods, and every one still follows the promise we started
               with.
             </p>
 
             <p className="mt-6 pt-5 border-t border-[#EC1F36]/15 font-poppins text-[12px] font-medium tracking-[0.16em] uppercase text-[#EC1F36]">
-              1991 Founded · 580+ Stores
+              1991 Founded · 650+ Stores
             </p>
           </div>
         </div>
@@ -513,7 +513,7 @@ const journey = [
   {
     year: "Today",
     title: "A Growing Network",
-    text: "580+ stores and 2,500+ livelihoods across Pune, Nashik and Ahilyanagar.",
+    text: "650+ stores and 2,500+ livelihoods across Pune, Nashik and Ahilyanagar.",
     featured: true,
   },
   {
@@ -705,7 +705,7 @@ const JourneySection = () => {
 ========================================================= */
 
 const trustStats = [
-  { to: 580, suffix: "+", label: "Retail Stores" },
+  { to: 650, suffix: "+", label: "Retail Stores" },
   { to: 1000000, suffix: "+", label: "Loyal Customers", indian: true },
   { to: 2500, suffix: "+", label: "Livelihoods Supported", indian: true },
   { to: 2200000, label: "White Eggs Sold Monthly", indian: true },
@@ -813,7 +813,7 @@ const FinalCta = () => (
 
       <p className="mx-auto mt-5 max-w-xl font-poppins text-[15px] leading-7 text-white/80">
         Fresh cuts, accurate weight and fair pricing, backed by 35+ years
-        of trust and a network of 580+ stores across Maharashtra.
+        of trust and a network of 650+ stores across Maharashtra.
       </p>
 
       <div className="mx-auto mt-6 w-10 h-[3px] bg-white/70" />
@@ -1002,14 +1002,14 @@ const AboutPage = () => {
           <div className="grow-x delay-2 mt-8 mx-auto w-10 h-[3px] bg-[#EC1F36]" />
 
           <p className="slide-bottom delay-2 mt-6 sm:mt-8 mx-auto font-poppins text-[15px] sm:text-[17px] lg:text-[19px] leading-[1.7] sm:leading-[1.75] text-black max-w-[680px]">
-            From a single store in Hadapsar to 580+ outlets, Amir brings fresh
+            From a single store in Hadapsar to 650+ outlets, Amir brings fresh
             cuts, accurate weight and fair pricing to every customer, every day.
           </p>
 
           <div className="mt-10 sm:mt-12 grid grid-cols-3 divide-x divide-[#EC1F36]/20">
             {[
               { to: 35, suffix: "+", label: "Years of Trust", anim: "slide-left delay-3" },
-              { to: 580, suffix: "+", label: "Retail Stores", anim: "slide-bottom delay-4" },
+              { to: 650, suffix: "+", label: "Retail Stores", anim: "slide-bottom delay-4" },
               { to: 10, suffix: " Lakh+", label: "Loyal Customers", anim: "slide-right delay-3" },
             ].map((stat) => (
               <div key={stat.label} className={`px-1.5 sm:px-4 ${stat.anim}`}>

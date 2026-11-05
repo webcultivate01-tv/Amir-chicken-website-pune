@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { EggCartonIcon } from "./EggIcon";
 
 // Bundled WebP product photos (images/products/<category>/<name>.webp)
 const productImages = import.meta.glob("../../../../images/products/*/*.webp", {

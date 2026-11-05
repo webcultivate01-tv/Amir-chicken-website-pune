@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Link, Outlet, useLocation } from "react-router-dom";
 
-import amirNavbarLogo from "../../../images/amir-seal-of-trust.png";
 import amirFooterLogo from "../../../images/amir-wordmark-white.png";
 import iraLogo from "../../../images/ira-logo.png";
 
@@ -38,9 +37,9 @@ const SiteLayout = () => {
 
       <header className="sticky top-0 z-50 bg-white border-b border-[#271719]/10 shadow-sm">
 
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="w-full px-5 sm:px-10 lg:px-16">
 
-          <div className="h-[82px] grid grid-cols-3 md:grid-cols-[auto_1fr_auto] md:gap-6 items-center">
+          <div className="h-[88px] grid grid-cols-3 md:grid-cols-[auto_1fr_auto] md:gap-6 items-center">
 
             {/* =========================
                 LEFT - LOGO
@@ -51,13 +50,30 @@ const SiteLayout = () => {
               <Link
                 to="/"
                 className="flex items-center"
-                aria-label="Amir 2.0 Home"
+                aria-label="Amir's Fresh Cut Home"
               >
-                <img
-                  src={amirNavbarLogo}
-                  alt="Amir 2.0"
-                  className="h-[62px] sm:h-[68px] w-auto object-contain ml-2 sm:ml-0"
-                />
+                {/* White wordmark recolored to brand red via CSS mask */}
+                <span className="relative inline-block">
+                  <img
+                    src={amirFooterLogo}
+                    alt="Amir's Fresh Cut"
+                    className="h-[64px] sm:h-[74px] w-auto object-contain opacity-0"
+                  />
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-[#EC1F36]"
+                    style={{
+                      WebkitMaskImage: `url(${amirFooterLogo})`,
+                      maskImage: `url(${amirFooterLogo})`,
+                      WebkitMaskRepeat: "no-repeat",
+                      maskRepeat: "no-repeat",
+                      WebkitMaskSize: "contain",
+                      maskSize: "contain",
+                      WebkitMaskPosition: "left center",
+                      maskPosition: "left center",
+                    }}
+                  />
+                </span>
               </Link>
 
             </div>
@@ -307,7 +323,7 @@ const SiteLayout = () => {
 
               <p className="mt-3 max-w-[350px] text-[13px] leading-5.5 text-[#F5EFE6]/65">
                 Amir | Fresh Protein Market.
-                Trusted fresh-protein retailer since 1991, with 580+ stores serving Chicken, Eggs, Mutton, Fish, Seafood and Frozen Foods.
+                Trusted fresh-protein retailer since 1991, with 650+ stores serving Chicken, Eggs, Mutton, Fish, Seafood and Frozen Foods.
               </p>
 
 
