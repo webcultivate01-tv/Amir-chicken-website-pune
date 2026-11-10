@@ -322,8 +322,7 @@ const SiteLayout = () => {
               </Link>
 
               <p className="mt-3 max-w-[350px] text-[13px] leading-5.5 text-[#F5EFE6]/65">
-                Amir | Fresh Protein Market.
-                Trusted fresh-protein retailer since 1991, with 650+ stores serving Chicken, Eggs, Mutton, Fish, Seafood and Frozen Foods.
+                Amir's Fresh Cut | Trusted Meat Retailer since 1991, with 650+ stores serving Chicken, Mutton, Fish, Seafood, Frozen Foods and Eggs.
               </p>
 
 
@@ -579,18 +578,6 @@ const SiteLayout = () => {
                     <span className="text-[#F5EFE6]/40">
                       &gt;
                     </span>
-                    Eggs
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    to="/catalog"
-                    className="flex items-center gap-2 text-[13px] text-[#F5EFE6]/65 hover:text-[#F5EFE6] transition-colors duration-200"
-                  >
-                    <span className="text-[#F5EFE6]/40">
-                      &gt;
-                    </span>
                     Mutton
                   </Link>
                 </li>
@@ -628,6 +615,18 @@ const SiteLayout = () => {
                       &gt;
                     </span>
                     Frozen Foods
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/catalog"
+                    className="flex items-center gap-2 text-[13px] text-[#F5EFE6]/65 hover:text-[#F5EFE6] transition-colors duration-200"
+                  >
+                    <span className="text-[#F5EFE6]/40">
+                      &gt;
+                    </span>
+                    Eggs
                   </Link>
                 </li>
 

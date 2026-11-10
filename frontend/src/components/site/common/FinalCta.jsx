@@ -39,7 +39,7 @@ export default function FinalCta() {
           className="font-seasons text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.05] tracking-[-0.025em] text-white"
         >
           Looking for a fresh,{" "}
-          <span className="italic">reliable protein partner?</span>
+          <span className="italic">reliable meat partner?</span>
         </motion.h2>
 
         <motion.p

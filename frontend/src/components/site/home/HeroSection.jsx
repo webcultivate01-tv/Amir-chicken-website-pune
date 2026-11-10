@@ -118,7 +118,7 @@ export default function HeroSection() {
           transition={{ duration: 0.9, delay: TEXT_DELAY + 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mt-4 max-w-[36ch] text-base leading-[1.6] text-white/90 sm:mt-5 sm:max-w-lg sm:leading-7"
         >
-          Chicken, eggs, mutton, fish, seafood and frozen foods — fresh cuts,
+          Chicken, mutton, fish, seafood, frozen foods and eggs — fresh cuts,
           100% Halal practices, accurate weight and fair pricing, all under
           one trusted brand.
         </motion.p>

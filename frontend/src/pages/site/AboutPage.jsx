@@ -519,7 +519,7 @@ const journey = [
   {
     year: "Next",
     title: "The Multi-Protein Chapter",
-    text: "Amir is evolving into a complete fresh-protein destination, with chicken, eggs, mutton, fish, seafood and frozen foods under one roof, supported by mobile ordering and home delivery.",
+    text: "Amir is evolving into a complete fresh-protein destination, with chicken, mutton, fish, seafood, frozen foods and eggs under one roof, supported by mobile ordering and home delivery.",
     featured: true,
   },
 ];
@@ -808,7 +808,7 @@ const FinalCta = () => (
 
       <h2 className="font-seasons text-[36px] sm:text-[48px] lg:text-[60px] leading-[1.05] tracking-[-0.025em] text-white">
         Looking for a fresh,{" "}
-        <span className="italic">reliable protein partner?</span>
+        <span className="italic">reliable meat partner?</span>
       </h2>
 
       <p className="mx-auto mt-5 max-w-xl font-poppins text-[15px] leading-7 text-white/80">
@@ -988,11 +988,11 @@ const AboutPage = () => {
             "
           >
             <span className="block sm:inline">
-              <HighlightWords text="Fresh Protein," activeColor="#171719" />
+              <HighlightWords text="Fresh Meat" activeColor="#171719" />
             </span>{" "}
             <span className="block sm:inline italic">
               <HighlightWords
-                text="Honestly Served."
+                text="Served with Hygiene."
                 activeColor="#EC1F36"
                 startIndex={2}
               />

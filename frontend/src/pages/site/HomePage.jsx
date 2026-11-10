@@ -457,8 +457,8 @@ export default function HomePage() {
 
             <p className="mt-7 max-w-md text-base leading-7 text-white/60">
               Amir is evolving from a chicken-and-eggs retailer into a
-              complete multi-protein destination, with chicken, eggs, mutton,
-              fish, seafood and frozen foods under one roof.
+              complete multi-protein destination, with chicken, mutton,
+              fish, seafood, frozen foods and eggs under one roof.
             </p>
 
             <Link

@@ -52,7 +52,7 @@ export default function BrandStatement() {
         </div>
 
         <h2 className="max-w-6xl font-seasons text-4xl font-semibold leading-[1.08] tracking-[-0.045em] sm:text-5xl lg:text-7xl">
-          One store in 1991.{" "}
+          First store in 1991.{" "}
           {statement.split(/\s+/).map((word, index) => (
             <span
               key={index}

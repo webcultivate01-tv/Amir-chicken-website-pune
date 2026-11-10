@@ -53,7 +53,7 @@ const pillars = [
     number: "05",
     kicker: "Product Diversity",
     name: "Variety",
-    text: "Chicken, eggs, mutton, fish, seafood and frozen foods.",
+    text: "Chicken, mutton, fish, seafood, frozen foods and eggs.",
     tilt: -6,
     offset: -24,
     image: "/images/franchiseNetwork/variety.png",
