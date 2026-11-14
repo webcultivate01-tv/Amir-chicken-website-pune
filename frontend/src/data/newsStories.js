@@ -5,7 +5,7 @@
    update it whenever a story is refreshed.
 ========================================================= */
 
-import aboutShop from "../../images/aboutShop.png";
+import aboutShop from "../../images/aboutShop.webp";
 import sealOfTrust from "../../images/amir-seal-of-trust.png";
 import founderPhoto from "../../images/founder-vijay-more.png";
 import rawChickenPlate from "../../images/raw-chicken-plate.png";
@@ -59,11 +59,11 @@ export const newsStories = [
     readingTime: "5 Minutes read",
     title: "Mr. Vijay More: Building Amir Since 1991",
     description:
-      "Born in Maharashtra's drought-affected Ahmednagar region, Mr. Vijay More built Amir on two simple ambitions: fresh food and fair livelihoods.",
+      "Born in Maharashtra's drought-affected Ahilya Nagar region, Mr. Vijay More built Amir on two simple ambitions: fresh food and fair livelihoods.",
     summary:
-      "Born in Maharashtra's drought-affected Ahmednagar region, Mr. Vijay More built Amir on two simple ambitions: fresh food and fair livelihoods.",
+      "Born in Maharashtra's drought-affected Ahilya Nagar region, Mr. Vijay More built Amir on two simple ambitions: fresh food and fair livelihoods.",
     content: [
-      "Mr. Vijay More grew up in Maharashtra's drought-affected Ahmednagar region, where he saw first-hand the challenges faced by educated rural youth struggling to find steady work.",
+      "Mr. Vijay More grew up in Maharashtra's drought-affected Ahilya Nagar region, where he saw first-hand the challenges faced by educated rural youth struggling to find steady work.",
       "In 1991, he founded Amir with two clear ambitions: to bring genuinely fresh chicken and eggs to local customers, and to create reliable livelihoods for the people who would come to work alongside him.",
       "More than three decades later, those same two ambitions still guide Amir — now a network of 650+ stores and 2,500+ livelihoods across Maharashtra, built one counter at a time.",
     ],

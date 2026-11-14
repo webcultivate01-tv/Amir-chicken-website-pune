@@ -113,13 +113,13 @@ export default function TransformationSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="border-t border-[#EC1F36]/15 bg-white px-6 py-16 sm:px-10 lg:flex lg:min-h-[100svh] lg:items-center lg:px-16 lg:py-12">
+    <section ref={sectionRef} className="border-t border-[#EC1F36]/15 bg-white px-6 py-16 sm:px-12 lg:flex lg:min-h-[100svh] lg:items-center lg:px-24 lg:py-12 xl:px-32">
       <style>{`
         .amir-chapters-window { scrollbar-width: none; -ms-overflow-style: none; }
         .amir-chapters-window::-webkit-scrollbar { display: none; }
       `}</style>
 
-      <div className="mx-auto w-full max-w-[1480px]">
+      <div className="mx-auto w-full max-w-[1200px]">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
           {/* LEFT — intro */}
           <div className="flex flex-col items-start">

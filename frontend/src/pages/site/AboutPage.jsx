@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import storyPhoto from "../../../images/aboutShop.png";
+import storyPhoto from "../../../images/aboutShop.webp";
 import founderPhoto from "../../../images/vijayMore.png";
 import TransformationSection from "../../components/site/home/TransformationSection";
 
@@ -448,7 +448,7 @@ const FounderSection = () => {
 
           <div>
             <p className="mt-6 font-poppins text-[15px] sm:text-[16px] leading-[1.75] text-[#171719]/75">
-              Born in Maharashtra’s drought-affected Ahmednagar region, Mr.
+              Born in Maharashtra’s drought-affected Ahilya Nagar region, Mr.
               Vijay More saw first-hand the challenges faced by educated rural
               youth.
             </p>

@@ -9,6 +9,8 @@ const productImages = import.meta.glob("../../../images/products/*/*.webp", {
 });
 const mediaImage = (folder, file) =>
   productImages[`../../../images/products/${folder}/${file}.webp`];
+const fishImage = (file) => mediaImage("fish&seafood", file);
+const eggImage = (file) => mediaImage("eggs", file);
 const chickenImage = (file) => mediaImage("chicken", file);
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -168,38 +170,32 @@ const products = {
     {
       name: "Fresh Sea Fish",
       text: "Fresh fish selected for everyday cooking.",
-      image:
-        "https://images.pexels.com/photos/37092459/pexels-photo-37092459.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: fishImage("Fresh Sea Fish"),
     },
     {
       name: "Fresh Fish",
       text: "Freshly sourced fish with natural flavour.",
-      image:
-        "https://images.pexels.com/photos/3650159/pexels-photo-3650159.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: fishImage("Fresh Fish"),
     },
     {
       name: "Seafood Selection",
       text: "A selection of fresh seafood cuts.",
-      image:
-        "https://images.pexels.com/photos/3903587/pexels-photo-3903587.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: fishImage("Seafood Selection"),
     },
     {
       name: "Fresh Fish Market Cut",
       text: "Carefully selected fish prepared fresh.",
-      image:
-        "https://images.pexels.com/photos/36122229/pexels-photo-36122229.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: fishImage("Fresh Fish Market Cut"),
     },
     {
       name: "Fresh Seafood",
       text: "Quality seafood for your favourite recipes.",
-      image:
-        "https://images.pexels.com/photos/10727383/pexels-photo-10727383.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: fishImage("Fresh Seafood"),
     },
     {
       name: "Fish on Ice",
       text: "Fresh fish ready for your kitchen.",
-      image:
-        "https://images.pexels.com/photos/27553354/pexels-photo-27553354.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: fishImage("Fish on Ice"),
     },
   ],
 
@@ -207,38 +203,17 @@ const products = {
     {
       name: "Farm Fresh Eggs",
       text: "Fresh eggs selected for everyday meals.",
-      image:
-        "https://images.pexels.com/photos/30805254/pexels-photo-30805254.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: eggImage("Farm Fresh Eggs"),
     },
     {
       name: "Country Eggs",
       text: "Fresh eggs with naturally rich yolks.",
-      image:
-        "https://images.pexels.com/photos/15428991/pexels-photo-15428991.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: eggImage("Country Eggs"),
     },
     {
-      name: "Brown Farm Eggs",
+      name: "Rustic Brown Eggs",
       text: "Fresh brown eggs from trusted farms.",
-      image:
-        "https://images.pexels.com/photos/29802845/pexels-photo-29802845.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    },
-    {
-      name: "Fresh Egg Selection",
-      text: "Naturally fresh eggs for everyday cooking.",
-      image:
-        "https://images.pexels.com/photos/22764388/pexels-photo-22764388.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    },
-    {
-      name: "Farm Egg Collection",
-      text: "Fresh eggs carefully selected for quality.",
-      image:
-        "https://images.pexels.com/photos/30805251/pexels-photo-30805251.jpeg?auto=compress&cs=tinysrgb&w=1200",
-    },
-    {
-      name: "Fresh Eggs",
-      text: "Farm-fresh eggs for your everyday kitchen.",
-      image:
-        "https://images.pexels.com/photos/30805259/pexels-photo-30805259.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      image: eggImage("Rustic Brown Egg Still Life"),
     },
   ],
 };
