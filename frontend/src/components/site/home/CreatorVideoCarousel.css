@@ -29,12 +29,12 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1100px;
-  height: clamp(380px, 40vw, 600px);
+  height: clamp(340px, 35vw, 530px);
   overflow: hidden;
 }
 
 .cvc-card {
-  --center-w: clamp(235px, 25vw, 375px);
+  --center-w: clamp(210px, 22vw, 330px);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -195,7 +195,7 @@
 
 @media (max-width: 1023px) {
   .cvc-card {
-    --center-w: clamp(210px, 34vw, 320px);
+    --center-w: clamp(190px, 30vw, 282px);
   }
 
   .cvc-card[data-slot="left"] {
@@ -209,11 +209,11 @@
 
 @media (max-width: 767px) {
   .cvc-stage {
-    height: clamp(280px, 78vw, 370px);
+    height: clamp(255px, 70vw, 335px);
   }
 
   .cvc-card {
-    --center-w: clamp(170px, 48vw, 230px);
+    --center-w: clamp(150px, 42vw, 205px);
   }
 
   .cvc-card[data-slot="left"] {

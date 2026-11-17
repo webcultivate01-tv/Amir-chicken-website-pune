@@ -5,6 +5,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EggIcon } from "./EggIcon";
 import "./PlateShowcase.css";
+import rawChickenPlate from "../../../../images/raw-chicken-plate.webp";
+import rawMuttonPlate from "../../../../images/raw-mutton-plate.webp";
+import freshFishPlate from "../../../../images/fresh-fish-plate.webp";
+import freshEggsPlate from "../../../../images/fresh-eggs-plate.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,7 +19,7 @@ const products = [
     caption: "FRESHNESS, EVERY DAY",
     description:
       "Fresh chicken, carefully handled with quality and hygiene in mind.",
-    image: "/images/raw-chicken-plate.png",
+    image: rawChickenPlate,
   },
   {
     name: "Tender Mutton",
@@ -23,7 +27,7 @@ const products = [
     caption: "QUALITY YOU CAN TRUST",
     description:
       "Quality mutton selected with care for freshness and consistency.",
-    image: "/images/raw-mutton-plate.png",
+    image: rawMuttonPlate,
   },
   {
     name: "Fresh Fish",
@@ -31,7 +35,7 @@ const products = [
     caption: "FRESH FROM THE WATER",
     description:
       "Fresh fish and seafood, handled with care from selection to your table.",
-    image: "/images/fresh-fish-plate.png",
+    image: freshFishPlate,
   },
   {
     name: "Farm Fresh Eggs",
@@ -39,7 +43,7 @@ const products = [
     caption: "A DAILY ESSENTIAL",
     description:
       "Fresh eggs for everyday meals and family favourites.",
-    image: "/images/fresh-eggs-plate.png",
+    image: freshEggsPlate,
   },
 ];
 

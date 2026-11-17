@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -85,6 +85,7 @@ const icons = {
       <path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
     </>
   ),
+  back: icon(<path d="M19 12H5M12 19l-7-7 7-7" />),
   logout: icon(
     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
   ),
@@ -242,6 +243,13 @@ function AdminLayout() {
             </div>
           </div>
           <button
+            onClick={() => navigate("/")}
+            className="mb-2 flex w-full items-center justify-center gap-2.5 rounded-lg border border-mist-line bg-white py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand/30 hover:bg-brand-soft hover:text-brand"
+          >
+            {icons.back}
+            Back to Site
+          </button>
+          <button
             onClick={handleLogout}
             className="flex w-full items-center justify-center gap-2.5 rounded-lg border border-mist-line bg-white py-2.5 text-sm font-semibold text-ink transition-colors hover:border-red-200 hover:bg-red-50 hover:text-[#c4161c]"
           >
@@ -294,7 +302,7 @@ function AdminLayout() {
         </header>
 
         <main className="px-4 py-8 sm:px-10">
-          <Outlet />
+          <Suspense fallback={null}><Outlet /></Suspense>
         </main>
       </div>
     </div>

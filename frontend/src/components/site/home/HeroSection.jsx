@@ -1,5 +1,5 @@
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -8,7 +8,25 @@ const TEXT_DELAY = 2;
 
 export default function HeroSection() {
   const heroRef = useRef(null);
+  const videoRef = useRef(null);
   const reduceMotion = useReducedMotion();
+
+  // Pause the background video while it is off-screen so scrolling stays smooth
+  useEffect(() => {
+    const section = heroRef.current;
+    const video = videoRef.current;
+    if (!section || !video) return undefined;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        const p = video.play();
+        if (p && p.catch) p.catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   const entrance = reduceMotion
     ? { opacity: 1, y: 0 }
@@ -43,7 +61,9 @@ export default function HeroSection() {
         }}
       >
         <motion.video
+          ref={videoRef}
           src="/HeroVideo%20(2).mp4"
+          poster="/hero-poster.jpg"
           autoPlay
           muted
           loop

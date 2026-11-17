@@ -1,25 +1,27 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
-import AdminLogin from "./pages/AdminLogin";
-import Dashboard from "./pages/Dashboard";
-import AdminLayout from "./components/AdminLayout";
-import ProfilePage from "./pages/admin/ProfilePage";
-import InquiriesPage from "./pages/admin/InquiriesPage";
-import InquiryDetailPage from "./pages/admin/InquiryDetailPage";
-import FollowupsPage from "./pages/admin/FollowupsPage";
 import SiteLayout from "./components/site/SiteLayout";
 import HomePage from "./pages/site/HomePage";
-import AboutPage from "./pages/site/AboutPage";
-import CatalogPage from "./pages/site/CatalogPage";
-import ContactPage from "./pages/site/ContactPage";
-import NewsPage from "./pages/site/NewsPage";
-import StoryDetailPage from "./pages/site/StoryDetailPage";
 import useGetCurrentUser from "./CustomHooks/getCurrentUser";
-import PrivacyPolicyPage from "./pages/site/PrivacyPolicyPage";
-import TermsPage from "./pages/site/TermsPage";
+
+// Route-level code splitting: each page is downloaded only when visited.
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const AdminLayout = lazy(() => import("./components/AdminLayout"));
+const ProfilePage = lazy(() => import("./pages/admin/ProfilePage"));
+const InquiriesPage = lazy(() => import("./pages/admin/InquiriesPage"));
+const InquiryDetailPage = lazy(() => import("./pages/admin/InquiryDetailPage"));
+const FollowupsPage = lazy(() => import("./pages/admin/FollowupsPage"));
+const AboutPage = lazy(() => import("./pages/site/AboutPage"));
+const CatalogPage = lazy(() => import("./pages/site/CatalogPage"));
+const ContactPage = lazy(() => import("./pages/site/ContactPage"));
+const NewsPage = lazy(() => import("./pages/site/NewsPage"));
+const StoryDetailPage = lazy(() => import("./pages/site/StoryDetailPage"));
+const PrivacyPolicyPage = lazy(() => import("./pages/site/PrivacyPolicyPage"));
+const TermsPage = lazy(() => import("./pages/site/TermsPage"));
 
 export const serverUrl = "http://localhost:8000";
 
@@ -39,6 +41,7 @@ function App() {
   return (
     <>
       <ToastContainer limit={1} position="top-center" newestOnTop hideProgressBar={false} />
+      <Suspense fallback={null}>
       <Routes>
         <Route element={<SiteLayout />}>
           <Route path="/" element={<HomePage />} />
@@ -66,6 +69,7 @@ function App() {
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
+      </Suspense>
     </>
   );
 }

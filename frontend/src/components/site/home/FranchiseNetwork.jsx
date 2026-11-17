@@ -6,6 +6,17 @@ import "./FranchiseNetwork.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const builtToGrowFiles = import.meta.glob("../../../../images/BuiltToGrow/*.webp", {
+  eager: true,
+  import: "default",
+});
+const builtToGrow = Object.fromEntries(
+  Object.entries(builtToGrowFiles).map(([path, url]) => [
+    path.split("/").pop().replace(".webp", ""),
+    url,
+  ])
+);
+
 const pillars = [
   {
     number: "01",
@@ -14,7 +25,7 @@ const pillars = [
     text: "A name families have trusted since 1991.",
     tilt: -5,
     offset: -18,
-    image:"/images/BuiltToGrow/Brand.webp",
+    image: builtToGrow.Brand,
     alt: "Modern retail store interior with branded display lighting",
   },
   {
@@ -24,7 +35,7 @@ const pillars = [
     text: "Consistent supply through centralised sourcing.",
     tilt: 4,
     offset: 22,
-    image:"/images/BuiltToGrow/Supply.webp",
+    image: builtToGrow.Supply,
     alt: "Freight truck on the road carrying fresh stock",
   },
   {
@@ -34,8 +45,7 @@ const pillars = [
     text: "Hygienic store designs proven across the network.",
     tilt: -3,
     offset: -10,
-    image:
-      "/images/BuiltToGrow/Retail.webp",
+    image: builtToGrow.Retail,
     alt: "Hygienic retail store with organised display shelves",
   },
   {
@@ -45,8 +55,7 @@ const pillars = [
     text: "Standard practices and hands-on franchise training.",
     tilt: 6,
     offset: 14,
-    image:
-      "/images/BuiltToGrow/Training.webp",
+    image: builtToGrow.Training,
     alt: "Franchise team in a hands-on operational training session",
   },
   {
@@ -56,7 +65,7 @@ const pillars = [
     text: "Chicken, mutton, fish, seafood, frozen foods and eggs.",
     tilt: -6,
     offset: -24,
-    image: "/images/BuiltToGrow/Variety.webp",
+    image: builtToGrow.Variety,
     alt: "Chicken, mutton, fish and eggs laid out together",
   },
   {
@@ -66,8 +75,7 @@ const pillars = [
     text: "Visibility and recall built with every partner.",
     tilt: 3,
     offset: 18,
-    image:
-      "/images/BuiltToGrow/Marketing.webp",
+    image: builtToGrow.Marketing,
     alt: "Brand billboard built for visibility and recall",
   },
   {
@@ -77,8 +85,7 @@ const pillars = [
     text: "10 Lakh+ loyal customers who already know the Amir name.",
     tilt: -4,
     offset: -8,
-    image:
-      "/images/BuiltToGrow/Trust.webp",
+    image: builtToGrow.Trust,
     alt: "Two partners shaking hands over a trusted deal",
   },
 ];

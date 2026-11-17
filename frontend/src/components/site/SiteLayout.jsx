@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import { NavLink, Link, Outlet, useLocation } from "react-router-dom";
 
 import amirFooterLogo from "../../../images/amir-wordmark-white.png";
@@ -284,7 +284,7 @@ const SiteLayout = () => {
       =============================== */}
 
       <main className="flex-1">
-        <Outlet />
+        <Suspense fallback={<div className="min-h-[70vh]" />}><Outlet /></Suspense>
       </main>
 
 
@@ -315,6 +315,7 @@ const SiteLayout = () => {
                 aria-label="Amir's Fresh Cut Home"
               >
                 <img
+                  loading="lazy" decoding="async"
                   src={amirFooterLogo}
                   alt="Amir's Fresh Cut"
                   className="h-[84px] w-auto object-contain"
@@ -488,6 +489,7 @@ const SiteLayout = () => {
 
                 <div className="inline-block rounded-md bg-white px-3 py-1.5">
                   <img
+                    loading="lazy" decoding="async"
                     src={iraLogo}
                     alt="Indian Retail Alliance"
                     className="h-[34px] w-auto object-contain"

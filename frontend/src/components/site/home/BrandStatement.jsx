@@ -9,7 +9,12 @@ export default function BrandStatement() {
 
     const words = section.querySelectorAll(".brand-word");
 
+    const lit = new Array(words.length).fill(false);
+    let ticking = false;
+    let visible = true;
+
     const updateHighlight = () => {
+      ticking = false;
       const rect = section.getBoundingClientRect();
       const progress = Math.max(
         0,
@@ -17,21 +22,36 @@ export default function BrandStatement() {
       );
 
       words.forEach((word, index) => {
-        word.style.color =
-          progress >= (index + 1) / words.length
-            ? "#171717"
-            : "#C7C7C7";
+        const on = progress >= (index + 1) / words.length;
+        if (on !== lit[index]) {
+          lit[index] = on;
+          word.style.color = on ? "#171717" : "#C7C7C7";
+        }
       });
     };
 
-    window.addEventListener("scroll", updateHighlight, {
-      passive: true,
-    });
+    const onScroll = () => {
+      if (ticking || !visible) return;
+      ticking = true;
+      requestAnimationFrame(updateHighlight);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        if (visible) onScroll();
+      },
+      { rootMargin: "100% 0px 100% 0px" }
+    );
+    observer.observe(section);
+
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     updateHighlight();
 
     return () => {
-      window.removeEventListener("scroll", updateHighlight);
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 

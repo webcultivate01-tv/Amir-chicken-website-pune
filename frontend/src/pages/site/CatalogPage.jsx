@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import OrderComingSoonModal from "../../components/site/OrderComingSoonModal";
+import proteinHero from "../../../images/amir-protein-hero.webp";
+import rawChickenPlate from "../../../images/raw-chicken-plate.webp";
+import rawMuttonPlate from "../../../images/raw-mutton-plate.webp";
+import freshFishPlate from "../../../images/fresh-fish-plate.webp";
+import freshEggsPlate from "../../../images/fresh-eggs-plate.webp";
 
 // Optimised WebP product photos (images/products/<category>/<name>.webp), bundled by Vite
 const productImages = import.meta.glob("../../../images/products/*/*.webp", {
@@ -19,11 +25,11 @@ const EASE = [0.22, 1, 0.36, 1];
 const PAGE_SIZE = 6;
 
 const categories = [
-  { name: "All Cuts", image: "/images/amir-protein-hero.png" },
-  { name: "Chicken", image: "/images/raw-chicken-plate.png" },
-  { name: "Mutton", image: "/images/raw-mutton-plate.png" },
-  { name: "Fish & Seafood", image: "/images/fresh-fish-plate.png" },
-  { name: "Farm Eggs", image: "/images/fresh-eggs-plate.png" },
+  { name: "All Cuts", image: proteinHero },
+  { name: "Chicken", image: rawChickenPlate },
+  { name: "Mutton", image: rawMuttonPlate },
+  { name: "Fish & Seafood", image: freshFishPlate },
+  { name: "Farm Eggs", image: freshEggsPlate },
 ];
 
 const products = {
@@ -231,6 +237,7 @@ export default function CatalogPage() {
   const categoryParam = categorySlugs[searchParams.get("category")];
   const [active, setActive] = useState(categoryParam ?? "All Cuts");
   const [page, setPage] = useState(1);
+  const [orderProduct, setOrderProduct] = useState(null);
   const productsRef = useRef(null);
   const reduce = useReducedMotion();
 
@@ -340,6 +347,7 @@ export default function CatalogPage() {
                   <div className="mb-4 h-28 w-28 overflow-hidden rounded-full bg-white ring-2 ring-transparent ring-offset-2 transition-all duration-500 group-hover:scale-105 group-hover:ring-[#EC1F36]"
                   >
                     <img
+                      decoding="async"
                       src={category.image}
                       alt={category.name}
                       className="h-full w-full object-cover"
@@ -407,14 +415,15 @@ export default function CatalogPage() {
                     </p>
                   </div>
 
-                  <Link
-                    to="/contact"
+                  <button
+                    type="button"
+                    onClick={() => setOrderProduct(product.name)}
                     aria-label={`Order ${product.name}`}
                     className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#EC1F36] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#c9172d]"
                   >
                     Order Now
                     <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                  </Link>
+                  </button>
                 </div>
               </motion.article>
             ))}
@@ -465,6 +474,11 @@ export default function CatalogPage() {
         </div>
       </section>
 
+      <OrderComingSoonModal
+        open={orderProduct !== null}
+        productName={orderProduct}
+        onClose={() => setOrderProduct(null)}
+      />
     </main>
   );
 }

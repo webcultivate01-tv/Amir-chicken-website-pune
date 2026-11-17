@@ -31,6 +31,8 @@ export default function CreatorVideoCarousel() {
   const [needsTap, setNeedsTap] = useState(false);
   const [muted, setMuted] = useState(true);
   const [errored, setErrored] = useState({});
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef(null);
   const videoRefs = useRef([]);
 
   const slotOf = useCallback(
@@ -58,13 +60,25 @@ export default function CreatorVideoCarousel() {
     []
   );
 
+  // Only load/play the videos while the section is near the viewport
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return undefined;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "200px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     setNeedsTap(false);
 
     videoRefs.current.forEach((video, index) => {
       if (!video) return;
 
-      if (index === slots.center) {
+      if (index === slots.center && inView) {
         video.muted = muted;
         const playback = video.play();
         if (playback && typeof playback.catch === "function") {
@@ -80,7 +94,7 @@ export default function CreatorVideoCarousel() {
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slots.center]);
+  }, [slots.center, inView]);
 
   useEffect(() => {
     const video = videoRefs.current[slots.center];
@@ -110,7 +124,7 @@ export default function CreatorVideoCarousel() {
   };
 
   return (
-    <section className="cvc-section" aria-labelledby="creator-carousel-heading">
+    <section ref={sectionRef} className="cvc-section" aria-labelledby="creator-carousel-heading">
       <div className="cvc-head">
         <p id="creator-carousel-heading" className="cvc-heading">
           Real people. Real love for Amir.
@@ -143,7 +157,7 @@ export default function CreatorVideoCarousel() {
                     muted={!isCenter || muted}
                     loop
                     playsInline
-                    preload="metadata"
+                    preload={isCenter && inView ? "auto" : "none"}
                     onError={() =>
                       setErrored((current) => ({ ...current, [card.id]: true }))
                     }

@@ -1,5 +1,6 @@
 
 import { forwardRef } from "react";
+import eggImg from "../../../../images/egg5.webp";
 
 export const EggIcon = forwardRef(function EggIcon(
   { style, ...props },
@@ -8,7 +9,7 @@ export const EggIcon = forwardRef(function EggIcon(
   return (
     <img
       ref={ref}
-      src="/images/egg5.png"
+      src={eggImg}
       alt=""
       aria-hidden="true"
       draggable={false}

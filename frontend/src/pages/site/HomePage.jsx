@@ -10,7 +10,7 @@ import FeaturedProducts from "../../components/site/home/FeaturedProducts";
 import EggFlight from "../../components/site/home/EggFlight";
 import CreatorVideoCarousel from "../../components/site/home/CreatorVideoCarousel";
 import FinalCta from "../../components/site/common/FinalCta";
-import oneAmir from "../../../images/oneAmir (2).png";
+import oneAmir from "../../../images/oneAmir (2).webp";
 import techBilling from "../../../images/tech/billing.jpg";
 import techEcommerce from "../../../images/tech/ecommerce.jpg";
 import techTracking from "../../../images/tech/tracking.jpg";
@@ -352,6 +352,7 @@ function TechnologyGrowth() {
               <div className="relative h-64 overflow-hidden rounded-[24px] sm:h-80 lg:h-[330px]">
 
                 <img
+                  loading="lazy" decoding="async"
                   src={current.image}
                   alt={current.title}
                   className="h-full w-full object-cover"
@@ -436,6 +437,7 @@ export default function HomePage() {
 
         {/* artwork pinned right at full section height, with the same side margin as the text on the left; both dark edges fade into the theme color */}
         <img
+          loading="lazy" decoding="async"
           src={oneAmir}
           alt="Amir store and network across Maharashtra"
           className="block w-11/12 mx-auto [mask-image:linear-gradient(to_top,black_85%,transparent)] lg:absolute lg:top-1/2 lg:mx-0 lg:w-auto lg:-translate-y-1/2 lg:right-[max(4rem,calc((100%-1480px)/2+4rem))] lg:h-[90%] lg:max-w-none lg:[mask-image:linear-gradient(to_right,transparent,black_30%,black_94%,transparent)]"
