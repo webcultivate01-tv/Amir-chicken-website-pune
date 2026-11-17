@@ -3,7 +3,8 @@ import React from "react";
 import NewsHeroSection from "../../components/site/news/NewsHeroSection";
 import FeaturedStory from "../../components/site/news/FeaturedStory";
 import LatestStories from "../../components/site/news/LatestStories";
-import Newsletter from "../../components/site/news/Newsletter";
+// Newsletter ("Stay Updated") section hidden for now — uncomment this import and the usage below to bring it back.
+// import Newsletter from "../../components/site/news/Newsletter";
 import FinalCta from "../../components/site/common/FinalCta";
 
 const NewsPage = () => (
@@ -11,7 +12,7 @@ const NewsPage = () => (
     <NewsHeroSection />
     <FeaturedStory />
     <LatestStories />
-    <Newsletter />
+    {/* <Newsletter /> */}
     <FinalCta />
   </main>
 );

@@ -915,10 +915,24 @@ const SiteLayout = () => {
 
             {/* LEFT */}
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col md:flex-row items-center gap-1 md:gap-3">
 
               <p className="text-[12px] text-[#F5EFE6]/60">
                 © {new Date().getFullYear()} Aamir Farms and Foods Limited. All rights reserved.
+              </p>
+
+              <span className="hidden md:inline text-[12px] text-[#F5EFE6]/60">|</span>
+
+              <p className="text-[12px] text-[#F5EFE6]/60">
+                Developed and Managed by{" "}
+                <a
+                  href="https://tejasmehar.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#F5EFE6] underline transition"
+                >
+                  Tejas Mehar
+                </a>
               </p>
 
             </div>

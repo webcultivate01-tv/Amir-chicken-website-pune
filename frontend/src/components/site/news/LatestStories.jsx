@@ -1,64 +1,41 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { Calendar, ArrowRight } from "lucide-react";
-import { newsStories } from "../../../data/newsStories.js";
+import { useState } from "react";
+import { pressClippings } from "../../../data/pressClippings.js";
+import Lightbox from "./Lightbox.jsx";
 
 const EASE = [0.22, 1, 0.36, 1];
 
-function StoryCard({ story, index, reduce }) {
+function StoryCard({ item, index, reduce, onOpen, priority }) {
   return (
     <motion.article
       initial={reduce ? false : { opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay: (index % 3) * 0.1, ease: EASE }}
-      className="group flex h-full flex-col overflow-hidden rounded-[22px] border border-neutral-200 bg-white shadow-[0_18px_45px_-18px_rgba(23,23,25,0.35)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[#EC1F36]/30 hover:shadow-[0_32px_65px_-20px_rgba(236,31,54,0.35)]"
+      transition={{ duration: 0.7, delay: (index % 4) * 0.1, ease: EASE }}
+      className="group mx-auto flex h-full w-full max-w-[340px] sm:max-w-none flex-col overflow-hidden rounded-[18px] border border-neutral-200 bg-white shadow-[0_18px_45px_-18px_rgba(23,23,25,0.35)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[#EC1F36]/30 hover:shadow-[0_32px_65px_-20px_rgba(236,31,54,0.35)]"
     >
-      <div className="aspect-[16/10] w-full overflow-hidden bg-[#FBF8F7] p-4">
+      <button
+        type="button"
+        onClick={() => onOpen(item)}
+        aria-label={`View ${item.title} in full size`}
+        className="aspect-[4/5] w-full cursor-zoom-in overflow-hidden bg-[#FBF8F7] p-3 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#EC1F36]"
+      >
         <img
-          src={story.image}
-          alt={story.title}
-          loading="lazy"
+          src={item.thumb}
+          alt={item.title}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
           className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
         />
-      </div>
-
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <span className="inline-flex w-fit items-center rounded-full bg-[#FBE8E9] px-3 py-1 text-xs font-semibold uppercase tracking-[0.1em] text-[#EC1F36]">
-          {story.category}
-        </span>
-
-        <div className="mt-4 flex items-center gap-2 text-sm text-neutral-500">
-          <Calendar className="h-4 w-4" aria-hidden="true" />
-          <time>{story.date}</time>
-        </div>
-
-        <h3 className="mt-3 font-seasons text-xl font-medium leading-snug tracking-tight text-[#171719]">
-          {story.title}
-        </h3>
-
-        <p className="mt-3 text-[15px] leading-6 text-neutral-500">
-          {story.description}
-        </p>
-
-        <div className="mt-5 flex items-center justify-between border-t border-neutral-100 pt-4">
-          <span className="text-sm text-neutral-500">{story.readingTime}</span>
-
-          <Link
-            to={`/news/${story.id}`}
-            className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-[#EC1F36] transition-colors hover:text-[#171719] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#EC1F36]"
-          >
-            Read More
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/link:translate-x-1" />
-          </Link>
-        </div>
-      </div>
+      </button>
     </motion.article>
   );
 }
 
 export default function LatestStories() {
   const reduce = useReducedMotion();
+  const [active, setActive] = useState(null);
 
   return (
     <section id="latest-stories" className="scroll-mt-24 bg-white px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
@@ -90,13 +67,14 @@ export default function LatestStories() {
           </Link>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-14 lg:grid-cols-3">
-          {newsStories.map((story, index) => (
-            <StoryCard key={story.id} story={story} index={index} reduce={reduce} />
+        <div className="mx-auto mt-10 grid max-w-[1240px] grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
+          {pressClippings.map((item, index) => (
+            <StoryCard key={item.id} item={item} index={index} reduce={reduce} onOpen={setActive} priority={index < 4} />
           ))}
         </div>
       </div>
 
+      <Lightbox item={active} onClose={() => setActive(null)} />
     </section>
   );
 }
