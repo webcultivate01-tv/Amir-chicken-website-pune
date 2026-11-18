@@ -14,7 +14,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 // Vite falls back to 5174, 5175... when 5173 is busy, so accept any localhost port
-app.use(cors({ origin: /^http:\/\/localhost:\d+$/, credentials: true }));
+// in production the site and API share one origin via nginx; FRONTEND_URL allows a separate frontend origin if needed
+const allowedOrigins = [/^http:\/\/localhost:\d+$/];
+if (process.env.FRONTEND_URL) allowedOrigins.push(process.env.FRONTEND_URL);
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/api/auth", authRouter);

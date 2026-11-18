@@ -195,14 +195,15 @@ export const connectDB = async () => {
       )
     `);
 
-    const [rows] = await pool.query("SELECT id FROM users WHERE email = ?", [
-      "admin@gmail.com",
-    ]);
+    // seed admin comes from .env (ADMIN_EMAIL / ADMIN_PASSWORD); the fallback is for local dev only
+    const adminEmail = (process.env.ADMIN_EMAIL || "admin@gmail.com").trim().toLowerCase();
+    const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+    const [rows] = await pool.query("SELECT id FROM users WHERE email = ?", [adminEmail]);
     if (rows.length === 0) {
-      const hashPassword = await bcrypt.hash("admin123", 10);
+      const hashPassword = await bcrypt.hash(adminPassword, 10);
       await pool.query(
         "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
-        ["Admin", "admin@gmail.com", hashPassword, "admin"]
+        ["Admin", adminEmail, hashPassword, "admin"]
       );
       console.log("Admin user seeded");
     }

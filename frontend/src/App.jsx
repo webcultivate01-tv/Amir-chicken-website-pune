@@ -24,7 +24,8 @@ const StoryDetailPage = lazy(() => import("./pages/site/StoryDetailPage"));
 const PrivacyPolicyPage = lazy(() => import("./pages/site/PrivacyPolicyPage"));
 const TermsPage = lazy(() => import("./pages/site/TermsPage"));
 
-export const serverUrl = "http://localhost:8000";
+// production builds set VITE_SERVER_URL="" so API calls go to the same origin (nginx proxies /api and /uploads)
+export const serverUrl = import.meta.env.VITE_SERVER_URL ?? "http://localhost:8000";
 
 function App() {
   useGetCurrentUser();

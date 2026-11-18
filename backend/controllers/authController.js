@@ -50,10 +50,10 @@ export const login = async (req, res) => {
     }
 
     const token = genToken(user.id);
-    // production over HTTPS needs sameSite: "none" and secure: true
+    // set COOKIE_SECURE=true once the site is served over HTTPS
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.COOKIE_SECURE === "true",
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
