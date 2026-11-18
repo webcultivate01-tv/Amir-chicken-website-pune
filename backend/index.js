@@ -23,7 +23,8 @@ app.use("/api/newsletter", newsletterRouter);
 
 app.get("/", (req, res) => res.send("Hello From Tejas Mehar"));
 
+// create/migrate the tables first so no request can hit the database before they exist
+await connectDB();
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);
-  connectDB();
 });

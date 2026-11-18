@@ -56,7 +56,8 @@ export const listInquiries = async ({ search, status, inquiryType, sort, page, l
     params.push(inquiryType);
   }
   if (search) {
-    const like = `%${search}%`;
+    // escape LIKE wildcards so "%" or "_" in the search box match literally
+    const like = `%${search.replace(/[\\%_]/g, "\\$&")}%`;
     where.push("(name LIKE ? OR email LIKE ? OR mobile LIKE ? OR location LIKE ?)");
     params.push(like, like, like, like);
   }
@@ -88,10 +89,12 @@ export const getInquiryStats = async () => {
   );
   const perDay = Object.fromEntries(dayRows.map((r) => [r.day, r.count]));
   const daily = [];
+  // the DB session runs in UTC, so build the day keys in UTC too (local-time keys would be shifted
+  // by a day whenever the server's timezone isn't UTC, and counts would land on the wrong day or vanish)
   for (let i = 29; i >= 0; i--) {
     const d = new Date();
-    d.setDate(d.getDate() - i);
-    const day = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    d.setUTCDate(d.getUTCDate() - i);
+    const day = d.toISOString().slice(0, 10);
     daily.push({ day, count: perDay[day] || 0 });
   }
 
@@ -128,15 +131,27 @@ export const findActivitiesByInquiryId = async (id) => {
 
 // changes: { status?, adminNote?, followUpAt? } — only the columns that actually changed.
 // activities: [{ type, detail }] logged under the admin in the same transaction.
-export const updateInquiry = async (id, changes, activities, adminName) => {
+// expected: { column: value } that must still hold, so two admins editing at once can't both win.
+// Returns false (and changes nothing) if the row no longer matches `expected`.
+const UPDATABLE_COLUMNS = ["status", "adminNote", "followUpAt"];
+export const updateInquiry = async (id, changes, activities, adminName, expected = {}) => {
+  const columns = Object.keys(changes);
+  const guards = Object.keys(expected);
+  if ([...columns, ...guards].some((c) => !UPDATABLE_COLUMNS.includes(c))) {
+    throw new Error("Invalid inquiry column");
+  }
   const connection = await pool.getConnection();
   try {
     await connection.beginTransaction();
-    const columns = Object.keys(changes);
-    await connection.query(
-      `UPDATE inquiries SET ${columns.map((c) => `${c} = ?`).join(", ")} WHERE id = ?`,
-      [...columns.map((c) => changes[c]), id]
+    const [result] = await connection.query(
+      `UPDATE inquiries SET ${columns.map((c) => `${c} = ?`).join(", ")}
+       WHERE id = ?${guards.map((c) => ` AND ${c} = ?`).join("")}`,
+      [...columns.map((c) => changes[c]), id, ...guards.map((c) => expected[c])]
     );
+    if (result.affectedRows === 0) {
+      await connection.rollback();
+      return false;
+    }
     for (const activity of activities) {
       await connection.query(
         "INSERT INTO inquiry_activities (inquiryId, type, detail, adminName) VALUES (?, ?, ?, ?)",
@@ -144,6 +159,7 @@ export const updateInquiry = async (id, changes, activities, adminName) => {
       );
     }
     await connection.commit();
+    return true;
   } catch (error) {
     await connection.rollback();
     throw error;
@@ -292,12 +308,14 @@ export const addFollowup = (inquiryId, { scheduledAt, type, notes }, adminName) 
     await logActivity(connection, inquiryId, "followup", `${scheduledAt.toISOString()}|${type}`, adminName);
   });
 
+// returns false if it was already completed (e.g. two admins clicked at the same time)
 export const completeFollowup = (followup, adminName) =>
   inInquiryTransaction(followup.inquiryId, async (connection) => {
-    await connection.query(
-      "UPDATE inquiry_followups SET status = 'Completed', completedAt = CURRENT_TIMESTAMP WHERE id = ?",
+    const [result] = await connection.query(
+      "UPDATE inquiry_followups SET status = 'Completed', completedAt = CURRENT_TIMESTAMP WHERE id = ? AND status = 'Pending'",
       [followup.id]
     );
+    if (result.affectedRows === 0) return false;
     await logActivity(
       connection,
       followup.inquiryId,
@@ -305,6 +323,7 @@ export const completeFollowup = (followup, adminName) =>
       `${new Date(followup.scheduledAt).toISOString()}|${followup.type}`,
       adminName
     );
+    return true;
   });
 
 export const deleteFollowup = (inquiryId, followupId) =>

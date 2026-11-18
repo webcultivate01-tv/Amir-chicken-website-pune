@@ -83,7 +83,7 @@ export const connectDB = async () => {
       CREATE TABLE IF NOT EXISTS inquiry_activities (
         id INT AUTO_INCREMENT PRIMARY KEY,
         inquiryId INT NOT NULL,
-        type ENUM('created','status','note','followup') NOT NULL,
+        type ENUM('created','status','note','followup','followup_done','reply') NOT NULL,
         detail TEXT NOT NULL,
         adminName VARCHAR(100) NULL,
         createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -154,12 +154,23 @@ export const connectDB = async () => {
       )
     `);
 
-    // one-time move of the old single adminNote / followUpAt columns into the new tables (idempotent)
-    await pool.query(
-      `INSERT INTO inquiry_notes (inquiryId, note, createdAt)
-       SELECT id, adminNote, updatedAt FROM inquiries WHERE adminNote IS NOT NULL AND adminNote <> ''`
-    );
-    await pool.query("UPDATE inquiries SET adminNote = NULL, updatedAt = updatedAt WHERE adminNote IS NOT NULL");
+    // one-time move of the old single adminNote / followUpAt columns into the new tables (idempotent).
+    // The copy + clear run in one transaction so a crash in between can't duplicate notes on the next start.
+    const migration = await pool.getConnection();
+    try {
+      await migration.beginTransaction();
+      await migration.query(
+        `INSERT INTO inquiry_notes (inquiryId, note, createdAt)
+         SELECT id, adminNote, updatedAt FROM inquiries WHERE adminNote IS NOT NULL AND adminNote <> ''`
+      );
+      await migration.query("UPDATE inquiries SET adminNote = NULL, updatedAt = updatedAt WHERE adminNote IS NOT NULL");
+      await migration.commit();
+    } catch (error) {
+      await migration.rollback();
+      throw error;
+    } finally {
+      migration.release();
+    }
     await pool.query(
       `INSERT INTO inquiry_followups (inquiryId, scheduledAt)
        SELECT i.id, i.followUpAt FROM inquiries i

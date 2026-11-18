@@ -45,7 +45,8 @@ export const submitInquiry = async (req, res) => {
     if (name.length > 100 || (location && location.length > 150)) {
       return res.status(400).json({ message: "Name or location is too long" });
     }
-    if (!validator.isEmail(email)) {
+    // inquiries.email is VARCHAR(150); longer would fail the INSERT with a 500
+    if (!validator.isEmail(email) || email.length > 150) {
       return res.status(400).json({ message: "Enter valid Email" });
     }
     if (!/^\+?[\d\s-]{7,15}$/.test(mobile)) {
@@ -145,12 +146,16 @@ export const updateInquiryController = async (req, res) => {
     }
 
     // "from|to" — the UI renders it as a sentence
-    await updateInquiry(
+    const updated = await updateInquiry(
       current.id,
       { status },
       [{ type: "status", detail: `${current.status}|${status}` }],
-      await adminNameOf(req.userId)
+      await adminNameOf(req.userId),
+      { status: current.status }
     );
+    if (!updated) {
+      return res.status(409).json({ message: "This inquiry was just changed by someone else. Refresh and try again" });
+    }
     return res.status(200).json({ message: "Status updated", ...(await detailPayload(current.id)) });
   } catch (error) {
     return res.status(500).json({ message: `UpdateInquiry error ${error.message}` });
@@ -304,7 +309,9 @@ export const completeFollowupController = async (req, res) => {
     if (followup.status === "Completed") {
       return res.status(400).json({ message: "Follow-up is already completed" });
     }
-    await completeFollowup(followup, await adminNameOf(req.userId));
+    if (!(await completeFollowup(followup, await adminNameOf(req.userId)))) {
+      return res.status(400).json({ message: "Follow-up is already completed" });
+    }
     return res.status(200).json({ message: "Follow-up completed", ...(await detailPayload(followup.inquiryId)) });
   } catch (error) {
     return res.status(500).json({ message: `CompleteFollowup error ${error.message}` });

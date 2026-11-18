@@ -14,7 +14,7 @@ import {
   updatePassword,
   saveResetCode,
   findResetByEmail,
-  incrementResetAttempts,
+  consumeResetAttempt,
   deleteReset,
 } from "../model/userModel.js";
 import { sendResetCodeMail } from "../config/mailer.js";
@@ -122,6 +122,11 @@ export const updateProfileController = async (req, res) => {
       removeFile(newPhoto);
       return res.status(400).json({ message: "Enter valid Email" });
     }
+    // must fit users.name VARCHAR(100) / users.email VARCHAR(150)
+    if (name.length > 100 || email.length > 150) {
+      removeFile(newPhoto);
+      return res.status(400).json({ message: "Name or email is too long" });
+    }
     if (password && password.length < 8) {
       removeFile(newPhoto);
       return res.status(400).json({ message: "Password must be at least 8 characters" });
@@ -144,6 +149,10 @@ export const updateProfileController = async (req, res) => {
     return res.status(200).json({ message: "Profile updated successfully", user });
   } catch (error) {
     removeFile(newPhoto);
+    // the UNIQUE index catches an email taken between the check above and the UPDATE
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(400).json({ message: "Email is already in use" });
+    }
     return res.status(500).json({ message: `UpdateProfile error ${error.message}` });
   }
 };
@@ -195,13 +204,12 @@ export const verifyResetCode = async (req, res) => {
       await deleteReset(user.email);
       return res.status(400).json({ message: "Code expired. Request a new one" });
     }
-    if (record.attempts >= MAX_ATTEMPTS) {
+    if (!(await consumeResetAttempt(user.email, MAX_ATTEMPTS))) {
       await deleteReset(user.email);
       return res.status(429).json({ message: "Too many attempts. Request a new code" });
     }
     const isMatch = await bcrypt.compare(code, record.codeHash);
     if (!isMatch) {
-      await incrementResetAttempts(user.email);
       return res.status(400).json({ message: "Invalid verification code" });
     }
 

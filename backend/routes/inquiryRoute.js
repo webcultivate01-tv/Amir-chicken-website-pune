@@ -18,6 +18,14 @@ import isAuth from "../middleware/isAuth.js";
 
 const router = express.Router();
 
+// MySQL casts strings like "5abc" to 5 when comparing to an INT column, so reject anything that
+// isn't a plain positive integer before it reaches a query
+const requireNumericId = (req, res, next, value) =>
+  /^[1-9]\d{0,9}$/.test(value) ? next() : res.status(404).json({ message: "Not found" });
+router.param("id", requireNumericId);
+router.param("noteId", requireNumericId);
+router.param("followupId", requireNumericId);
+
 router.post("/", submitInquiry);
 router.get("/", isAuth, getInquiries);
 router.get("/stats", isAuth, getStats);

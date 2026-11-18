@@ -43,8 +43,15 @@ export const findResetByEmail = async (email) => {
   return rows[0] || null;
 };
 
-export const incrementResetAttempts = async (email) => {
-  await pool.query("UPDATE password_resets SET attempts = attempts + 1 WHERE email = ?", [email]);
+// Atomically uses up one attempt BEFORE the code is checked, so parallel guesses can't all slip
+// past the attempt limit. Returns false when the code is expired or out of attempts.
+export const consumeResetAttempt = async (email, maxAttempts) => {
+  const [result] = await pool.query(
+    `UPDATE password_resets SET attempts = attempts + 1
+     WHERE email = ? AND attempts < ? AND expiresAt > UTC_TIMESTAMP()`,
+    [email, maxAttempts]
+  );
+  return result.affectedRows === 1;
 };
 
 export const deleteReset = async (email) => {
