@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  AnimatePresence,
   motion,
   useMotionValue,
   useSpring,
@@ -14,7 +13,6 @@ import AnimatedHeadline from "./hero/AnimatedHeadline";
 import FloatingCard from "./hero/FloatingCard";
 import HeroVisual from "./hero/HeroVisual";
 import Leaves from "./hero/Leaves";
-import StoryModal from "./StoryModal";
 import { heroCards } from "../../../data/heroCards";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -24,10 +22,10 @@ const PARALLAX_BASE = 20; // px of travel for a depth-1 layer
    its own duration/delay/direction so the four float independently rather
    than in lockstep. */
 const CARD_MOTION = {
-  "top-left": { entranceFrom: { x: -140, y: -90 }, floatDuration: 7, floatDelay: 0, driftX: -5 },
-  "top-right": { entranceFrom: { x: 140, y: -90 }, floatDuration: 8.5, floatDelay: 0.4, driftX: 5 },
-  "bottom-left": { entranceFrom: { x: -140, y: 90 }, floatDuration: 7.5, floatDelay: 0.8, driftX: -4 },
-  "bottom-right": { entranceFrom: { x: 140, y: 90 }, floatDuration: 9, floatDelay: 1.2, driftX: 4 },
+  "top-left": { entranceFrom: { x: -520, y: 0 }, floatDuration: 7, floatDelay: 0, driftX: -5 },
+  "top-right": { entranceFrom: { x: 520, y: 0 }, floatDuration: 8.5, floatDelay: 0.4, driftX: 5 },
+  "bottom-left": { entranceFrom: { x: -520, y: 0 }, floatDuration: 7.5, floatDelay: 0.8, driftX: -4 },
+  "bottom-right": { entranceFrom: { x: 520, y: 0 }, floatDuration: 9, floatDelay: 1.2, driftX: 4 },
 };
 
 const CORNER_CLASS = {
@@ -40,7 +38,6 @@ const CORNER_CLASS = {
 export default function NewsHeroSection() {
   const reduce = useReducedMotion();
   const sectionRef = useRef(null);
-  const [activeCard, setActiveCard] = useState(null);
 
   /* Mouse parallax is desktop-only; coarse (touch) pointers skip it */
   const [isTouch, setIsTouch] = useState(false);
@@ -171,12 +168,11 @@ export default function NewsHeroSection() {
                 springX={springX}
                 springY={springY}
                 reduce={reduce}
-                entranceDelay={reduce ? 0 : 0.3 + i * 0.12}
+                entranceDelay={reduce ? 0 : 0.3 + (i < 2 ? 0 : 0.35) + (i % 2) * 0.1}
                 entranceFrom={CARD_MOTION[card.corner].entranceFrom}
                 floatDuration={CARD_MOTION[card.corner].floatDuration}
                 floatDelay={CARD_MOTION[card.corner].floatDelay}
                 driftX={CARD_MOTION[card.corner].driftX}
-                onOpen={setActiveCard}
               />
             </div>
           ))}
@@ -196,27 +192,9 @@ export default function NewsHeroSection() {
             reduce={reduce}
             mobile
             entranceDelay={reduce ? 0 : 0.1 * i}
-            onOpen={setActiveCard}
           />
         ))}
       </div>
-
-      <AnimatePresence>
-        {activeCard && (
-          <StoryModal
-            layout="stacked"
-            story={{
-              image: activeCard.image,
-              category: activeCard.tag,
-              date: activeCard.date,
-              title: activeCard.title,
-              summary: activeCard.description,
-              content: activeCard.content,
-            }}
-            onClose={() => setActiveCard(null)}
-          />
-        )}
-      </AnimatePresence>
     </section>
   );
 }

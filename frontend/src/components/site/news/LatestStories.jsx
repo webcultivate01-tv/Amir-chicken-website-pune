@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { pressClippings } from "../../../data/pressClippings.js";
@@ -54,17 +53,6 @@ export default function LatestStories() {
               In the News
             </h2>
           </motion.div>
-
-          <Link
-            to="/about"
-            className="group inline-flex w-fit items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-[#171719] transition-colors hover:text-[#EC1F36]"
-          >
-            View All Stories
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1">
-              <path d="M5 12h14" />
-              <path d="m13 6 6 6-6 6" />
-            </svg>
-          </Link>
         </div>
 
         <div className="mx-auto mt-10 grid max-w-[1240px] grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">

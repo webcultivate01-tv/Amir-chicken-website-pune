@@ -1,7 +1,7 @@
 import { motion, useTransform } from "framer-motion";
-import { ArrowRight, Sprout } from "lucide-react";
+import { Sprout } from "lucide-react";
 
-const EASE_SPRING = { type: "spring", stiffness: 90, damping: 14 };
+const EASE_SPRING = { type: "spring", stiffness: 38, damping: 13, mass: 1.1 };
 
 /**
  * A tilted, full-bleed editorial story card. Three nested layers keep the
@@ -23,7 +23,6 @@ export default function FloatingCard({
   springY,
   reduce,
   mobile = false,
-  onOpen,
 }) {
   const parX = useTransform(springX, (v) => v * depth);
   const parY = useTransform(springY, (v) => v * depth);
@@ -36,7 +35,7 @@ export default function FloatingCard({
             ? false
             : {
                 opacity: 0,
-                scale: 0.9,
+                scale: 0.7,
                 x: entranceFrom.x,
                 y: entranceFrom.y,
                 rotateX: 18,
@@ -47,13 +46,9 @@ export default function FloatingCard({
         transition={{ ...EASE_SPRING, delay: reduce ? 0 : entranceDelay }}
         style={{ perspective: 800 }}
       >
-        <motion.button
-          type="button"
-          onClick={() => onOpen?.(data)}
-          aria-haspopup="dialog"
-          aria-label={`${data.title} — read full story`}
-          className={`group relative block aspect-[3/4] overflow-hidden rounded-[22px] bg-[#271719] text-left shadow-[0_20px_40px_-16px_rgba(34,34,34,0.4)] transition-shadow duration-300 hover:shadow-[0_24px_48px_-12px_rgba(128,24,33,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amir ${
-            mobile ? "w-[165px] shrink-0 snap-center" : "w-[150px] md:w-[175px] lg:w-[205px]"
+        <motion.div
+          className={`group relative block aspect-square overflow-hidden rounded-full border-[5px] border-white bg-[#271719] shadow-[0_20px_40px_-16px_rgba(34,34,34,0.4)] transition-shadow duration-300 hover:shadow-[0_24px_48px_-12px_rgba(128,24,33,0.5)] ${
+            mobile ? "w-[150px] shrink-0 snap-center" : "w-[150px] md:w-[180px] lg:w-[220px]"
           }`}
           animate={
             reduce || mobile
@@ -89,35 +84,7 @@ export default function FloatingCard({
               <Sprout className="h-12 w-12 text-white/20" strokeWidth={1.25} />
             </div>
           )}
-
-          {/* Legibility gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-black/5" />
-
-          {/* Category pill */}
-          <span className="absolute left-2.5 top-2.5 inline-flex items-center rounded-full bg-white/95 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-[#801821] shadow-sm">
-            {data.tag}
-          </span>
-
-          {/* Title + CTA */}
-          <div className="absolute inset-x-0 bottom-0 p-3 lg:p-3.5">
-            <h3 className="font-seasons text-[13.5px] font-semibold leading-tight text-white line-clamp-2 lg:text-[15px]">
-              {data.title}
-            </h3>
-            <p className="mt-1 line-clamp-1 text-[10.5px] leading-relaxed text-white/75">
-              {data.description}
-            </p>
-
-            <div className="mt-2 flex items-center gap-1.5">
-              <span className="text-[8px] font-bold uppercase tracking-[0.12em] text-white">
-                Read Full Story
-              </span>
-              <span className="h-px flex-1 bg-white/30" />
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amir text-white transition-transform duration-300 group-hover:translate-x-0.5">
-                <ArrowRight className="h-3 w-3" />
-              </span>
-            </div>
-          </div>
-        </motion.button>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

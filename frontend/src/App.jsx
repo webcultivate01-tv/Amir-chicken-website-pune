@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
+import PageTitle from "./components/PageTitle";
 import SiteLayout from "./components/site/SiteLayout";
 import HomePage from "./pages/site/HomePage";
 import useGetCurrentUser from "./CustomHooks/getCurrentUser";
@@ -40,6 +41,7 @@ function App() {
 
   return (
     <>
+      <PageTitle />
       <ToastContainer limit={1} position="top-center" newestOnTop hideProgressBar={false} />
       <Suspense fallback={null}>
       <Routes>

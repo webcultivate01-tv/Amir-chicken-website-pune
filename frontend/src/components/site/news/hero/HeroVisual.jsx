@@ -1,14 +1,15 @@
 import { motion, useTransform } from "framer-motion";
 import heroFood from "../../../../../images/newsmedia/NewHeroNews.webp";
 import productChicken from "../../../../../images/products/chicken/Whole Chicken With Skin.webp";
+import eggsImg from "../../../../../images/products/eggs/Farm Fresh Eggs.webp";
 import fishPlate from "../../../../../images/fresh-fish-plate.webp";
 import muttonPlate from "../../../../../images/raw-mutton-plate.webp";
 
 const RING_PANELS = [
   { img: productChicken, angle: -70, dist: 1 },
-  { img: fishPlate, angle: 15, dist: 1.05 },
-  { img: muttonPlate, angle: 125, dist: 1 },
-  { img: productChicken, angle: 200, dist: 1.05 },
+  { img: fishPlate, angle: 20, dist: 1.05 },
+  { img: muttonPlate, angle: 110, dist: 1 },
+  { img: eggsImg, angle: 200, dist: 1.05 },
 ];
 
 /**
@@ -51,7 +52,7 @@ export default function HeroVisual({ springX, springY, reduce }) {
           return (
             <div
               key={i}
-              className="absolute h-14 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/40 opacity-25 blur-[3px] sm:h-16 sm:w-24"
+              className="absolute h-14 w-20 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/40 opacity-70 blur-[1px] sm:h-16 sm:w-24"
               style={{ left: `${x}%`, top: `${y}%` }}
             >
               <img src={panel.img} alt="" className="h-full w-full object-cover" />

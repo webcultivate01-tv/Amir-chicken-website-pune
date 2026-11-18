@@ -243,10 +243,13 @@ export default function ContactPage() {
             </a>
 
             <a
-              href="mailto:info@amirchicken.in"
-              className="inline-flex items-center rounded-full border border-neutral-300 px-6 py-3 text-sm font-semibold text-[#171719] transition hover:border-[#171719] hover:bg-[#171719] hover:text-white"
+              href="https://www.google.com/maps/d/viewer?mid=1brfKUYTM81Vo1uhN9e2oCQrVkjnIP4Q"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-[#EC1F36] bg-[#EC1F36] px-6 py-3 text-sm font-semibold text-white transition hover:border-[#c8172d] hover:bg-[#c8172d]"
             >
-              Email us
+              Find a Store Near You
+              <ArrowIcon />
             </a>
           </motion.div>
         </motion.div>

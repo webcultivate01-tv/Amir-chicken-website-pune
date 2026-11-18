@@ -1,77 +1,78 @@
 /* =========================================================
-   NEWS & MEDIA HERO — floating editorial card content.
-   Images are public Unsplash photos (stable CDN URLs); swap
-   any `image` for a dedicated Amir photo any time. `date` and
-   `content` feed the "Read Full Story" modal.
+   NEWS & MEDIA HERO — floating product story cards.
+   One card each for chicken, mutton, fish and eggs, using the
+   site's own product photography. `date` and `content` feed the
+   "Read Full Story" modal.
 ========================================================= */
+
+import chickenImg from "../../images/products/chicken/Whole Chicken With Skin.webp";
+import muttonImg from "../../images/products/mutton/Mutton Curry Cut.webp";
+import fishImg from "../../images/products/fish&seafood/Fresh Fish.webp";
+import eggsImg from "../../images/products/eggs/Farm Fresh Eggs.webp";
 
 export const heroCards = [
   {
-    id: "farm",
+    id: "chicken",
     corner: "top-left",
-    tag: "Farm Stories",
-    title: "From Farm to Your Table",
-    description: "A look at our sourcing practices and the people behind them.",
-    image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=75&auto=format&fit=crop",
-    alt: "Golden farmland at sunrise",
+    tag: "Chicken",
+    title: "Fresh Chicken, Every Single Day",
+    description: "Tender, hygienic cuts from trusted farm partners.",
+    image: chickenImg,
+    alt: "Fresh whole chicken",
     rotate: -8,
     date: "3 October 2026",
     content: [
-      "Every cut that reaches an Amir counter starts long before the shop opens — with farm partners across Maharashtra who supply poultry, mutton and fish under the same freshness standards the brand has followed since 1991.",
+      "Chicken is the heart of the Amir counter — whole birds, curry cuts, boneless breast and tandoor-ready pieces, all processed fresh every morning.",
       "Sourcing teams visit partner farms on a fixed weekly rotation, checking feed quality, housing conditions and transport handling, so nothing is left to chance between the farm gate and the store counter.",
-      "It's a quieter part of the Amir story, but it's the one that makes the rest possible: fresher cuts, consistent quality, and a supply chain built on relationships that go back decades.",
+      "The result is chicken that stays tender, cooks evenly and tastes the way it should — the standard Amir has held since 1991.",
     ],
   },
   {
-    id: "product",
+    id: "mutton",
     corner: "top-right",
-    tag: "Product Updates",
-    title: "New Range Now Available",
-    description: "Fresh cuts, same commitment to quality.",
-    image:
-      "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=600&q=75&auto=format&fit=crop",
-    alt: "Fresh whole chicken with herbs and lemon, ready for the new range",
+    tag: "Mutton",
+    title: "Premium Mutton, Perfectly Cut",
+    description: "Curry cuts, chops and boneless — cut to order.",
+    image: muttonImg,
+    alt: "Fresh mutton curry cut",
     rotate: 8,
     date: "21 August 2026",
     content: [
-      "Amir's latest range brings more ready-to-cook and marinated options to counters across Pune, Nashik and Ahilyanagar, built around the same daily-fresh sourcing the brand has used since day one.",
-      "Each new cut goes through the same six-point quality routine as the rest of the catalogue — nothing about the process changes just because the product is new.",
-      "The range is rolling out store by store through the rest of the year, with franchise partners given first access before it reaches the full network.",
+      "Amir's mutton range covers everything from classic curry cuts and chops to boneless, shoulder and leg, each prepared fresh and trimmed to the way families actually cook.",
+      "Every batch goes through the same six-point quality routine as the rest of the catalogue, so the cut you buy on Sunday is as good as the one you bought last week.",
+      "Whether it's a slow-cooked curry or a festive biryani, the aim is simple: rich flavour and consistent quality.",
     ],
   },
   {
-    id: "insights",
+    id: "fish",
     corner: "bottom-left",
-    tag: "Insights",
-    title: "The Nutrition Behind Fresh Food",
-    description: "Simple food, stronger tomorrows.",
-    image:
-      "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=75&auto=format&fit=crop",
-    alt: "Pan-seared fish plated with fresh vegetables",
+    tag: "Fish & Seafood",
+    title: "Fresh Catch, Straight to You",
+    description: "Sea and river fish kept cold from catch to counter.",
+    image: fishImg,
+    alt: "Fresh fish on display",
     rotate: -6,
     date: "9 July 2026",
     content: [
-      "Fresh protein — chicken, mutton, fish and eggs — remains one of the most reliable ways to meet daily nutrition needs, especially in households balancing taste, cost and health.",
-      "Amir works with nutrition advisors to share simple, practical guidance on cuts, portions and cooking methods that keep meals both nourishing and enjoyable.",
-      "The goal isn't a trend-driven diet — it's steady, dependable nutrition, the same way Amir has approached freshness since 1991.",
+      "Fish is one of the most delicate products to handle, which is why Amir keeps its fish and seafood on a tight cold chain from landing to store counter.",
+      "The range includes everyday favourites and market-cut options, cleaned and ready for the pan, the tawa or the curry pot.",
+      "Light, protein-rich and full of flavour — fresh fish is simple food that supports stronger tomorrows.",
     ],
   },
   {
-    id: "community",
+    id: "eggs",
     corner: "bottom-right",
-    tag: "Community",
-    title: "Better Food, Happier Communities",
-    description: "Stories of people, places and positive change.",
-    image:
-      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=75&auto=format&fit=crop",
-    alt: "Friends sitting together, arms around each other",
+    tag: "Eggs",
+    title: "Farm Fresh Eggs, Daily Goodness",
+    description: "Wholesome, protein-packed and always fresh.",
+    image: eggsImg,
+    alt: "Farm fresh eggs",
     rotate: 8,
     date: "28 May 2026",
     content: [
-      "Behind every Amir store is a network of over 2,500 people — farm partners, store staff and delivery teams — whose work turns a daily grocery trip into something dependable for thousands of families.",
-      "From supporting local franchise owners to running neighbourhood outreach around food safety, Amir's community efforts stay close to the same two priorities the brand started with: good food and fair livelihoods.",
-      "These are the stories that don't always make it to a product label, but they're the ones that keep the Amir network growing, one counter and one community at a time.",
+      "From farm fresh white eggs to country eggs, Amir's egg range is a daily staple for breakfast tables and home kitchens across the network.",
+      "Eggs are graded, handled carefully and stocked in quantities that keep turnover high, so freshness stays a given rather than a promise.",
+      "Affordable, versatile and rich in protein — a small everyday ingredient that does a lot of work.",
     ],
   },
 ];

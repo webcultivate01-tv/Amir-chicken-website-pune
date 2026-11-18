@@ -1,5 +1,5 @@
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -10,6 +10,14 @@ export default function HeroSection() {
   const heroRef = useRef(null);
   const videoRef = useRef(null);
   const reduceMotion = useReducedMotion();
+
+  // Phones get a smaller file (~0.5 MB) so the hero starts playing quickly
+  const [videoSrc] = useState(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 768px)").matches
+      ? "/hero-mobile.mp4"
+      : "/hero.mp4"
+  );
 
   // Pause the background video while it is off-screen so scrolling stays smooth
   useEffect(() => {
@@ -53,8 +61,8 @@ export default function HeroSection() {
       {/* Full-screen food photograph */}
       <motion.div
         className="absolute inset-0 -z-20"
-        initial={reduceMotion ? false : { opacity: 0, scale: 1.06 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={reduceMotion ? false : { opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{
           duration: 1.2,
           ease: [0.22, 1, 0.36, 1],
@@ -62,15 +70,15 @@ export default function HeroSection() {
       >
         <motion.video
           ref={videoRef}
-          src="/HeroVideo%20(2).mp4"
-          poster="/hero-poster.jpg"
+          src={videoSrc}
+          poster="/hero-poster.webp"
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           aria-hidden="true"
-          className="h-full w-full scale-[1.12] object-cover object-center"
+          className="h-full w-full object-cover object-center"
         />
       </motion.div>
 
