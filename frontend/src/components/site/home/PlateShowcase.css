@@ -54,8 +54,12 @@
   aspect-ratio: 1;
   margin: auto;
   transform-origin: center center;
+  /* Own GPU layer; no filter here — a filter on a large rotating,
+     scaling element is re-rasterised every frame and makes scroll stutter. */
   will-change: transform;
-  filter: drop-shadow(0 18px 24px rgba(39, 23, 25, 0.08));
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout paint;
 }
 
 .plate-showcase__plate-image {
@@ -69,6 +73,7 @@
   opacity: 0;
   visibility: hidden;
   will-change: opacity;
+  backface-visibility: hidden;
 }
 
 .plate-showcase__details {
@@ -174,7 +179,6 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  filter: drop-shadow(0 10px 14px rgba(39, 23, 25, 0.25));
   will-change: opacity;
 }
 

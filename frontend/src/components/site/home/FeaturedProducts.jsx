@@ -108,7 +108,7 @@ export default function FeaturedProducts() {
     <section
       id="featured-products-section"
       aria-label="Featured products"
-      className="relative overflow-hidden bg-[#FBF8F7] px-4 pb-10 pt-20 sm:px-8 sm:py-20 lg:px-16 lg:py-28"
+      className="relative overflow-hidden bg-[#FBF8F7] px-4 pb-4 pt-16 sm:px-8 sm:py-20 lg:px-16 lg:py-28"
     >
       <div className="pointer-events-none absolute -left-32 top-10 h-96 w-96 rounded-full bg-[#EC1F36]/[0.06] blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-[#EC1F36]/[0.05] blur-3xl" />
@@ -165,7 +165,7 @@ export default function FeaturedProducts() {
           ))}
         </div>
 
-        <div className="mt-8 flex justify-center sm:hidden">
+        <div className="mt-6 flex justify-center sm:hidden">
           <Link
             to="/catalog"
             className="inline-flex items-center gap-2 rounded-full bg-[#171719] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#EC1F36]"

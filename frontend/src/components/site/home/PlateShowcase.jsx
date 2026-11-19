@@ -89,6 +89,7 @@ export default function PlateShowcase() {
         scale: 1.1,
         rotation: 0,
         transformOrigin: "50% 50%",
+        force3D: true,
       });
 
       if (progressRef.current) {
@@ -139,7 +140,7 @@ export default function PlateShowcase() {
             start: "top top+=74",
             end: "+=4400",
             pin: true,
-            scrub: 0.7,
+            scrub: 0.4,
             anticipatePin: 1,
             invalidateOnRefresh: true,
           },
@@ -225,6 +226,7 @@ export default function PlateShowcase() {
             scale: 1.30,
             duration: sequenceDuration,
             ease: "none",
+            force3D: true,
           },
           0
         );
