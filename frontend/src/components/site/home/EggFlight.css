@@ -4,12 +4,14 @@
    restore every inline style it touched (position/opacity/size), so this
    CSS guarantee is what actually keeps the egg out of layout, invisible,
    and non-interactive below 1024px, independent of GSAP's cleanup timing. */
+/* !important is required: EggIcon sets inline display:block, which would
+   otherwise beat this rule and leave an empty gap between the sections. */
 .egg-flight-icon {
-  display: none;
+  display: none !important;
 }
 
 @media (min-width: 1024px) {
   .egg-flight-icon {
-    display: block;
+    display: block !important;
   }
 }
