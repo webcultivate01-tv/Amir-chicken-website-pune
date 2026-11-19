@@ -56,7 +56,7 @@ export default function HeroSection() {
     <section
       ref={heroRef}
       aria-labelledby="amir-hero-title"
-      className="relative isolate flex h-[70svh] max-h-[900px] sm:min-h-[620px] sm:h-[calc(100svh-82px)] items-center justify-start overflow-hidden bg-[#271719] text-white"
+      className="relative isolate flex h-[77svh] max-h-[900px] sm:min-h-[620px] sm:h-[calc(100svh-82px)] items-center justify-start overflow-hidden bg-[#271719] text-white"
     >
       {/* Full-screen food photograph */}
       <motion.div
@@ -76,7 +76,7 @@ export default function HeroSection() {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-hidden="true"
           className="h-full w-full object-cover object-center"
         />
