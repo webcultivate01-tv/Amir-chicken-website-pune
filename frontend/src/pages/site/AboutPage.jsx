@@ -1025,9 +1025,7 @@ const AboutPage = () => {
 
           <div className="zoom-in delay-5 mt-10 sm:mt-12 flex flex-row items-stretch justify-center gap-2 sm:gap-4">
             <a
-              href="https://www.google.com/maps/d/viewer?mid=1brfKUYTM81Vo1uhN9e2oCQrVkjnIP4Q"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
               className="
                 inline-flex items-center justify-center gap-1.5 sm:gap-3
                 bg-[#EC1F36] text-white border border-[#EC1F36]
